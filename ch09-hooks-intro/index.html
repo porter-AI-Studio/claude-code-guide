@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-TW" data-astro-cid-mw7aashj> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Hooks 是什麼？ | </title><link rel="stylesheet" href="/claude-code-guide/_astro/DocsLayout.BldRaKia.css">
+<style>.events-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin:1.5rem 0}.event-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem;box-shadow:0 4px 12px #0000000d;transition:transform .2s}.event-card:hover{transform:translateY(-2px);border-color:var(--accent)}.ec-name{font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:.5rem}.ec-timing{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.5rem;display:flex;align-items:center;gap:.3rem}.ec-timing:before{content:"⏱️"}.ec-desc{font-size:.85rem;color:var(--text2);line-height:1.5}
+.cb-wrap[data-astro-cid-jgrc2lfe]{margin-bottom:1.25rem}.cb-bar[data-astro-cid-jgrc2lfe]{display:flex;align-items:center;justify-content:space-between;background:#1a1a2e;border-radius:6px 6px 0 0;border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.05);padding:.18rem .5rem .18rem .75rem;min-height:1.8rem}.cb-label[data-astro-cid-jgrc2lfe]{color:#a6adc8;font-family:Fira Code,Cascadia Code,Consolas,monospace;font-size:.73rem;letter-spacing:.04em}.cb-inner[data-astro-cid-jgrc2lfe] pre{border-radius:0 0 8px 8px!important;margin-bottom:0!important}.cb-copy[data-astro-cid-jgrc2lfe]{background:#ffffff14;color:#888;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.15rem .55rem;font-size:.7rem;cursor:pointer;transition:all .15s;flex-shrink:0}.cb-copy[data-astro-cid-jgrc2lfe]:hover{background:#ffffff2e;color:#fff}.cb-copy[data-astro-cid-jgrc2lfe].copied{color:#4ec9b0;border-color:#4ec9b0}
+</style></head>Claude Code 完整指南 <meta name="description" content="深入了解 Claude Code 的 Hooks 系統——生命週期攔截器，讓你在 CC 執行的各個節點插入自訂邏輯。"> <link rel="icon" href="/claude-code-guide/favicon.svg" type="image/svg+xml"> <script>
+    (function () {
+      const s = localStorage.getItem('cc-theme');
+      const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+    })();
+  </script>  </html> <body data-astro-cid-mw7aashj> <div id="pb" data-astro-cid-mw7aashj></div> <header data-astro-cid-mw7aashj> <div class="hi" data-astro-cid-mw7aashj> <div class="hl" data-astro-cid-mw7aashj> <button id="mbtn" class="ibtn" aria-label="選單" data-astro-cid-mw7aashj> <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" data-astro-cid-mw7aashj></path> </svg> </button> <a href="/claude-code-guide/" class="site-name" data-astro-cid-mw7aashj> <span class="logo" data-astro-cid-mw7aashj>CC</span>&nbsp;&nbsp;Claude Code 完整指南
+</a> </div> <div class="hr" data-astro-cid-mw7aashj> <button id="tt" class="ibtn" aria-label="切換主題" data-astro-cid-mw7aashj> <svg id="isun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" data-astro-cid-mw7aashj></path> </svg> <svg id="imoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" data-astro-cid-mw7aashj></path> </svg> </button> </div> </div> </header> <div id="layout" data-astro-cid-mw7aashj> <nav id="sb" data-astro-cid-mw7aashj> <div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="1" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 1：入門</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="1" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch01-what-is-cc" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>1.</span> <span data-astro-cid-mw7aashj>什麼是 Claude Code？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch02-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>2.</span> <span data-astro-cid-mw7aashj>安裝與環境設定</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch03-first-chat" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>3.</span> <span data-astro-cid-mw7aashj>第一次對話</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="2" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 2：模型選擇</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="2" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch04-models" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>4.</span> <span data-astro-cid-mw7aashj>三大模型比較</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>5.</span> <span data-astro-cid-mw7aashj>如何切換模型</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="3" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 3：設定與記憶</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="3" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>6.</span> <span data-astro-cid-mw7aashj>CLAUDE.md</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch07-rules" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>7.</span> <span data-astro-cid-mw7aashj>Rules</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>8.</span> <span data-astro-cid-mw7aashj>Memory.md</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="4" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 4：Hooks</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="4" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" class="active" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>9.</span> <span data-astro-cid-mw7aashj>Hooks 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch10-hooks-diary" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>10.</span> <span data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch11-hooks-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>11.</span> <span data-astro-cid-mw7aashj>Hooks 安全性應用</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="5" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 5：Skills</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="5" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch12-skills-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>12.</span> <span data-astro-cid-mw7aashj>官方六大類 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>13.</span> <span data-astro-cid-mw7aashj>使用內建 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch14-skills-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>14.</span> <span data-astro-cid-mw7aashj>自己寫 Skill</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="6" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 6：MCP Plugin</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="6" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch15-mcp-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>15.</span> <span data-astro-cid-mw7aashj>MCP 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>16.</span> <span data-astro-cid-mw7aashj>安裝 MCP Server</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch17-mcp-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>17.</span> <span data-astro-cid-mw7aashj>自製 MCP Server</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="7" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 7：進階技巧</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="7" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch18-multi-agent" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>18.</span> <span data-astro-cid-mw7aashj>多 Agent 協作</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch19-permissions" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>19.</span> <span data-astro-cid-mw7aashj>Permissions 模式</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch20-faq" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>20.</span> <span data-astro-cid-mw7aashj>常見問題 &amp; Debug</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="8" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 8：附錄</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="8" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-mcp-spec" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>21.</span> <span data-astro-cid-mw7aashj>附錄 A：MCP 協定規格與底層通訊解析</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-sandbox-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>22.</span> <span data-astro-cid-mw7aashj>附錄 B：終端沙箱安全與權限控制原理</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-terminal-pager" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>23.</span> <span data-astro-cid-mw7aashj>附錄 C：終端 Pager 控制與中文字元編碼故障排除</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>24.</span> <span data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-skills-examples" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>25.</span> <span data-astro-cid-mw7aashj>附錄 E：Skills 實戰手冊</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-pro-limits" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>26.</span> <span data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span>  </a> </li> </ul> </div> </nav> <div id="ov" data-astro-cid-mw7aashj></div> <main data-astro-cid-mw7aashj> <div class="cb" data-astro-cid-mw7aashj>  <p class="clabel">第 9 章 · Part 4：Hooks</p> <h1>Hooks 是什麼？</h1> <p class="cdesc">Hooks 是 Claude Code 的生命週期攔截器——在 CC 執行的各個節點插入你自己的邏輯，從自動化日誌、安全防護到桌面通知，全部交給 Hooks 處理。</p> <h2>什麼是 Hooks？</h2> <p>每次 Claude Code 執行工具、回應使用者、或開始／結束 session 時，都會觸發一系列<strong>生命週期事件</strong>。Hooks 讓你可以在這些事件點掛上自己的腳本或服務，實現：</p> <ul> <li>自動記錄每次 session 的工作摘要</li> <li>阻擋危險指令（如 <code>rm -rf</code>）在執行前被攔截</li> <li>任務完成時送出桌面通知</li> <li>審計日誌——記錄所有執行過的 Bash 指令</li> <li>自動化工作流程——呼叫外部 Webhook 或 MCP 工具</li> </ul> <p>與 CLAUDE.md 規則不同，Hooks 是<strong>技術層面的強制執行</strong>，不依賴 Claude 的理解與自覺——腳本說不行就不行。</p> <h2>觸發事件一覽表</h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 240" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--text)" fill-opacity="0.4"/>
+    </marker>
+  </defs>
+  <style>
+    .glass-event { fill: rgba(139,92,246,0.07); stroke: #8b5cf6; stroke-width: 2; rx: 20; }
+    .node-title { font-family: "system-ui, sans-serif"; font-size: 16px; font-weight: bold; fill: var(--text); }
+  </style>
+
+  <path d="M 100 120 L 700 120" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="3" marker-end="url(#arr)"/>
+  <text x="400" y="180" text-anchor="middle" font-size="17px" fill="var(--text)" opacity="0.7">時間軸 (Timeline)</text>
+
+  <g transform="translate(100, 90)">
+    <rect class="glass-event" width="120" height="40"/>
+    <text class="node-title" x="60" y="25" text-anchor="middle">TaskStart</text>
+  </g>
+  <g transform="translate(340, 90)">
+    <rect class="glass-event" width="120" height="40"/>
+    <text class="node-title" x="60" y="25" text-anchor="middle">ToolExecution</text>
+  </g>
+  <g transform="translate(580, 90)">
+    <rect class="glass-event" width="120" height="40"/>
+    <text class="node-title" x="60" y="25" text-anchor="middle">TaskDone</text>
+  </g>
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>Hooks 能夠攔截 Claude Code 執行過程中的重要生命週期事件，讓你在開始前、執行中、結束後介入。</figcaption> </figure>  <div class="events-board"> <div class="event-card"> <div class="ec-name">PreToolUse</div> <div class="ec-timing">工具執行前（可阻擋）</div> <div class="ec-desc">安全檢查、危險指令攔截</div> </div> <div class="event-card"> <div class="ec-name">PostToolUse</div> <div class="ec-timing">工具執行成功後</div> <div class="ec-desc">審計日誌、結果通知</div> </div> <div class="event-card"> <div class="ec-name">PostToolUseFailure</div> <div class="ec-timing">工具執行失敗後</div> <div class="ec-desc">錯誤告警、自動重試邏輯</div> </div> <div class="event-card"> <div class="ec-name">UserPromptSubmit</div> <div class="ec-timing">使用者送出後、回應前</div> <div class="ec-desc">輸入過濾、自動補充 context</div> </div> <div class="event-card"> <div class="ec-name">Stop</div> <div class="ec-timing">每次 agent 回應結束後</div> <div class="ec-desc">寫工作日誌、通知任務完成</div> </div> <div class="event-card"> <div class="ec-name">SessionEnd</div> <div class="ec-timing">整個 session 關閉時</div> <div class="ec-desc">清理暫存、寫入最終摘要</div> </div> </div> <div style="border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.25rem;background:var(--bg2);margin:1.5rem 0;overflow-x:auto"> <p style="text-align:center;font-size:.78rem;color:var(--muted);margin:0 0 1.1rem;font-weight:600;letter-spacing:.06em">HOOKS 生命週期時間軸（一次完整的對話 session）</p> <div style="display:flex;align-items:flex-start;gap:0;min-width:680px;font-family:var(--mono);font-size:.75rem"> <div style="text-align:center;min-width:88px"> <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:.4rem .4rem"> <div style="font-weight:700">SessionStart</div> <div style="color:var(--muted);font-size:.68rem;margin-top:.15rem">環境初始化</div> </div> </div> <div style="display:flex;align-items:center;height:36px;flex:1;min-width:14px"><div style="height:2px;background:var(--border);width:100%"></div></div> <div style="text-align:center;min-width:106px"> <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:.4rem .4rem"> <div style="font-weight:700">UserPromptSubmit</div> <div style="color:var(--muted);font-size:.68rem;margin-top:.15rem">你送出訊息後</div> </div> </div> <div style="display:flex;align-items:center;height:36px;flex:1;min-width:14px"><div style="height:2px;background:var(--border);width:100%"></div></div> <div style="text-align:center;min-width:86px"> <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.45);border-radius:7px;padding:.4rem .4rem"> <div style="font-weight:700;color:#ef4444">PreToolUse</div> <div style="color:var(--muted);font-size:.68rem;margin-top:.15rem">可阻擋 ⛔</div> </div> </div> <div style="display:flex;align-items:center;height:36px;flex:1;min-width:14px"><div style="height:2px;background:var(--border);width:100%"></div></div> <div style="text-align:center;min-width:90px"> <div style="background:var(--accent);border-radius:7px;padding:.4rem .4rem;color:#fff"> <div style="font-weight:700">🔧 工具執行</div> <div style="font-size:.68rem;opacity:.85;margin-top:.15rem">Bash / Read / Edit</div> </div> </div> <div style="display:flex;align-items:center;height:36px;flex:1;min-width:14px"><div style="height:2px;background:var(--border);width:100%"></div></div> <div style="text-align:center;min-width:86px"> <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:.4rem .4rem;margin-bottom:.3rem"> <div style="font-weight:700">PostToolUse</div> <div style="color:#22c55e;font-size:.68rem;margin-top:.15rem">成功後</div> </div> <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.45);border-radius:7px;padding:.3rem .4rem"> <div style="font-size:.7rem;color:#ef4444;font-weight:600">PostTool..Failure</div> <div style="color:var(--muted);font-size:.65rem;margin-top:.1rem">失敗後</div> </div> </div> <div style="display:flex;align-items:center;height:36px;flex:1;min-width:14px"><div style="height:2px;background:var(--border);width:100%"></div></div> <div style="text-align:center;min-width:76px"> <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:.4rem .4rem;margin-bottom:.3rem"> <div style="font-weight:700">Stop</div> <div style="color:var(--muted);font-size:.68rem;margin-top:.15rem">回應結束</div> </div> </div> <div style="display:flex;align-items:center;height:36px;flex:1;min-width:14px"><div style="height:2px;background:var(--border);width:100%"></div></div> <div style="text-align:center;min-width:86px"> <div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:.4rem .4rem"> <div style="font-weight:700">SessionEnd</div> <div style="color:var(--muted);font-size:.68rem;margin-top:.15rem">session 關閉</div> </div> </div> </div> <div style="text-align:center;margin-top:.85rem;font-size:.73rem;color:var(--muted);font-family:var(--mono)">
+⚡ PermissionRequest 可在任何需要授權的工具呼叫時觸發（非固定節點）
+</div> </div> <h2>Hook 類型</h2> <table> <thead> <tr> <th>類型</th> <th>說明</th> <th>適用情境</th> </tr> </thead> <tbody> <tr> <td><code>command</code></td> <td>執行本機 shell 腳本</td> <td>日誌、安全檢查、本機通知</td> </tr> <tr> <td><code>http</code></td> <td>POST 請求到 Webhook URL</td> <td>Slack 通知、CI/CD 觸發、外部 API</td> </tr> <tr> <td><code>mcp_tool</code></td> <td>呼叫已連接的 MCP 工具</td> <td>整合 MCP 服務、資料庫寫入</td> </tr> <tr> <td><code>prompt</code></td> <td>讓 LLM 評估或生成內容</td> <td>自動摘要、AI 審核輸入內容</td> </tr> <tr> <td><code>agent</code></td> <td>啟動 subagent 執行子任務</td> <td>複雜後處理、多步驟自動化</td> </tr> </tbody> </table> <h2>基本設定範例</h2> <p>所有 Hooks 設定都寫在 <code>~/.claude/settings.json</code> 的 <code>hooks</code> 欄位。以下是一個最簡單的範例——每次 Claude 回應結束後，執行一個腳本：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;Stop&quot;: [
+      {
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;~/.claude/hooks/on-stop.sh&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "Stop"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"~/.claude/hooks/on-stop.sh"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>  <script type="module">document.querySelectorAll(".cb-copy").forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.code;t&&navigator.clipboard.writeText(t).then(()=>{e.textContent="已複製!",e.classList.add("copied"),setTimeout(()=>{e.textContent="複製",e.classList.remove("copied")},2e3)})})});</script> <p>如果想讓 Hook 只在特定工具觸發，可以加上 <code>matcher</code>：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（加上 matcher）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;PreToolUse&quot;: [
+      {
+        &quot;matcher&quot;: &quot;Bash&quot;,
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;~/.claude/hooks/check.sh&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "PreToolUse"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "matcher"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"Bash"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"~/.claude/hooks/check.sh"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h2>Stdin / Stdout 資料格式</h2> <p>Hook 腳本透過 <strong>stdin</strong> 接收事件資料（JSON 格式），並可透過 <strong>stdout</strong> 回傳決策。</p> <h3>PreToolUse 的 stdin 範例</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>stdin（Hook 腳本接收到的資料）</span> <button class="cb-copy" data-code="{
+  &quot;tool_name&quot;: &quot;Bash&quot;,
+  &quot;tool_input&quot;: {
+    &quot;command&quot;: &quot;rm -rf /&quot;
+  },
+  &quot;session_id&quot;: &quot;sess_abc123xyz&quot;
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "tool_name"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"Bash"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">  "tool_input"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"rm -rf /"</span></span>
+<span class="line"><span style="color:#ABB2BF">  },</span></span>
+<span class="line"><span style="color:#E06C75">  "session_id"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"sess_abc123xyz"</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h3>PostToolUse 的 stdin 範例</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>stdin（工具執行後）</span> <button class="cb-copy" data-code="{
+  &quot;tool_name&quot;: &quot;Bash&quot;,
+  &quot;tool_input&quot;: {
+    &quot;command&quot;: &quot;ls -la&quot;
+  },
+  &quot;tool_result&quot;: &quot;total 48
+drwxr-xr-x  8 user user 4096 ...&quot;,
+  &quot;session_id&quot;: &quot;sess_abc123xyz&quot;
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "tool_name"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"Bash"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">  "tool_input"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"ls -la"</span></span>
+<span class="line"><span style="color:#ABB2BF">  },</span></span>
+<span class="line"><span style="color:#E06C75">  "tool_result"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"total 48</span></span>
+<span class="line"><span style="color:#98C379">drwxr-xr-x  8 user user 4096 ..."</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">  "session_id"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"sess_abc123xyz"</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h2>阻擋工具執行</h2> <p>在 <code>PreToolUse</code> 事件中，Hook 腳本可以<strong>阻擋工具執行</strong>：</p> <ul> <li><strong>exit code 0</strong> — 允許執行，繼續往下</li> <li><strong>exit code 2</strong> — 阻擋執行，將 stderr 輸出顯示給 Claude</li> </ul> <p>腳本也可以輸出 JSON 到 stdout 來提供更詳細的阻擋原因：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>stdout（阻擋時輸出）</span> <button class="cb-copy" data-code="{
+  &quot;decision&quot;: &quot;block&quot;,
+  &quot;reason&quot;: &quot;Dangerous command detected: rm -rf /&quot;
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "decision"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"block"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">  "reason"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"Dangerous command detected: rm -rf /"</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <p>完整的阻擋腳本範例（bash）：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/hooks/check.sh</span> <button class="cb-copy" data-code="#!/bin/bash
+INPUT=$(cat)
+COMMAND=$(echo &quot;$INPUT&quot; | python3 -c &quot;import sys,json; print(json.load(sys.stdin)['tool_input']['command'])&quot;)
+
+if echo &quot;$COMMAND&quot; | grep -qi &quot;rm -rf /&quot;; then
+  echo '{&quot;decision&quot;:&quot;block&quot;,&quot;reason&quot;:&quot;拒絕執行：rm -rf / 是危險指令&quot;}' >&amp;2
+  exit 2
+fi
+
+exit 0" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic">#!/bin/bash</span></span>
+<span class="line"><span style="color:#E06C75">INPUT</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#61AFEF">cat</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#E06C75">COMMAND</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$INPUT</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">python3</span><span style="color:#D19A66"> -c</span><span style="color:#98C379"> "import sys,json; print(json.load(sys.stdin)['tool_input']['command'])"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">if</span><span style="color:#56B6C2"> echo</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$COMMAND</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">grep</span><span style="color:#D19A66"> -qi</span><span style="color:#98C379"> "rm -rf /"</span><span style="color:#ABB2BF">; </span><span style="color:#C678DD">then</span></span>
+<span class="line"><span style="color:#56B6C2">  echo</span><span style="color:#98C379"> '{"decision":"block","reason":"拒絕執行：rm -rf / 是危險指令"}'</span><span style="color:#ABB2BF"> >&#x26;2</span></span>
+<span class="line"><span style="color:#56B6C2">  exit</span><span style="color:#D19A66"> 2</span></span>
+<span class="line"><span style="color:#C678DD">fi</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span></code></pre> </div> </div>   <div class="call tip"> <span class="ci">💡</span> <div> <strong>Hooks 不影響對話速度</strong> <p>除了 PreToolUse 以外，所有 Hook 都在 Claude 回應<strong>之後</strong>才執行，不會拖慢對話的回應時間。PreToolUse 雖然在執行前觸發，但通常腳本執行速度極快（毫秒級），使用者感受不到延遲。</p> </div> </div>  </div> <nav class="cnav" data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" class="prev" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>← 上一章</span> <span class="nt" data-astro-cid-mw7aashj>Memory.md</span> </a> <a href="/claude-code-guide/ch10-hooks-diary" class="next" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>下一章 →</span> <span class="nt" data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span> </a> </nav> </main> </div> <script>
+    // Theme
+    const html = document.documentElement;
+    const tt = document.getElementById('tt');
+    const isun = document.getElementById('isun');
+    const imoon = document.getElementById('imoon');
+    function syncIcons() {
+      const dk = html.classList.contains('dark');
+      isun.style.display = dk ? 'block' : 'none';
+      imoon.style.display = dk ? 'none' : 'block';
+    }
+    syncIcons();
+    tt?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('cc-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      syncIcons();
+    });
+
+    // Progress
+    const pb = document.getElementById('pb');
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = t > 0 ? `${(window.scrollY / t) * 100}%` : '0%';
+    }, { passive: true });
+
+    // Sidebar part toggles
+    document.querySelectorAll('.pt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.pid;
+        const list = document.querySelector(`[data-pl="${id}"]`);
+        btn.classList.toggle('open');
+        list?.classList.toggle('closed');
+      });
+    });
+
+    // Mobile menu
+    const sb = document.getElementById('sb');
+    const ov = document.getElementById('ov');
+    const mb = document.getElementById('mbtn');
+    const open = () => { sb.classList.add('open'); ov.classList.add('open'); document.body.style.overflow='hidden'; };
+    const close = () => { sb.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow=''; };
+    mb?.addEventListener('click', open);
+    ov?.addEventListener('click', close);
+  </script> </body> 

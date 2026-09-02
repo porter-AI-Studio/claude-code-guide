@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="zh-TW" data-astro-cid-mw7aashj> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>CLAUDE.md | </title><link rel="stylesheet" href="/claude-code-guide/_astro/DocsLayout.BldRaKia.css">
+<style>.init-term{background:#0f172a;padding:1.5rem;border-radius:12px;margin:1.5rem 0;font-family:var(--mono);font-size:.85rem;color:#e2e8f0}.init-term .ai{color:#818cf8;margin-bottom:.5rem;display:block}.init-term .action{color:#64748b;margin-left:1rem}.init-term .success{color:#10b981;margin-top:.5rem}
+.cb-wrap[data-astro-cid-jgrc2lfe]{margin-bottom:1.25rem}.cb-bar[data-astro-cid-jgrc2lfe]{display:flex;align-items:center;justify-content:space-between;background:#1a1a2e;border-radius:6px 6px 0 0;border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.05);padding:.18rem .5rem .18rem .75rem;min-height:1.8rem}.cb-label[data-astro-cid-jgrc2lfe]{color:#a6adc8;font-family:Fira Code,Cascadia Code,Consolas,monospace;font-size:.73rem;letter-spacing:.04em}.cb-inner[data-astro-cid-jgrc2lfe] pre{border-radius:0 0 8px 8px!important;margin-bottom:0!important}.cb-copy[data-astro-cid-jgrc2lfe]{background:#ffffff14;color:#888;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.15rem .55rem;font-size:.7rem;cursor:pointer;transition:all .15s;flex-shrink:0}.cb-copy[data-astro-cid-jgrc2lfe]:hover{background:#ffffff2e;color:#fff}.cb-copy[data-astro-cid-jgrc2lfe].copied{color:#4ec9b0;border-color:#4ec9b0}
+</style></head>Claude Code 完整指南 <meta name="description" content="CLAUDE.md 是 Claude Code 的記憶核心，告訴 Claude 你的專案規則、縮寫、偏好設定。學會正確撰寫，讓每次對話都有最佳起點。"> <link rel="icon" href="/claude-code-guide/favicon.svg" type="image/svg+xml"> <script>
+    (function () {
+      const s = localStorage.getItem('cc-theme');
+      const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+    })();
+  </script>  </html> <body data-astro-cid-mw7aashj> <div id="pb" data-astro-cid-mw7aashj></div> <header data-astro-cid-mw7aashj> <div class="hi" data-astro-cid-mw7aashj> <div class="hl" data-astro-cid-mw7aashj> <button id="mbtn" class="ibtn" aria-label="選單" data-astro-cid-mw7aashj> <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" data-astro-cid-mw7aashj></path> </svg> </button> <a href="/claude-code-guide/" class="site-name" data-astro-cid-mw7aashj> <span class="logo" data-astro-cid-mw7aashj>CC</span>&nbsp;&nbsp;Claude Code 完整指南
+</a> </div> <div class="hr" data-astro-cid-mw7aashj> <button id="tt" class="ibtn" aria-label="切換主題" data-astro-cid-mw7aashj> <svg id="isun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" data-astro-cid-mw7aashj></path> </svg> <svg id="imoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" data-astro-cid-mw7aashj></path> </svg> </button> </div> </div> </header> <div id="layout" data-astro-cid-mw7aashj> <nav id="sb" data-astro-cid-mw7aashj> <div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="1" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 1：入門</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="1" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch01-what-is-cc" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>1.</span> <span data-astro-cid-mw7aashj>什麼是 Claude Code？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch02-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>2.</span> <span data-astro-cid-mw7aashj>安裝與環境設定</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch03-first-chat" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>3.</span> <span data-astro-cid-mw7aashj>第一次對話</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="2" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 2：模型選擇</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="2" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch04-models" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>4.</span> <span data-astro-cid-mw7aashj>三大模型比較</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>5.</span> <span data-astro-cid-mw7aashj>如何切換模型</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="3" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 3：設定與記憶</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="3" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" class="active" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>6.</span> <span data-astro-cid-mw7aashj>CLAUDE.md</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch07-rules" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>7.</span> <span data-astro-cid-mw7aashj>Rules</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>8.</span> <span data-astro-cid-mw7aashj>Memory.md</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="4" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 4：Hooks</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="4" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>9.</span> <span data-astro-cid-mw7aashj>Hooks 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch10-hooks-diary" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>10.</span> <span data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch11-hooks-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>11.</span> <span data-astro-cid-mw7aashj>Hooks 安全性應用</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="5" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 5：Skills</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="5" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch12-skills-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>12.</span> <span data-astro-cid-mw7aashj>官方六大類 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>13.</span> <span data-astro-cid-mw7aashj>使用內建 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch14-skills-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>14.</span> <span data-astro-cid-mw7aashj>自己寫 Skill</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="6" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 6：MCP Plugin</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="6" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch15-mcp-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>15.</span> <span data-astro-cid-mw7aashj>MCP 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>16.</span> <span data-astro-cid-mw7aashj>安裝 MCP Server</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch17-mcp-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>17.</span> <span data-astro-cid-mw7aashj>自製 MCP Server</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="7" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 7：進階技巧</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="7" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch18-multi-agent" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>18.</span> <span data-astro-cid-mw7aashj>多 Agent 協作</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch19-permissions" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>19.</span> <span data-astro-cid-mw7aashj>Permissions 模式</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch20-faq" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>20.</span> <span data-astro-cid-mw7aashj>常見問題 &amp; Debug</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="8" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 8：附錄</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="8" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-mcp-spec" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>21.</span> <span data-astro-cid-mw7aashj>附錄 A：MCP 協定規格與底層通訊解析</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-sandbox-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>22.</span> <span data-astro-cid-mw7aashj>附錄 B：終端沙箱安全與權限控制原理</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-terminal-pager" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>23.</span> <span data-astro-cid-mw7aashj>附錄 C：終端 Pager 控制與中文字元編碼故障排除</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>24.</span> <span data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-skills-examples" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>25.</span> <span data-astro-cid-mw7aashj>附錄 E：Skills 實戰手冊</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-pro-limits" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>26.</span> <span data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span>  </a> </li> </ul> </div> </nav> <div id="ov" data-astro-cid-mw7aashj></div> <main data-astro-cid-mw7aashj> <div class="cb" data-astro-cid-mw7aashj>  <p class="clabel">第 6 章 · Part 3：設定與記憶</p> <h1>CLAUDE.md</h1> <p class="cdesc">Claude Code 的「說明書」。每次對話開始前自動載入，告訴 Claude 你是誰、你的專案長什麼樣、你希望它怎麼做事。</p> <h2>什麼是 CLAUDE.md？</h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 280" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--text)" fill-opacity="0.4"/>
+    </marker>
+  </defs>
+  <style>
+    .glass-doc { fill: rgba(16,185,129,0.07); stroke: #34d399; stroke-width: 2; rx: 8; }
+    .glass-layer { fill: rgba(245,158,11,0.07); stroke: #f59e0b; stroke-width: 2; rx: 8; }
+    .node-title { font-family: "system-ui, sans-serif"; font-size: 18px; font-weight: bold; fill: var(--text); }
+    .node-desc { font-family: "system-ui, sans-serif"; font-size: 14px; fill: var(--text); opacity: 0.7; }
+  </style>
+
+  <g transform="translate(100, 100)">
+    <rect class="glass-doc" width="180" height="80"/>
+    <text class="node-title" x="90" y="40" text-anchor="middle">CLAUDE.md</text>
+    <text class="node-desc" x="90" y="60" text-anchor="middle">給 AI 看的系統提示</text>
+  </g>
+
+  <g transform="translate(450, 40)">
+    <rect class="glass-layer" width="240" height="40"/>
+    <text class="node-title" x="120" y="26" text-anchor="middle">1. 全域層 (~/.claude.md)</text>
+  </g>
+  <g transform="translate(450, 100)">
+    <rect class="glass-layer" width="240" height="40"/>
+    <text class="node-title" x="120" y="26" text-anchor="middle">2. 專案層 (root/CLAUDE.md)</text>
+  </g>
+  <g transform="translate(450, 160)">
+    <rect class="glass-layer" width="240" height="40"/>
+    <text class="node-title" x="120" y="26" text-anchor="middle">3. 目錄層 (dir/CLAUDE.md)</text>
+  </g>
+  <g transform="translate(450, 220)">
+    <rect class="glass-layer" width="240" height="40"/>
+    <text class="node-title" x="120" y="26" text-anchor="middle">4. 會話層 (/memory)</text>
+  </g>
+  
+  <path d="M 280 140 L 410 140" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2"/>
+  <path d="M 410 60 L 450 60" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M 410 120 L 450 120" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M 410 180 L 450 180" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M 410 240 L 450 240" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M 410 60 L 410 240" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2"/>
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>CLAUDE.md 是專案的 AI 靈魂，它透過分層機制，精準控制各個層級的行為準則。</figcaption> </figure> <p>
+CLAUDE.md 是一個純 Markdown 文件，在每次 Claude Code 啟動時<strong>自動載入到上下文</strong>。
+    你不需要每次都解釋「我的專案用 TypeScript」「回答請用繁體中文」「不要自動 push git」——
+    寫在 CLAUDE.md 一次，它就永遠記得。
+</p> <p>把它想成你僱用新工程師時給他的入職文件。</p> <h2>四層架構：哪個檔案管哪個範圍</h2> <table> <thead> <tr><th>層級</th><th>位置</th><th>範圍</th><th>適合放什麼</th></tr> </thead> <tbody> <tr> <td><strong>全域個人</strong></td> <td><code>~/.claude/CLAUDE.md</code></td> <td>所有專案</td> <td>語言偏好、個人縮寫、時區、通用規則</td> </tr> <tr> <td><strong>專案共享</strong></td> <td><code>./CLAUDE.md</code></td> <td>當前專案（git 追蹤）</td> <td>技術棧、架構說明、team 規範、Build 指令</td> </tr> <tr> <td><strong>本地私有</strong></td> <td><code>./CLAUDE.local.md</code></td> <td>當前專案（不 commit）</td> <td>個人開發偏好、本機路徑、私人 API Key 說明</td> </tr> <tr> <td><strong>子目錄</strong></td> <td><code>./src/CLAUDE.md</code></td> <td>特定目錄</td> <td>該模組的特殊規則（如 API 目錄的驗證規則）</td> </tr> </tbody> </table> <div style="border:1px solid var(--border);border-radius:12px;padding:1.5rem;background:var(--bg2);margin:1.5rem 0;font-size:.84rem;font-family:var(--mono)"> <p style="text-align:center;font-size:.78rem;color:var(--muted);margin:0 0 1rem;font-weight:600;letter-spacing:.06em">CLAUDE.md 範圍層次（越內層越優先）</p> <div style="border:2px solid var(--accent);border-radius:10px;padding:1rem 1.1rem;position:relative"> <div style="position:absolute;top:-.65rem;left:1rem;background:var(--bg2);padding:0 .5rem;font-size:.75rem;color:var(--accent);font-weight:700">🌐 全域個人 — ~/.claude/CLAUDE.md　→　適用所有專案</div> <div style="font-size:.76rem;color:var(--muted);margin-bottom:.75rem">語言偏好 · 個人縮寫 · 時區 · 通用規則</div> <div style="border:1.5px solid var(--border);border-radius:8px;padding:.85rem;background:var(--bg)"> <div style="font-size:.78rem;color:var(--text);font-weight:600;margin-bottom:.5rem">📁 專案層 — 適用當前專案</div> <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.65rem"> <div style="border:1px solid var(--border);border-radius:6px;padding:.5rem .65rem;background:var(--bg2);font-size:.75rem"> <div style="font-weight:600;margin-bottom:.15rem">./CLAUDE.md</div> <div style="color:var(--muted)">git 追蹤 · team 共用</div> </div> <div style="border:1px dashed var(--border);border-radius:6px;padding:.5rem .65rem;background:var(--bg2);font-size:.75rem"> <div style="font-weight:600;margin-bottom:.15rem">./CLAUDE.local.md</div> <div style="color:var(--muted)">不 commit · 個人私有</div> </div> </div> <div style="border:1.5px solid var(--accent);border-radius:6px;padding:.6rem .65rem;background:var(--bg2);font-size:.75rem"> <div style="font-weight:600;margin-bottom:.15rem;color:var(--accent)">📂 子目錄 — ./src/CLAUDE.md　→　優先級最高</div> <div style="color:var(--muted)">只對特定目錄生效 · 可覆蓋父層規則</div> </div> </div> </div> </div> <div class="call tip"> <span class="ci">💡</span> <div> <strong>優先順序</strong> <p>Claude 會<strong>全部載入</strong>，不是覆蓋——所有層級的 CLAUDE.md 都會被讀取。如果有衝突，越具體的（子目錄層）越優先。建議把通用規則放全域，專案相關放專案根目錄。</p> </div> </div> <h2>快速產生 CLAUDE.md</h2> <p>讓 Claude 自動分析你的專案並生成初始版：</p>  <div class="init-term"> <div><span style="color:#22c55e">You:</span> /init</div> <br> <span class="ai">Claude:</span> <div class="action">Scanning project directory...</div> <div class="action">Reading package.json...</div> <div class="action">Reading README.md...</div> <div class="success">✓ Created CLAUDE.md with detected tech stack (Next.js, TypeScript).</div> <div style="margin-top:0.5rem; color:#cbd5e1;">I've generated a default `CLAUDE.md` file for you based on the project structure. Please review and add any specific personal preferences or rules.</div> </div> <p>Claude 會掃描你的 <code>package.json</code>、<code>README.md</code>、目錄結構，自動填寫常用欄位。之後再手動補充你的個人偏好。</p> <h2>標準結構範本</h2> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>CLAUDE.md</span> <button class="cb-copy" data-code="# 專案名稱
+
+## 專案簡介
+一句話說明這個專案是什麼、做什麼用的。
+
+## 技術棧
+- 語言：TypeScript 5.x
+- 框架：Next.js 15 / Fastify
+- 資料庫：PostgreSQL + Prisma ORM
+- 測試：Vitest + Testing Library
+
+## 常用指令
+- Build：`npm run build`
+- Dev server：`npm run dev`
+- 測試：`npm test`
+- 型別檢查：`npm run typecheck`
+
+## 架構說明
+- `src/api/` — API routes（Fastify plugins）
+- `src/services/` — 商業邏輯
+- `src/db/` — Prisma schema 與 migrations
+
+## 開發規範
+- 使用 TypeScript strict mode
+- 函式盡量控制在 30 行以內
+- 所有 async 函式必須有 error handling
+
+## 注意事項
+- 不要自動 push 到 main branch
+- 不要修改 package.json 的 version 欄位" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#E06C75"># 專案名稱</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 專案簡介</span></span>
+<span class="line"><span style="color:#ABB2BF">一句話說明這個專案是什麼、做什麼用的。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 技術棧</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 語言：TypeScript 5.x</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 框架：Next.js 15 / Fastify</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 資料庫：PostgreSQL + Prisma ORM</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 測試：Vitest + Testing Library</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 常用指令</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> Build：</span><span style="color:#E5C07B">`</span><span style="color:#98C379">npm run build</span><span style="color:#E5C07B">`</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> Dev server：</span><span style="color:#E5C07B">`</span><span style="color:#98C379">npm run dev</span><span style="color:#E5C07B">`</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 測試：</span><span style="color:#E5C07B">`</span><span style="color:#98C379">npm test</span><span style="color:#E5C07B">`</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 型別檢查：</span><span style="color:#E5C07B">`</span><span style="color:#98C379">npm run typecheck</span><span style="color:#E5C07B">`</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 架構說明</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#E5C07B"> `</span><span style="color:#98C379">src/api/</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> — API routes（Fastify plugins）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#E5C07B"> `</span><span style="color:#98C379">src/services/</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> — 商業邏輯</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#E5C07B"> `</span><span style="color:#98C379">src/db/</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> — Prisma schema 與 migrations</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 開發規範</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 使用 TypeScript strict mode</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 函式盡量控制在 30 行以內</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 所有 async 函式必須有 error handling</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 注意事項</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要自動 push 到 main branch</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要修改 package.json 的 version 欄位</span></span></code></pre> </div> </div>  <script type="module">document.querySelectorAll(".cb-copy").forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.code;t&&navigator.clipboard.writeText(t).then(()=>{e.textContent="已複製!",e.classList.add("copied"),setTimeout(()=>{e.textContent="複製",e.classList.remove("copied")},2e3)})})});</script> <h2>實際範例：個人全域設定</h2> <p>以下是一份真實的 <code>~/.claude/CLAUDE.md</code> 個人全域設定：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/CLAUDE.md</span> <button class="cb-copy" data-code="# 個人設定
+
+## 身分
+你是我的 AI 助理與分身。
+
+## 回應語言
+請用繁體中文回應，專有名詞（API、CLI、Git 等）保留英文。
+
+## 縮寫對照
+- `ag` = Antigravity（主要專案）
+- `obs` = Obsidian（筆記工具）
+- `cc` = Claude Code（這個工具本身）
+
+## 時區
+永遠使用台北時間（Asia/Taipei, UTC+8）。
+進行日期計算前先執行 `date` 確認系統時間。
+
+## 程式碼風格
+- 預設使用 TypeScript
+- 非必要不加 comment（好的命名自己說話）
+- 不要加 try-catch 在永遠不會 throw 的地方
+
+## 安全規則
+- 永遠不要 commit .env 或任何含有 secret 的檔案
+- 不要在程式碼中 hardcode API key" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#E06C75"># 個人設定</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 身分</span></span>
+<span class="line"><span style="color:#ABB2BF">你是我的 AI 助理與分身。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 回應語言</span></span>
+<span class="line"><span style="color:#ABB2BF">請用繁體中文回應，專有名詞（API、CLI、Git 等）保留英文。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 縮寫對照</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#E5C07B"> `</span><span style="color:#98C379">ag</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> = Antigravity（主要專案）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#E5C07B"> `</span><span style="color:#98C379">obs</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> = Obsidian（筆記工具）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#E5C07B"> `</span><span style="color:#98C379">cc</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> = Claude Code（這個工具本身）</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 時區</span></span>
+<span class="line"><span style="color:#ABB2BF">永遠使用台北時間（Asia/Taipei, UTC+8）。</span></span>
+<span class="line"><span style="color:#ABB2BF">進行日期計算前先執行 </span><span style="color:#E5C07B">`</span><span style="color:#98C379">date</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> 確認系統時間。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 程式碼風格</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 預設使用 TypeScript</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 非必要不加 comment（好的命名自己說話）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要加 try-catch 在永遠不會 throw 的地方</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 安全規則</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 永遠不要 commit .env 或任何含有 secret 的檔案</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要在程式碼中 hardcode API key</span></span></code></pre> </div> </div>   <h2>Import 語法：拆分管理</h2> <p>當 CLAUDE.md 內容太多時，用 <code>@</code> 語法拆分成多個檔案：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>CLAUDE.md</span> <button class="cb-copy" data-code="# 主設定檔
+
+## 通用規範
+@~/.claude/rules/security.md
+@~/.claude/rules/coding-style.md
+
+## 專案架構
+詳見 @README.md 與 @docs/architecture.md
+
+## API 開發規範
+@src/api/CLAUDE.md" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#E06C75"># 主設定檔</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 通用規範</span></span>
+<span class="line"><span style="color:#ABB2BF">@~/.claude/rules/security.md</span></span>
+<span class="line"><span style="color:#ABB2BF">@~/.claude/rules/coding-style.md</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 專案架構</span></span>
+<span class="line"><span style="color:#ABB2BF">詳見 @README.md 與 @docs/architecture.md</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## API 開發規範</span></span>
+<span class="line"><span style="color:#ABB2BF">@src/api/CLAUDE.md</span></span></code></pre> </div> </div>   <div class="call info"> <span class="ci">ℹ️</span> <div> <strong>Import 規則</strong> <p>支援相對路徑（<code>./docs/rules.md</code>）與絕對路徑（<code>~/.claude/rules.md</code>）。最多 4 層遞迴 import。首次遇到新的外部 import 路徑時，Claude Code 會請你確認是否允許讀取。</p> </div> </div> <h2>撰寫建議</h2> <ul> <li><strong>每個 CLAUDE.md 控制在 200 行以內</strong>——太長會降低 Claude 對重要規則的注意力</li> <li><strong>寫具體可驗證的規則</strong>——「使用 2 格縮排」比「好好格式化程式碼」有效</li> <li><strong>用 Markdown 標題組織結構</strong>——方便 Claude 快速找到對應的規則</li> <li><strong>HTML 註解不消耗 token</strong>——維護者筆記可用 <code>&lt;!-- 說明 --&gt;</code>，不影響 Claude 的 context</li> <li><strong>定期更新</strong>——隨著專案演進，過時的規則比沒有規則更糟</li> </ul> <h2>用 <code>/memory</code> 管理設定</h2> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>互動模式</span> <button class="cb-copy" data-code="You: /memory
+
+# 會顯示目前載入的記憶檔案，並讓你選擇編輯哪個" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: /memory</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 會顯示目前載入的記憶檔案，並讓你選擇編輯哪個</span></span></code></pre> </div> </div>    </div> <nav class="cnav" data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" class="prev" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>← 上一章</span> <span class="nt" data-astro-cid-mw7aashj>如何切換模型</span> </a> <a href="/claude-code-guide/ch07-rules" class="next" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>下一章 →</span> <span class="nt" data-astro-cid-mw7aashj>Rules</span> </a> </nav> </main> </div> <script>
+    // Theme
+    const html = document.documentElement;
+    const tt = document.getElementById('tt');
+    const isun = document.getElementById('isun');
+    const imoon = document.getElementById('imoon');
+    function syncIcons() {
+      const dk = html.classList.contains('dark');
+      isun.style.display = dk ? 'block' : 'none';
+      imoon.style.display = dk ? 'none' : 'block';
+    }
+    syncIcons();
+    tt?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('cc-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      syncIcons();
+    });
+
+    // Progress
+    const pb = document.getElementById('pb');
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = t > 0 ? `${(window.scrollY / t) * 100}%` : '0%';
+    }, { passive: true });
+
+    // Sidebar part toggles
+    document.querySelectorAll('.pt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.pid;
+        const list = document.querySelector(`[data-pl="${id}"]`);
+        btn.classList.toggle('open');
+        list?.classList.toggle('closed');
+      });
+    });
+
+    // Mobile menu
+    const sb = document.getElementById('sb');
+    const ov = document.getElementById('ov');
+    const mb = document.getElementById('mbtn');
+    const open = () => { sb.classList.add('open'); ov.classList.add('open'); document.body.style.overflow='hidden'; };
+    const close = () => { sb.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow=''; };
+    mb?.addEventListener('click', open);
+    ov?.addEventListener('click', close);
+  </script> </body> 

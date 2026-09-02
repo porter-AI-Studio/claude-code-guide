@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-TW" data-astro-cid-mw7aashj> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>什麼是 Claude Code？ | </title><style>.agent-loop-board{margin:2rem 0;padding:2rem;border-radius:16px;background:var(--bg2);border:1px solid var(--border);box-shadow:0 10px 30px #0000000d;display:flex;flex-direction:column;align-items:center;font-family:var(--mono)}.node{padding:.75rem 2rem;border-radius:8px;font-weight:600;text-align:center;position:relative;width:100%;max-width:320px}.node-user{background:var(--accent);color:#fff;box-shadow:0 4px 12px #6366f14d}.node-ai{background:var(--bg);border:2px solid var(--accent);color:var(--text)}.node-tool{background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:.85rem}.arrow-down{color:var(--muted);margin:.5rem 0;font-size:1.2rem}.decision-row{display:flex;gap:1rem;width:100%;max-width:400px;justify-content:center}.node-done{border:2px solid #10b981;color:#10b981;flex:1}.node-loop{border:2px dashed var(--accent);color:var(--accent);flex:1}
+</style>
+<link rel="stylesheet" href="/claude-code-guide/_astro/DocsLayout.BldRaKia.css"></head>Claude Code 完整指南 <meta name="description" content="了解 Claude Code 的定義、核心能力，以及它與傳統 AI 工具的根本差異。"> <link rel="icon" href="/claude-code-guide/favicon.svg" type="image/svg+xml"> <script>
+    (function () {
+      const s = localStorage.getItem('cc-theme');
+      const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+    })();
+  </script>  </html> <body data-astro-cid-mw7aashj> <div id="pb" data-astro-cid-mw7aashj></div> <header data-astro-cid-mw7aashj> <div class="hi" data-astro-cid-mw7aashj> <div class="hl" data-astro-cid-mw7aashj> <button id="mbtn" class="ibtn" aria-label="選單" data-astro-cid-mw7aashj> <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" data-astro-cid-mw7aashj></path> </svg> </button> <a href="/claude-code-guide/" class="site-name" data-astro-cid-mw7aashj> <span class="logo" data-astro-cid-mw7aashj>CC</span>&nbsp;&nbsp;Claude Code 完整指南
+</a> </div> <div class="hr" data-astro-cid-mw7aashj> <button id="tt" class="ibtn" aria-label="切換主題" data-astro-cid-mw7aashj> <svg id="isun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" data-astro-cid-mw7aashj></path> </svg> <svg id="imoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" data-astro-cid-mw7aashj></path> </svg> </button> </div> </div> </header> <div id="layout" data-astro-cid-mw7aashj> <nav id="sb" data-astro-cid-mw7aashj> <div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="1" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 1：入門</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="1" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch01-what-is-cc" class="active" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>1.</span> <span data-astro-cid-mw7aashj>什麼是 Claude Code？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch02-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>2.</span> <span data-astro-cid-mw7aashj>安裝與環境設定</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch03-first-chat" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>3.</span> <span data-astro-cid-mw7aashj>第一次對話</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="2" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 2：模型選擇</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="2" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch04-models" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>4.</span> <span data-astro-cid-mw7aashj>三大模型比較</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>5.</span> <span data-astro-cid-mw7aashj>如何切換模型</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="3" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 3：設定與記憶</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="3" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>6.</span> <span data-astro-cid-mw7aashj>CLAUDE.md</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch07-rules" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>7.</span> <span data-astro-cid-mw7aashj>Rules</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>8.</span> <span data-astro-cid-mw7aashj>Memory.md</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="4" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 4：Hooks</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="4" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>9.</span> <span data-astro-cid-mw7aashj>Hooks 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch10-hooks-diary" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>10.</span> <span data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch11-hooks-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>11.</span> <span data-astro-cid-mw7aashj>Hooks 安全性應用</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="5" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 5：Skills</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="5" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch12-skills-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>12.</span> <span data-astro-cid-mw7aashj>官方六大類 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>13.</span> <span data-astro-cid-mw7aashj>使用內建 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch14-skills-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>14.</span> <span data-astro-cid-mw7aashj>自己寫 Skill</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="6" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 6：MCP Plugin</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="6" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch15-mcp-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>15.</span> <span data-astro-cid-mw7aashj>MCP 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>16.</span> <span data-astro-cid-mw7aashj>安裝 MCP Server</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch17-mcp-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>17.</span> <span data-astro-cid-mw7aashj>自製 MCP Server</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="7" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 7：進階技巧</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="7" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch18-multi-agent" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>18.</span> <span data-astro-cid-mw7aashj>多 Agent 協作</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch19-permissions" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>19.</span> <span data-astro-cid-mw7aashj>Permissions 模式</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch20-faq" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>20.</span> <span data-astro-cid-mw7aashj>常見問題 &amp; Debug</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="8" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 8：附錄</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="8" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-mcp-spec" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>21.</span> <span data-astro-cid-mw7aashj>附錄 A：MCP 協定規格與底層通訊解析</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-sandbox-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>22.</span> <span data-astro-cid-mw7aashj>附錄 B：終端沙箱安全與權限控制原理</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-terminal-pager" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>23.</span> <span data-astro-cid-mw7aashj>附錄 C：終端 Pager 控制與中文字元編碼故障排除</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>24.</span> <span data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-skills-examples" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>25.</span> <span data-astro-cid-mw7aashj>附錄 E：Skills 實戰手冊</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-pro-limits" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>26.</span> <span data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span>  </a> </li> </ul> </div> </nav> <div id="ov" data-astro-cid-mw7aashj></div> <main data-astro-cid-mw7aashj> <div class="cb" data-astro-cid-mw7aashj>  <p class="clabel">第 1 章 · Part 1：入門</p> <h1>什麼是 Claude Code？</h1> <p class="cdesc">一個讓 AI 真正「動手」的工具——不只回答問題，而是直接讀取、修改、執行你的程式碼。</p> <h2>一句話定義</h2> <p> <strong>Claude Code</strong> 是 Anthropic 官方開發的 CLI（命令列介面）工具，
+    讓 Claude AI 能夠在你的終端機中直接存取檔案系統、執行指令、操作 Git，
+    以及呼叫各種外部工具——不需要複製貼上，不需要切換視窗。
+</p> <p>
+簡單說：你打一句話，Claude 就去做事。改完告訴你結果。
+</p> <div class="call info"> <span class="ci">ℹ️</span> <div> <strong>官方定義</strong> <p>Claude Code 是 Anthropic 推出的 agentic coding tool，讓開發者透過自然語言與 Claude 協作，完成真實的程式碼任務。</p> </div> </div> <h2>代理式 CLI：跟傳統工具差在哪？</h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 280" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--text)" fill-opacity="0.4"/>
+    </marker>
+  </defs>
+  
+  <text x="200" y="40" text-anchor="middle" font-size="21px" font-weight="bold" fill="var(--text)">傳統 CLI 工具</text>
+  <text x="600" y="40" text-anchor="middle" font-size="21px" font-weight="bold" fill="var(--text)">代理式 CLI (Claude Code)</text>
+
+  <!-- Traditional CLI -->
+  <g transform="translate(80, 70)">
+    <rect width="240" height="70" rx="8" fill="rgba(107,114,128,0.05)" stroke="#9ca3af" stroke-width="1.5" />
+    <rect x="20" y="10" width="200" height="25" rx="4" fill="#9ca3af" />
+    <text x="120" y="27" text-anchor="middle" font-weight="700" fill="#fff" font-size="16px">精確指令輸入</text>
+    <text x="120" y="55" text-anchor="middle" fill="var(--muted)" font-size="15px">git commit -m "fix bug"</text>
+  </g>
+  <g transform="translate(80, 180)">
+    <rect width="240" height="70" rx="8" fill="rgba(107,114,128,0.05)" stroke="#9ca3af" stroke-width="1.5" />
+    <rect x="20" y="10" width="200" height="25" rx="4" fill="#9ca3af" />
+    <text x="120" y="27" text-anchor="middle" font-weight="700" fill="#fff" font-size="16px">單一固定動作</text>
+    <text x="120" y="55" text-anchor="middle" fill="var(--muted)" font-size="15px">執行完即結束</text>
+  </g>
+  <path d="M 200 140 L 200 180" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Agentic CLI -->
+  <g transform="translate(480, 70)">
+    <rect width="240" height="70" rx="8" fill="rgba(139,92,246,0.05)" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="20" y="10" width="200" height="25" rx="4" fill="#8b5cf6" />
+    <text x="120" y="27" text-anchor="middle" font-weight="700" fill="#fff" font-size="16px">模糊意圖輸入</text>
+    <text x="120" y="55" text-anchor="middle" fill="var(--muted)" font-size="15px">"幫我修好剛剛的報錯"</text>
+  </g>
+  <g transform="translate(480, 180)">
+    <rect width="240" height="70" rx="8" fill="rgba(139,92,246,0.05)" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="20" y="10" width="200" height="25" rx="4" fill="#8b5cf6" />
+    <text x="120" y="27" text-anchor="middle" font-weight="700" fill="#fff" font-size="16px">自主規劃與循環</text>
+    <text x="120" y="55" text-anchor="middle" fill="var(--muted)" font-size="15px">找檔 -> 讀檔 -> 修改 -> 測試</text>
+  </g>
+  <path d="M 600 140 L 600 180" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+  
+  <line x1="400" y1="50" x2="400" y2="250" stroke="var(--text)" stroke-opacity="0.2" stroke-dasharray="4 4" stroke-width="2" />
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>傳統工具需要你成為操作說明書的專家，而代理式 CLI 只需要你成為問題定義的專家。</figcaption> </figure> <p>傳統的程式設計輔助工具（ChatGPT、GitHub Copilot）是<strong>對話型</strong>的——你貼上程式碼，它給你建議，你再手動套用。</p> <p>Claude Code 是<strong>代理式（Agentic）</strong>的——它能自己主動決定要用哪些工具、以什麼順序執行，直到任務完成。</p> <table> <thead> <tr> <th>功能</th> <th>ChatGPT / Copilot</th> <th>Claude Code</th> </tr> </thead> <tbody> <tr> <td>讀取真實檔案</td> <td>❌ 需要手動貼上</td> <td>✅ 直接讀整個專案</td> </tr> <tr> <td>修改並儲存檔案</td> <td>❌ 只給建議</td> <td>✅ 直接編輯儲存</td> </tr> <tr> <td>執行終端機指令</td> <td>❌</td> <td>✅ 可執行 shell 命令</td> </tr> <tr> <td>Git 操作</td> <td>❌</td> <td>✅ commit、diff、branch</td> </tr> <tr> <td>理解整個程式庫</td> <td>△ 需要你提供上下文</td> <td>✅ 自動掃描相關檔案</td> </tr> <tr> <td>多步驟自動化</td> <td>❌ 一次一個問題</td> <td>✅ 規劃並連續執行</td> </tr> </tbody> </table> <h2>能做什麼？</h2> <p>Claude Code 配備超過 400 個工具，常見使用場景包括：</p> <ul> <li><strong>Bug 修復</strong>——描述問題，Claude 找到原因並直接修改</li> <li><strong>新功能開發</strong>——從設計到實作，一氣呵成</li> <li><strong>大型重構</strong>——跨多個檔案的系統性修改</li> <li><strong>說明文件</strong>——自動產生 README、API 文件、程式碼註解</li> <li><strong>測試撰寫</strong>——分析程式碼、生成對應的單元測試</li> <li><strong>Debug 輔助</strong>——執行測試、分析錯誤訊息、提出修正</li> <li><strong>程式碼審查</strong>——找出潛在問題、安全漏洞、效能瓶頸</li> <li><strong>Git 工作流</strong>——生成 commit message、管理分支</li> </ul> <h2>系統架構</h2> <p>一個請求是如何從你的鍵盤流到最終結果的：</p> <div style="border:1px solid var(--border);border-radius:12px;padding:1.75rem;background:var(--bg2);margin:1.5rem 0;font-size:.85rem"> <div style="display:flex;flex-direction:column;align-items:center;gap:.6rem;font-family:var(--mono)"> <div style="padding:.5rem 2rem;background:var(--accent);color:#fff;border-radius:8px;font-weight:600">
+👤 你（Terminal）
+</div> <div style="color:var(--muted);font-size:.8rem">↕ 自然語言指令</div> <div style="padding:.5rem 2rem;border:2px solid var(--accent);border-radius:8px;color:var(--text);background:var(--bg);font-weight:600">
+⚡ Claude Code CLI
+</div> <div style="color:var(--muted);font-size:.8rem">↕ HTTPS API 呼叫</div> <div style="padding:.5rem 2rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text)">
+🧠 Claude API（Anthropic）
+</div> <div style="color:var(--muted);font-size:.8rem">↕ 工具呼叫指令</div> <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;width:100%;max-width:420px"> <div style="padding:.5rem .25rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;text-align:center;font-size:.78rem">📁<br>檔案讀寫</div> <div style="padding:.5rem .25rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;text-align:center;font-size:.78rem">🖥️<br>Shell 執行</div> <div style="padding:.5rem .25rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;text-align:center;font-size:.78rem">🔀<br>Git 操作</div> <div style="padding:.5rem .25rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;text-align:center;font-size:.78rem">🔌<br>MCP 工具</div> </div> </div> </div> <h2>查詢迴圈（Agent Loop）</h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 280" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr-loop" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--text)" fill-opacity="0.4"/>
+    </marker>
+  </defs>
+  
+  <g transform="translate(100, 100)">
+    <rect width="140" height="80" rx="8" fill="rgba(59,130,246,0.05)" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="10" y="15" width="120" height="25" rx="4" fill="#3b82f6" />
+    <text x="70" y="32" text-anchor="middle" font-weight="700" fill="#fff" font-size="16px">理解意圖</text>
+    <text x="70" y="62" text-anchor="middle" fill="var(--muted)" font-size="14px">拆解使用者需求</text>
+  </g>
+  <g transform="translate(330, 40)">
+    <rect width="140" height="80" rx="8" fill="rgba(59,130,246,0.05)" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="10" y="15" width="120" height="25" rx="4" fill="#3b82f6" />
+    <text x="70" y="32" text-anchor="middle" font-weight="700" fill="#fff" font-size="16px">建立計畫</text>
+    <text x="70" y="62" text-anchor="middle" fill="var(--muted)" font-size="14px">決定要呼叫什麼工具</text>
+  </g>
+  <g transform="translate(560, 100)">
+    <rect width="140" height="80" rx="8" fill="rgba(59,130,246,0.05)" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="10" y="15" width="120" height="25" rx="4" fill="#3b82f6" />
+    <text x="70" y="32" text-anchor="middle" font-weight="700" fill="#fff" font-size="16px">執行動作</text>
+    <text x="70" y="62" text-anchor="middle" fill="var(--muted)" font-size="14px">讀檔 / 執行終端機</text>
+  </g>
+  <g transform="translate(330, 160)">
+    <rect width="140" height="80" rx="8" fill="rgba(59,130,246,0.05)" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="10" y="15" width="120" height="25" rx="4" fill="#3b82f6" />
+    <text x="70" y="32" text-anchor="middle" font-weight="700" fill="#fff" font-size="16px">評估結果</text>
+    <text x="70" y="62" text-anchor="middle" fill="var(--muted)" font-size="14px">決定是否繼續循環</text>
+  </g>
+  
+  <!-- Curved lines connecting the loop -->
+  <path d="M 240 120 Q 285 80 330 80" fill="none" stroke="var(--border)" stroke-width="2" marker-end="url(#arr-loop)"/>
+  <path d="M 470 80 Q 515 80 560 120" fill="none" stroke="var(--border)" stroke-width="2" marker-end="url(#arr-loop)"/>
+  <path d="M 560 160 Q 515 200 470 200" fill="none" stroke="var(--border)" stroke-width="2" marker-end="url(#arr-loop)"/>
+  <path d="M 330 200 Q 285 200 240 160" fill="none" stroke="var(--border)" stroke-width="2" marker-end="url(#arr-loop)"/>
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>Agent Loop 的魔法：它不會像腳本一樣直通到底，而是不斷根據當下狀況重新評估與行動，直到問題解決。</figcaption> </figure> <p>
+Claude Code 的核心是一個<strong>非同步查詢迴圈</strong>。當你輸入一個指令，它不是執行一次就結束，
+    而是持續循環：呼叫模型 → 收到工具指令 → 執行工具 → 把結果回傳給模型 → 再次呼叫……
+    直到任務完成或你叫停。
+</p>  <div class="agent-loop-board"> <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: 0.1em; text-transform: uppercase;">Agent Loop 運作機制</div> <div class="node node-user">💬 你輸入自然語言指令</div> <div class="arrow-down">↓</div> <div class="node node-ai">🧠 呼叫 Claude API 進行推理</div> <div style="font-size: 0.75rem; color: var(--muted); margin: 0.25rem 0;">分析目標、決定使用哪一個 Tool</div> <div class="arrow-down">↓</div> <div class="node node-tool"> <div style="font-weight: 600; margin-bottom: 0.5rem;">🔧 終端機/本機執行 Tool</div> <span style="display:inline-block; padding:2px 8px; background:var(--bg); border-radius:4px; margin:2px;">Read File</span> <span style="display:inline-block; padding:2px 8px; background:var(--bg); border-radius:4px; margin:2px;">Bash Command</span> <span style="display:inline-block; padding:2px 8px; background:var(--bg); border-radius:4px; margin:2px;">Git Commit</span> </div> <div style="font-size: 0.75rem; color: var(--muted); margin: 0.25rem 0;">將 Tool 執行結果（例如 error log 或 file content）回傳</div> <div class="arrow-down">↓</div> <div class="decision-row"> <div class="node node-done">✅ 任務完成<br><span style="font-size:0.75rem; font-weight:normal;">輸出最終結果給你</span></div> <div class="node node-loop">🔄 尚未完成<br><span style="font-size:0.75rem; font-weight:normal;">回到 API 繼續推理</span></div> </div> </div> <p>這就是「代理式」的本質——Claude 自己決定下一步要做什麼。</p> <div class="call tip"> <span class="ci">💡</span> <div> <strong>跟傳統 CLI 的根本差異</strong> <p><code>grep</code> 不會自己決定順便執行 <code>sed</code>。但 Claude Code 會。這份「自主判斷」是它強大的原因，也是你需要理解它的權限系統的原因（見 Ch07 Permissions）。</p> </div> </div> <h2>誰適合用 Claude Code？</h2> <ul> <li>想加速日常開發工作的工程師</li> <li>需要快速了解陌生程式庫的開發者</li> <li>做側專案但時間有限的人</li> <li>想把重複性工作自動化的技術人員</li> <li>任何想把 AI 真正融入開發流程的人</li> </ul> <div class="call warn"> <span class="ci">⚠️</span> <div> <strong>注意</strong> <p>Claude Code 可以讀寫你的檔案、執行 shell 指令。使用前請了解<a href="/ch07-rules">權限與 Rules 設定</a>，避免意外操作。</p> </div> </div>  </div> <nav class="cnav" data-astro-cid-mw7aashj> <div class="ph" data-astro-cid-mw7aashj></div> <a href="/claude-code-guide/ch02-install" class="next" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>下一章 →</span> <span class="nt" data-astro-cid-mw7aashj>安裝與環境設定</span> </a> </nav> </main> </div> <script>
+    // Theme
+    const html = document.documentElement;
+    const tt = document.getElementById('tt');
+    const isun = document.getElementById('isun');
+    const imoon = document.getElementById('imoon');
+    function syncIcons() {
+      const dk = html.classList.contains('dark');
+      isun.style.display = dk ? 'block' : 'none';
+      imoon.style.display = dk ? 'none' : 'block';
+    }
+    syncIcons();
+    tt?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('cc-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      syncIcons();
+    });
+
+    // Progress
+    const pb = document.getElementById('pb');
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = t > 0 ? `${(window.scrollY / t) * 100}%` : '0%';
+    }, { passive: true });
+
+    // Sidebar part toggles
+    document.querySelectorAll('.pt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.pid;
+        const list = document.querySelector(`[data-pl="${id}"]`);
+        btn.classList.toggle('open');
+        list?.classList.toggle('closed');
+      });
+    });
+
+    // Mobile menu
+    const sb = document.getElementById('sb');
+    const ov = document.getElementById('ov');
+    const mb = document.getElementById('mbtn');
+    const open = () => { sb.classList.add('open'); ov.classList.add('open'); document.body.style.overflow='hidden'; };
+    const close = () => { sb.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow=''; };
+    mb?.addEventListener('click', open);
+    ov?.addEventListener('click', close);
+  </script> </body> 

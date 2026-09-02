@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="zh-TW" data-astro-cid-mw7aashj> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>附錄 E：Skills 實戰手冊 | </title><link rel="stylesheet" href="/claude-code-guide/_astro/DocsLayout.BldRaKia.css">
+<style>.cb-wrap[data-astro-cid-jgrc2lfe]{margin-bottom:1.25rem}.cb-bar[data-astro-cid-jgrc2lfe]{display:flex;align-items:center;justify-content:space-between;background:#1a1a2e;border-radius:6px 6px 0 0;border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.05);padding:.18rem .5rem .18rem .75rem;min-height:1.8rem}.cb-label[data-astro-cid-jgrc2lfe]{color:#a6adc8;font-family:Fira Code,Cascadia Code,Consolas,monospace;font-size:.73rem;letter-spacing:.04em}.cb-inner[data-astro-cid-jgrc2lfe] pre{border-radius:0 0 8px 8px!important;margin-bottom:0!important}.cb-copy[data-astro-cid-jgrc2lfe]{background:#ffffff14;color:#888;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.15rem .55rem;font-size:.7rem;cursor:pointer;transition:all .15s;flex-shrink:0}.cb-copy[data-astro-cid-jgrc2lfe]:hover{background:#ffffff2e;color:#fff}.cb-copy[data-astro-cid-jgrc2lfe].copied{color:#4ec9b0;border-color:#4ec9b0}
+</style></head>Claude Code 完整指南 <meta name="description" content="精選四大實戰 Skill：UI/UX 前端設計、Git 部署工作流、影片轉逐字稿、Obsidian Tags 整理。每個 Skill 附完整範例與設定說明。"> <link rel="icon" href="/claude-code-guide/favicon.svg" type="image/svg+xml"> <script>
+    (function () {
+      const s = localStorage.getItem('cc-theme');
+      const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+    })();
+  </script>  </html> <body data-astro-cid-mw7aashj> <div id="pb" data-astro-cid-mw7aashj></div> <header data-astro-cid-mw7aashj> <div class="hi" data-astro-cid-mw7aashj> <div class="hl" data-astro-cid-mw7aashj> <button id="mbtn" class="ibtn" aria-label="選單" data-astro-cid-mw7aashj> <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" data-astro-cid-mw7aashj></path> </svg> </button> <a href="/claude-code-guide/" class="site-name" data-astro-cid-mw7aashj> <span class="logo" data-astro-cid-mw7aashj>CC</span>&nbsp;&nbsp;Claude Code 完整指南
+</a> </div> <div class="hr" data-astro-cid-mw7aashj> <button id="tt" class="ibtn" aria-label="切換主題" data-astro-cid-mw7aashj> <svg id="isun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" data-astro-cid-mw7aashj></path> </svg> <svg id="imoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" data-astro-cid-mw7aashj></path> </svg> </button> </div> </div> </header> <div id="layout" data-astro-cid-mw7aashj> <nav id="sb" data-astro-cid-mw7aashj> <div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="1" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 1：入門</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="1" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch01-what-is-cc" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>1.</span> <span data-astro-cid-mw7aashj>什麼是 Claude Code？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch02-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>2.</span> <span data-astro-cid-mw7aashj>安裝與環境設定</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch03-first-chat" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>3.</span> <span data-astro-cid-mw7aashj>第一次對話</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="2" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 2：模型選擇</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="2" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch04-models" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>4.</span> <span data-astro-cid-mw7aashj>三大模型比較</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>5.</span> <span data-astro-cid-mw7aashj>如何切換模型</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="3" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 3：設定與記憶</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="3" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>6.</span> <span data-astro-cid-mw7aashj>CLAUDE.md</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch07-rules" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>7.</span> <span data-astro-cid-mw7aashj>Rules</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>8.</span> <span data-astro-cid-mw7aashj>Memory.md</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="4" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 4：Hooks</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="4" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>9.</span> <span data-astro-cid-mw7aashj>Hooks 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch10-hooks-diary" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>10.</span> <span data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch11-hooks-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>11.</span> <span data-astro-cid-mw7aashj>Hooks 安全性應用</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="5" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 5：Skills</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="5" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch12-skills-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>12.</span> <span data-astro-cid-mw7aashj>官方六大類 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>13.</span> <span data-astro-cid-mw7aashj>使用內建 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch14-skills-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>14.</span> <span data-astro-cid-mw7aashj>自己寫 Skill</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="6" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 6：MCP Plugin</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="6" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch15-mcp-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>15.</span> <span data-astro-cid-mw7aashj>MCP 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>16.</span> <span data-astro-cid-mw7aashj>安裝 MCP Server</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch17-mcp-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>17.</span> <span data-astro-cid-mw7aashj>自製 MCP Server</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="7" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 7：進階技巧</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="7" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch18-multi-agent" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>18.</span> <span data-astro-cid-mw7aashj>多 Agent 協作</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch19-permissions" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>19.</span> <span data-astro-cid-mw7aashj>Permissions 模式</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch20-faq" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>20.</span> <span data-astro-cid-mw7aashj>常見問題 &amp; Debug</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="8" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 8：附錄</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="8" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-mcp-spec" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>21.</span> <span data-astro-cid-mw7aashj>附錄 A：MCP 協定規格與底層通訊解析</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-sandbox-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>22.</span> <span data-astro-cid-mw7aashj>附錄 B：終端沙箱安全與權限控制原理</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-terminal-pager" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>23.</span> <span data-astro-cid-mw7aashj>附錄 C：終端 Pager 控制與中文字元編碼故障排除</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>24.</span> <span data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-skills-examples" class="active" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>25.</span> <span data-astro-cid-mw7aashj>附錄 E：Skills 實戰手冊</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-pro-limits" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>26.</span> <span data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span>  </a> </li> </ul> </div> </nav> <div id="ov" data-astro-cid-mw7aashj></div> <main data-astro-cid-mw7aashj> <div class="cb" data-astro-cid-mw7aashj>  <p class="clabel">附錄 E · Skills 實戰</p> <h1>Skills 實戰手冊</h1> <p class="cdesc">四個真實 Skill 的完整使用說明——從 UI 設計到 Git 部署，從影片轉錄到 Obsidian 整理，每個都是能立即上手的工作流。</p> <h2>一、UI/UX 前端設計：<code>/frontend-design</code></h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 240" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--text)" fill-opacity="0.4"/>
+    </marker>
+    <style>
+      .step { fill: rgba(16,185,129,0.05); stroke: #10b981; stroke-width: 2; rx: 8; }
+      .t-bold { font-family: "system-ui, sans-serif"; font-size: 16px; font-weight: bold; fill: var(--text); }
+      .t-num { font-family: "system-ui, sans-serif"; font-size: 24px; font-weight: bold; fill: #10b981; opacity: 0.3; }
+    </style>
+  </defs>
+
+  <g transform="translate(50, 80)">
+    <rect class="step" width="160" height="80"/>
+    <text class="t-num" x="15" y="30">1</text>
+    <text class="t-bold" x="80" y="45" text-anchor="middle">分析需求</text>
+  </g>
+
+  <path d="M 210 120 L 310 120" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+
+  <g transform="translate(310, 80)">
+    <rect class="step" width="160" height="80"/>
+    <text class="t-num" x="15" y="30">2</text>
+    <text class="t-bold" x="80" y="45" text-anchor="middle">生成 UI 元件</text>
+  </g>
+
+  <path d="M 470 120 L 570 120" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+
+  <g transform="translate(570, 80)">
+    <rect class="step" width="160" height="80"/>
+    <text class="t-num" x="15" y="30">3</text>
+    <text class="t-bold" x="80" y="45" text-anchor="middle">自動套用樣式</text>
+  </g>
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>透過 Skills，可以將前端 UI/UX 的思考與實作流程標準化，確保產出一致的高品質元件。</figcaption> </figure> <p> <code>/frontend-design</code> 生成高品質前端介面，核心特色是刻意避免「AI 味」——
+    不用通用字體（Inter、Roboto）、不用紫色漸層白底、不用千篇一律的 card + grid 佈局。
+    每次呼叫都要選定一個明確的美學方向，貫徹到底。
+</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>觸發範例</span> <button class="cb-copy" data-code="You: /frontend-design
+請幫我設計一個 API 健康度儀表板。使用者是後端工程師，
+需要看到 API 延遲分佈、錯誤率、最近 20 筆請求記錄。" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: /frontend-design</span></span>
+<span class="line"><span>請幫我設計一個 API 健康度儀表板。使用者是後端工程師，</span></span>
+<span class="line"><span>需要看到 API 延遲分佈、錯誤率、最近 20 筆請求記錄。</span></span></code></pre> </div> </div>  <script type="module">document.querySelectorAll(".cb-copy").forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.code;t&&navigator.clipboard.writeText(t).then(()=>{e.textContent="已複製!",e.classList.add("copied"),setTimeout(()=>{e.textContent="複製",e.classList.remove("copied")},2e3)})})});</script> <p>Skill 執行前的設計思考流程：</p> <ul> <li><strong>Purpose（目的）</strong>：使用者是誰？介面解決什麼問題？</li> <li><strong>Tone（風格）</strong>：選一個極端——工業極簡、復古終端機、報紙排版、奢華精緻…然後貫徹到底</li> <li><strong>Differentiation（記憶點）</strong>：這個介面讓人記得的是什麼？</li> </ul> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>指定風格的觸發範例</span> <button class="cb-copy" data-code="You: /frontend-design
+設計一個 SaaS 產品登入頁。目標用戶是企業 IT 管理員。
+風格：工業感極簡，黑灰配色，資訊密度高，像 Bloomberg Terminal。" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: /frontend-design</span></span>
+<span class="line"><span>設計一個 SaaS 產品登入頁。目標用戶是企業 IT 管理員。</span></span>
+<span class="line"><span>風格：工業感極簡，黑灰配色，資訊密度高，像 Bloomberg Terminal。</span></span></code></pre> </div> </div>   <div class="call tip"> <span class="ci">💡</span> <div> <strong>讓 Claude 大膽選擇風格</strong> <p>如果你不指定風格，Claude 會自主選定方向。建議把需求說清楚（使用者、內容、情緒）但不限制風格，讓 Skill 選最適合的——往往比你指定的更驚豔。</p> </div> </div> <h2>二、Git 部署工作流</h2> <h3>2-1 一鍵部署：<code>/deploy-porter-book</code></h3> <p>
+封裝完整的「本地建置 → Git commit → push → 等待 GitHub Actions → 確認上線」流程。
+<strong>核心保護：若本地 build 失敗，腳本立刻停止，不會 push 壞掉的程式碼</strong>。
+</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>觸發範例</span> <button class="cb-copy" data-code="You: /deploy-porter-book
+# 或帶 commit message：
+You: /deploy-porter-book 新增 Hooks 章節實戰範例" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: /deploy-porter-book</span></span>
+<span class="line"><span># 或帶 commit message：</span></span>
+<span class="line"><span>You: /deploy-porter-book 新增 Hooks 章節實戰範例</span></span></code></pre> </div> </div>   <p>執行流程（5 步驟）：</p> <ol> <li>確認 <code>git status</code>，若無變更則停止</li> <li><code>npm run build</code> — 失敗則停止，不 push</li> <li><code>git add . &amp;&amp; git commit &amp;&amp; git push</code></li> <li>用 opencli browser 監控 GitHub Actions 進度（最多等 3 分鐘）</li> <li>截圖確認網站已上線</li> </ol> <div class="call info"> <span class="ci">ℹ️</span> <div> <strong>改成自己的部署 Skill</strong> <p>複製 <code>deploy-porter-book</code> 的結構，改成你自己的專案路徑、repo URL、commit message 格式，就有了屬於你的一鍵部署 Skill。</p> </div> </div> <h3>2-2 產生 .gitignore：<code>/gitignore</code></h3> <p>偵測專案技術棧，自動產生完整 <code>.gitignore</code>。最重要的：會掃描目前已被 Git 追蹤但<em>應該</em>被忽略的敏感檔（<code>.env</code>、<code>*.key</code>），並提示處理方式。</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>觸發範例</span> <button class="cb-copy" data-code="You: /gitignore
+# Claude 自動偵測到：Node.js + Docker + Python
+# 產生完整 .gitignore 後報告：
+# ⚠ .env.local 已被 Git 追蹤 → 建議執行 git rm --cached .env.local" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: /gitignore</span></span>
+<span class="line"><span># Claude 自動偵測到：Node.js + Docker + Python</span></span>
+<span class="line"><span># 產生完整 .gitignore 後報告：</span></span>
+<span class="line"><span># ⚠ .env.local 已被 Git 追蹤 → 建議執行 git rm --cached .env.local</span></span></code></pre> </div> </div>   <h2>三、影片轉逐字稿：<code>/local-video-note</code></h2> <p>把本機影片轉成 Obsidian 雙語筆記的完整自動化流程——一個指令涵蓋音訊萃取、語音辨識、翻譯、建立筆記。</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>指令語法</span> <button class="cb-copy" data-code="/local-video-note <影片路徑> [--start HH:MM:SS] [--end HH:MM:SS]
+
+# 整部影片
+/local-video-note &quot;C:\Users\porte\Videos\demo.mp4&quot;
+
+# 只處理特定段落（5:00 到 15:00）
+/local-video-note demo.mkv --start 00:05:00 --end 00:15:00" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>/local-video-note &#x3C;影片路徑> [--start HH:MM:SS] [--end HH:MM:SS]</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 整部影片</span></span>
+<span class="line"><span>/local-video-note "C:\Users\porte\Videos\demo.mp4"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 只處理特定段落（5:00 到 15:00）</span></span>
+<span class="line"><span>/local-video-note demo.mkv --start 00:05:00 --end 00:15:00</span></span></code></pre> </div> </div>   <div style="border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;background:var(--bg2);margin:1.5rem 0;font-size:.85rem"> <p style="font-weight:600;margin:0 0 .75rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">完整流程</p> <div style="display:flex;flex-direction:column;gap:.55rem"> <div style="display:flex;align-items:center;gap:.75rem"> <span style="background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0">1</span> <span><strong>驗證輸入</strong>：確認檔案存在、格式支援（mkv / mp4 / mp3 / wav / ...）</span> </div> <div style="display:flex;align-items:center;gap:.75rem"> <span style="background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0">2</span> <span><strong>ffmpeg 萃取音訊</strong> → 16kHz mono PCM WAV（Whisper 最佳輸入）</span> </div> <div style="display:flex;align-items:center;gap:.75rem"> <span style="background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0">3</span> <span><strong>Whisper 語音轉文字</strong>：GPU（whisper-cli + Vulkan）優先，無 GPU 則 CPU fallback</span> </div> <div style="display:flex;align-items:center;gap:.75rem"> <span style="background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0">4</span> <span><strong>SRT → 雙語表格</strong>：AI 逐句填入中英對照翻譯</span> </div> <div style="display:flex;align-items:center;gap:.75rem"> <span style="background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0">5</span> <span><strong>建立 Obsidian 筆記</strong>：含 VID 編號、時間戳記、完整雙語逐字稿</span> </div> </div> </div> <h3>核心指令詳解</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>Step 2：ffmpeg 萃取 16kHz WAV（Whisper 標準格式）</span> <button class="cb-copy" data-code="# 確保輸出目錄存在
+New-Item -ItemType Directory -Force -Path &quot;C:\video\process_audio&quot; | Out-Null
+
+# 整部影片萃取音訊
+ffmpeg -y -i &quot;demo.mp4&quot; -vn -ar 16000 -ac 1 -c:a pcm_s16le &quot;C:\video\process_audio\demo.wav&quot;
+
+# 裁切時間段（5:00 到 15:00）
+ffmpeg -y -i &quot;demo.mp4&quot; -ss 00:05:00 -to 00:15:00 -vn -ar 16000 -ac 1 -c:a pcm_s16le &quot;demo.wav&quot;" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="powershell"><code><span class="line"><span style="color:#7F848E;font-style:italic"># 確保輸出目錄存在</span></span>
+<span class="line"><span style="color:#56B6C2">New-Item</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">ItemType Directory </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">Force </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">Path </span><span style="color:#98C379">"C:\video\process_audio"</span><span style="color:#ABB2BF"> | </span><span style="color:#56B6C2">Out-Null</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 整部影片萃取音訊</span></span>
+<span class="line"><span style="color:#ABB2BF">ffmpeg </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">y </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">i </span><span style="color:#98C379">"demo.mp4"</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">vn </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">ar </span><span style="color:#D19A66">16000</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">ac </span><span style="color:#D19A66">1</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">c:a pcm_s16le </span><span style="color:#98C379">"C:\video\process_audio\demo.wav"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 裁切時間段（5:00 到 15:00）</span></span>
+<span class="line"><span style="color:#ABB2BF">ffmpeg </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">y </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">i </span><span style="color:#98C379">"demo.mp4"</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">ss </span><span style="color:#D19A66">00</span><span style="color:#ABB2BF">:</span><span style="color:#D19A66">05</span><span style="color:#ABB2BF">:</span><span style="color:#D19A66">00</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">to </span><span style="color:#D19A66">00</span><span style="color:#ABB2BF">:</span><span style="color:#D19A66">15</span><span style="color:#ABB2BF">:</span><span style="color:#D19A66">00</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">vn </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">ar </span><span style="color:#D19A66">16000</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">ac </span><span style="color:#D19A66">1</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">c:a pcm_s16le </span><span style="color:#98C379">"demo.wav"</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>Step 3a：whisper-cli（GPU / Vulkan 模式）</span> <button class="cb-copy" data-code="$whisperCli = &quot;C:\Users\porte\dev\whisper.cpp\build\bin\whisper-cli.exe&quot;
+$modelPath  = &quot;C:\Users\porte\dev\whisper.cpp\models\ggml-large-v3-turbo.bin&quot;
+$wavPath    = &quot;C:\video\process_audio\demo.wav&quot;
+$outPrefix  = &quot;C:\video\process_audio\demo&quot;
+
+&amp; $whisperCli -m $modelPath -f $wavPath -l zh -otxt -osrt -of $outPrefix -pp --no-speech-thold 0.6
+# 輸出：demo.txt（純文字）、demo.srt（含時間戳記字幕）" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="powershell"><code><span class="line"><span style="color:#E06C75">$whisperCli</span><span style="color:#56B6C2"> =</span><span style="color:#98C379"> "C:\Users\porte\dev\whisper.cpp\build\bin\whisper-cli.exe"</span></span>
+<span class="line"><span style="color:#E06C75">$modelPath</span><span style="color:#56B6C2">  =</span><span style="color:#98C379"> "C:\Users\porte\dev\whisper.cpp\models\ggml-large-v3-turbo.bin"</span></span>
+<span class="line"><span style="color:#E06C75">$wavPath</span><span style="color:#56B6C2">    =</span><span style="color:#98C379"> "C:\video\process_audio\demo.wav"</span></span>
+<span class="line"><span style="color:#E06C75">$outPrefix</span><span style="color:#56B6C2">  =</span><span style="color:#98C379"> "C:\video\process_audio\demo"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ABB2BF">&#x26; </span><span style="color:#E06C75">$whisperCli</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">m </span><span style="color:#E06C75">$modelPath</span><span style="color:#ABB2BF"> -f</span><span style="color:#E06C75"> $wavPath</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">l zh </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">otxt </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">osrt </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">of </span><span style="color:#E06C75">$outPrefix</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">pp </span><span style="color:#56B6C2">--</span><span style="color:#ABB2BF">no</span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">speech</span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">thold </span><span style="color:#D19A66">0.6</span></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 輸出：demo.txt（純文字）、demo.srt（含時間戳記字幕）</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>Step 3b：faster-whisper CPU Fallback（無 GPU 時）</span> <button class="cb-copy" data-code="uv run --with faster-whisper python transcribe_audio.py demo.wav --model medium --language zh" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="powershell"><code><span class="line"><span style="color:#ABB2BF">uv run </span><span style="color:#56B6C2">--</span><span style="color:#ABB2BF">with faster</span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">whisper python transcribe_audio.py demo.wav </span><span style="color:#56B6C2">--</span><span style="color:#ABB2BF">model medium </span><span style="color:#56B6C2">--</span><span style="color:#ABB2BF">language zh</span></span></code></pre> </div> </div>   <p><strong>性能參考</strong>（large-v3-turbo + Intel Arc / Vulkan）：</p> <table> <thead><tr><th>音訊長度</th><th>GPU 時間</th><th>CPU 時間（估算）</th></tr></thead> <tbody> <tr><td>10 分鐘</td><td>~2–3 分鐘</td><td>~10–15 分鐘</td></tr> <tr><td>1 小時</td><td>~12–18 分鐘</td><td>~60–90 分鐘</td></tr> </tbody> </table> <h3>Obsidian 筆記輸出格式</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>vault/videos/VID-042-demo.md（自動生成）</span> <button class="cb-copy" data-code="---
+title: &quot;demo&quot;
+tags: [video-note, local-video]
+vid: VID-042
+local_file: &quot;demo.mp4&quot;
+date: 2026-06-10
+---
+
+# demo
+
+## 摘要
+（AI 自動摘要）
+
+## 雙語逐字稿
+
+| 時間     | 影片原文                    | 中文翻譯            |
+|----------|-----------------------------|---------------------|
+| 00:00:05 | Hello everyone, today...    | 大家好，今天我們...  |
+| 00:00:18 | Let's start with the basics | 我們從基礎開始      |" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#ABB2BF">---</span></span>
+<span class="line"><span style="color:#ABB2BF">title: "demo"</span></span>
+<span class="line"><span style="color:#ABB2BF">tags: [video-note, local-video]</span></span>
+<span class="line"><span style="color:#ABB2BF">vid: VID-042</span></span>
+<span class="line"><span style="color:#ABB2BF">local_file: "demo.mp4"</span></span>
+<span class="line"><span style="color:#ABB2BF">date: 2026-06-10</span></span>
+<span class="line"><span style="color:#E06C75">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75"># demo</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 摘要</span></span>
+<span class="line"><span style="color:#ABB2BF">（AI 自動摘要）</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 雙語逐字稿</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ABB2BF">| 時間     | 影片原文                    | 中文翻譯            |</span></span>
+<span class="line"><span style="color:#ABB2BF">|----------|-----------------------------|---------------------|</span></span>
+<span class="line"><span style="color:#ABB2BF">| 00:00:05 | Hello everyone, today...    | 大家好，今天我們...  |</span></span>
+<span class="line"><span style="color:#ABB2BF">| 00:00:18 | Let's start with the basics | 我們從基礎開始      |</span></span></code></pre> </div> </div>   <h2>四、Obsidian Tags 整理：<code>/obsidian-markdown</code></h2> <p> <code>/obsidian-markdown</code> Skill 覆蓋完整 Obsidian Flavored Markdown 語法。
+    其中 tags 整理是最高頻的使用場景：統一命名規範、建立階層結構、清理孤立 tag。
+</p> <h3>Tags 語法速查</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>Frontmatter tags（推薦）</span> <button class="cb-copy" data-code="---
+title: &quot;API 設計規範&quot;
+tags:
+  - backend
+  - api/rest
+  - api/graphql
+  - project/gyro-2026
+---" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#ABB2BF">---</span></span>
+<span class="line"><span style="color:#ABB2BF">title: "API 設計規範"</span></span>
+<span class="line"><span style="color:#ABB2BF">tags:</span></span>
+<span class="line"><span style="color:#E5C07B">  -</span><span style="color:#ABB2BF"> backend</span></span>
+<span class="line"><span style="color:#E5C07B">  -</span><span style="color:#ABB2BF"> api/rest</span></span>
+<span class="line"><span style="color:#E5C07B">  -</span><span style="color:#ABB2BF"> api/graphql</span></span>
+<span class="line"><span style="color:#E5C07B">  -</span><span style="color:#ABB2BF"> project/gyro-2026</span></span>
+<span class="line"><span style="color:#ABB2BF">---</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>Inline tags（行內標記）</span> <button class="cb-copy" data-code="這份文件涵蓋 #backend 開發核心，特別是 #api/rest 設計原則。
+
+> [!tip] 最佳實踐
+> 使用巢狀 tag（如 #project/gyro-2026）建立階層，比平鋪更容易在 Obsidian Graph 中篩選。" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#ABB2BF">這份文件涵蓋 #backend 開發核心，特別是 #api/rest 設計原則。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#5C6370">> [</span><span style="color:#61AFEF">!tip</span><span style="color:#5C6370">] 最佳實踐</span></span>
+<span class="line"><span style="color:#5C6370">> 使用巢狀 tag（如 #project/gyro-2026）建立階層，比平鋪更容易在 Obsidian Graph 中篩選。</span></span></code></pre> </div> </div>   <h3>Tags 整理工作流</h3> <p>讓 Claude Code 協助審計 Vault 的 tag 結構：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>觸發範例</span> <button class="cb-copy" data-code="You: /obsidian-markdown
+請幫我審計 C:\Obsidian\vault 下所有筆記的 tag 使用情況：
+1. 列出所有 tag 及出現次數（由多到少）
+2. 找出只出現一次的孤立 tag（可能是拼寫錯誤）
+3. 建議合併同義 tag 的方案" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: /obsidian-markdown</span></span>
+<span class="line"><span>請幫我審計 C:\Obsidian\vault 下所有筆記的 tag 使用情況：</span></span>
+<span class="line"><span>1. 列出所有 tag 及出現次數（由多到少）</span></span>
+<span class="line"><span>2. 找出只出現一次的孤立 tag（可能是拼寫錯誤）</span></span>
+<span class="line"><span>3. 建議合併同義 tag 的方案</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>PowerShell — 快速統計 Vault Tags</span> <button class="cb-copy" data-code="$tags = @{}
+Get-ChildItem &quot;C:\Obsidian\vault&quot; -Recurse -Filter &quot;*.md&quot; | ForEach-Object {
+    $inFm = $false
+    foreach ($line in (Get-Content $_.FullName)) {
+        if ($line -eq &quot;---&quot;) { $inFm = -not $inFm }
+        if ($inFm -and $line -match &quot;^  - (.+)&quot;) { $tags[$matches[1]]++ }
+    }
+}
+$tags.GetEnumerator() | Sort-Object Value -Descending | Format-Table Name, Value -AutoSize" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="powershell"><code><span class="line"><span style="color:#E06C75">$tags</span><span style="color:#56B6C2"> =</span><span style="color:#C678DD"> @</span><span style="color:#ABB2BF">{}</span></span>
+<span class="line"><span style="color:#56B6C2">Get-ChildItem</span><span style="color:#98C379"> "C:\Obsidian\vault"</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">Recurse </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">Filter </span><span style="color:#98C379">"*.md"</span><span style="color:#ABB2BF"> | </span><span style="color:#56B6C2">ForEach-Object</span><span style="color:#ABB2BF"> {</span></span>
+<span class="line"><span style="color:#E06C75">    $inFm</span><span style="color:#56B6C2"> =</span><span style="color:#D19A66"> $false</span></span>
+<span class="line"><span style="color:#C678DD">    foreach</span><span style="color:#ABB2BF"> (</span><span style="color:#E06C75">$line</span><span style="color:#C678DD"> in</span><span style="color:#ABB2BF"> (</span><span style="color:#56B6C2">Get-Content</span><span style="color:#ABB2BF"> $_</span><span style="color:#E06C75">.FullName</span><span style="color:#ABB2BF">)) {</span></span>
+<span class="line"><span style="color:#C678DD">        if</span><span style="color:#ABB2BF"> (</span><span style="color:#E06C75">$line</span><span style="color:#56B6C2"> -eq</span><span style="color:#98C379"> "---"</span><span style="color:#ABB2BF">) { </span><span style="color:#E06C75">$inFm</span><span style="color:#56B6C2"> =</span><span style="color:#56B6C2"> -not</span><span style="color:#E06C75"> $inFm</span><span style="color:#ABB2BF"> }</span></span>
+<span class="line"><span style="color:#C678DD">        if</span><span style="color:#ABB2BF"> (</span><span style="color:#E06C75">$inFm</span><span style="color:#56B6C2"> -and</span><span style="color:#E06C75"> $line</span><span style="color:#56B6C2"> -match</span><span style="color:#98C379"> "^  - (.+)"</span><span style="color:#ABB2BF">) { </span><span style="color:#E06C75">$tags</span><span style="color:#ABB2BF">[$matches[</span><span style="color:#D19A66">1</span><span style="color:#ABB2BF">]]</span><span style="color:#56B6C2">++</span><span style="color:#ABB2BF"> }</span></span>
+<span class="line"><span style="color:#ABB2BF">    }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span>
+<span class="line"><span style="color:#E06C75">$tags.GetEnumerator</span><span style="color:#ABB2BF">() | </span><span style="color:#56B6C2">Sort-Object</span><span style="color:#ABB2BF"> Value </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">Descending | </span><span style="color:#56B6C2">Format-Table</span><span style="color:#ABB2BF"> Name, Value </span><span style="color:#56B6C2">-</span><span style="color:#ABB2BF">AutoSize</span></span></code></pre> </div> </div>   <p>常見整理動作：</p> <ul> <li><strong>批次重命名</strong>：把 <code>#AI</code>、<code>#ai</code>、<code>#artificial-intelligence</code> 統一為 <code>#ai</code></li> <li><strong>建立階層</strong>：<code>#python</code>、<code>#javascript</code> → <code>#lang/python</code>、<code>#lang/js</code></li> <li><strong>清理孤立 tag</strong>：只出現一次的 tag 通常是拼寫錯誤，需人工確認</li> <li><strong>自動補 tag</strong>：要求 Claude 掃描沒有 tag 的筆記，根據內容自動補上</li> </ul> <div class="call info"> <span class="ci">ℹ️</span> <div> <strong>Obsidian CLI 快速統計</strong> <p>若安裝了 Obsidian CLI 工具，可直接執行：<br> <code>obsidian tags sort=count counts</code><br>
+列出所有 tag 並依使用頻率排序，比手動掃描更精確，也支援 backlinks 查詢。</p> </div> </div>  </div> <nav class="cnav" data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" class="prev" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>← 上一章</span> <span class="nt" data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span> </a> <a href="/claude-code-guide/ap-pro-limits" class="next" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>下一章 →</span> <span class="nt" data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span> </a> </nav> </main> </div> <script>
+    // Theme
+    const html = document.documentElement;
+    const tt = document.getElementById('tt');
+    const isun = document.getElementById('isun');
+    const imoon = document.getElementById('imoon');
+    function syncIcons() {
+      const dk = html.classList.contains('dark');
+      isun.style.display = dk ? 'block' : 'none';
+      imoon.style.display = dk ? 'none' : 'block';
+    }
+    syncIcons();
+    tt?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('cc-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      syncIcons();
+    });
+
+    // Progress
+    const pb = document.getElementById('pb');
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = t > 0 ? `${(window.scrollY / t) * 100}%` : '0%';
+    }, { passive: true });
+
+    // Sidebar part toggles
+    document.querySelectorAll('.pt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.pid;
+        const list = document.querySelector(`[data-pl="${id}"]`);
+        btn.classList.toggle('open');
+        list?.classList.toggle('closed');
+      });
+    });
+
+    // Mobile menu
+    const sb = document.getElementById('sb');
+    const ov = document.getElementById('ov');
+    const mb = document.getElementById('mbtn');
+    const open = () => { sb.classList.add('open'); ov.classList.add('open'); document.body.style.overflow='hidden'; };
+    const close = () => { sb.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow=''; };
+    mb?.addEventListener('click', open);
+    ov?.addEventListener('click', close);
+  </script> </body> 

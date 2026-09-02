@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="zh-TW" data-astro-cid-mw7aashj> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Rules | </title><link rel="stylesheet" href="/claude-code-guide/_astro/DocsLayout.BldRaKia.css">
+<style>.rule-compare{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}@media(min-width:768px){.rule-compare{flex-direction:row}}.r-col{flex:1;border-radius:12px;padding:1.5rem}.r-good{background:#10b9810d;border:1px solid rgba(16,185,129,.2)}.r-bad{background:#ef44440d;border:1px solid rgba(239,68,68,.2)}.r-title{font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}.r-good .r-title{color:#10b981}.r-bad .r-title{color:#ef4444}.r-item{margin-bottom:.75rem;padding-bottom:.75rem;border-bottom:1px dashed var(--border);font-size:.85rem}.r-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.cb-wrap[data-astro-cid-jgrc2lfe]{margin-bottom:1.25rem}.cb-bar[data-astro-cid-jgrc2lfe]{display:flex;align-items:center;justify-content:space-between;background:#1a1a2e;border-radius:6px 6px 0 0;border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.05);padding:.18rem .5rem .18rem .75rem;min-height:1.8rem}.cb-label[data-astro-cid-jgrc2lfe]{color:#a6adc8;font-family:Fira Code,Cascadia Code,Consolas,monospace;font-size:.73rem;letter-spacing:.04em}.cb-inner[data-astro-cid-jgrc2lfe] pre{border-radius:0 0 8px 8px!important;margin-bottom:0!important}.cb-copy[data-astro-cid-jgrc2lfe]{background:#ffffff14;color:#888;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.15rem .55rem;font-size:.7rem;cursor:pointer;transition:all .15s;flex-shrink:0}.cb-copy[data-astro-cid-jgrc2lfe]:hover{background:#ffffff2e;color:#fff}.cb-copy[data-astro-cid-jgrc2lfe].copied{color:#4ec9b0;border-color:#4ec9b0}
+</style></head>Claude Code 完整指南 <meta name="description" content="在 CLAUDE.md 中定義行為規則，約束 Claude 的操作邊界，保護你的專案安全。"> <link rel="icon" href="/claude-code-guide/favicon.svg" type="image/svg+xml"> <script>
+    (function () {
+      const s = localStorage.getItem('cc-theme');
+      const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+    })();
+  </script>  </html> <body data-astro-cid-mw7aashj> <div id="pb" data-astro-cid-mw7aashj></div> <header data-astro-cid-mw7aashj> <div class="hi" data-astro-cid-mw7aashj> <div class="hl" data-astro-cid-mw7aashj> <button id="mbtn" class="ibtn" aria-label="選單" data-astro-cid-mw7aashj> <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" data-astro-cid-mw7aashj></path> </svg> </button> <a href="/claude-code-guide/" class="site-name" data-astro-cid-mw7aashj> <span class="logo" data-astro-cid-mw7aashj>CC</span>&nbsp;&nbsp;Claude Code 完整指南
+</a> </div> <div class="hr" data-astro-cid-mw7aashj> <button id="tt" class="ibtn" aria-label="切換主題" data-astro-cid-mw7aashj> <svg id="isun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" data-astro-cid-mw7aashj></path> </svg> <svg id="imoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" data-astro-cid-mw7aashj></path> </svg> </button> </div> </div> </header> <div id="layout" data-astro-cid-mw7aashj> <nav id="sb" data-astro-cid-mw7aashj> <div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="1" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 1：入門</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="1" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch01-what-is-cc" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>1.</span> <span data-astro-cid-mw7aashj>什麼是 Claude Code？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch02-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>2.</span> <span data-astro-cid-mw7aashj>安裝與環境設定</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch03-first-chat" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>3.</span> <span data-astro-cid-mw7aashj>第一次對話</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="2" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 2：模型選擇</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="2" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch04-models" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>4.</span> <span data-astro-cid-mw7aashj>三大模型比較</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>5.</span> <span data-astro-cid-mw7aashj>如何切換模型</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="3" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 3：設定與記憶</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="3" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>6.</span> <span data-astro-cid-mw7aashj>CLAUDE.md</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch07-rules" class="active" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>7.</span> <span data-astro-cid-mw7aashj>Rules</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>8.</span> <span data-astro-cid-mw7aashj>Memory.md</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="4" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 4：Hooks</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="4" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>9.</span> <span data-astro-cid-mw7aashj>Hooks 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch10-hooks-diary" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>10.</span> <span data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch11-hooks-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>11.</span> <span data-astro-cid-mw7aashj>Hooks 安全性應用</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="5" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 5：Skills</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="5" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch12-skills-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>12.</span> <span data-astro-cid-mw7aashj>官方六大類 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>13.</span> <span data-astro-cid-mw7aashj>使用內建 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch14-skills-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>14.</span> <span data-astro-cid-mw7aashj>自己寫 Skill</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="6" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 6：MCP Plugin</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="6" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch15-mcp-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>15.</span> <span data-astro-cid-mw7aashj>MCP 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>16.</span> <span data-astro-cid-mw7aashj>安裝 MCP Server</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch17-mcp-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>17.</span> <span data-astro-cid-mw7aashj>自製 MCP Server</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="7" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 7：進階技巧</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="7" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch18-multi-agent" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>18.</span> <span data-astro-cid-mw7aashj>多 Agent 協作</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch19-permissions" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>19.</span> <span data-astro-cid-mw7aashj>Permissions 模式</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch20-faq" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>20.</span> <span data-astro-cid-mw7aashj>常見問題 &amp; Debug</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="8" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 8：附錄</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="8" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-mcp-spec" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>21.</span> <span data-astro-cid-mw7aashj>附錄 A：MCP 協定規格與底層通訊解析</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-sandbox-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>22.</span> <span data-astro-cid-mw7aashj>附錄 B：終端沙箱安全與權限控制原理</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-terminal-pager" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>23.</span> <span data-astro-cid-mw7aashj>附錄 C：終端 Pager 控制與中文字元編碼故障排除</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>24.</span> <span data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-skills-examples" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>25.</span> <span data-astro-cid-mw7aashj>附錄 E：Skills 實戰手冊</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-pro-limits" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>26.</span> <span data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span>  </a> </li> </ul> </div> </nav> <div id="ov" data-astro-cid-mw7aashj></div> <main data-astro-cid-mw7aashj> <div class="cb" data-astro-cid-mw7aashj>  <p class="clabel">第 7 章 · Part 3：設定與記憶</p> <h1>Rules</h1> <p class="cdesc">告訴 Claude 什麼可以做、什麼不能做。好的 Rules 讓你放心授權，不好的 Rules 讓 Claude 綁手綁腳。</p> <h2>Rules 是什麼？</h2> <p>
+Rules 是寫在 CLAUDE.md 中的<strong>行為約束</strong>。它不是獨立的設定檔，而是 CLAUDE.md 裡的一個段落，
+    告訴 Claude 在執行任務時要遵守哪些邊界。
+</p> <p>正確的 Rules 設計能讓你<strong>大膽授權</strong>給 Claude 自動執行，同時保護你不踩到危險操作。</p> <h2>四大類規則</h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 240" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .glass-rule { fill: rgba(236,72,153,0.07); stroke: #ec4899; stroke-width: 2; rx: 8; }
+    .node-title { font-family: "system-ui, sans-serif"; font-size: 18px; font-weight: bold; fill: var(--text); }
+    .node-desc { font-family: "system-ui, sans-serif"; font-size: 14px; fill: var(--text); opacity: 0.7; }
+  </style>
+  
+  <g transform="translate(60, 40)">
+    <rect class="glass-rule" width="150" height="70"/>
+    <text class="node-title" x="75" y="30" text-anchor="middle">程式碼風格</text>
+    <text class="node-desc" x="75" y="55" text-anchor="middle">縮排/命名法</text>
+  </g>
+  <g transform="translate(240, 40)">
+    <rect class="glass-rule" width="150" height="70"/>
+    <text class="node-title" x="75" y="30" text-anchor="middle">架構設計</text>
+    <text class="node-desc" x="75" y="55" text-anchor="middle">目錄分層規範</text>
+  </g>
+  <g transform="translate(420, 40)">
+    <rect class="glass-rule" width="150" height="70"/>
+    <text class="node-title" x="75" y="30" text-anchor="middle">安全性準則</text>
+    <text class="node-desc" x="75" y="55" text-anchor="middle">禁上傳金鑰</text>
+  </g>
+  <g transform="translate(600, 40)">
+    <rect class="glass-rule" width="150" height="70"/>
+    <text class="node-title" x="75" y="30" text-anchor="middle">工具與工作流</text>
+    <text class="node-desc" x="75" y="55" text-anchor="middle">如何跑編譯</text>
+  </g>
+  
+  <g transform="translate(60, 140)">
+    <rect fill="rgba(107,114,128,0.07)" stroke="#9ca3af" stroke-dasharray="4" width="690" height="60" rx="8" />
+    <text class="node-title" x="345" y="35" text-anchor="middle">這些規則最終匯聚，成為團隊統一的 Coding Standard</text>
+  </g>
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>Rules 四大面向涵蓋了從微觀的寫碼風格到宏觀的專案架構，確保 AI 產出的程式碼符合團隊預期。</figcaption> </figure> <h3>1. 安全與保護規則</h3> <p>防止意外操作或資安問題：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>CLAUDE.md</span> <button class="cb-copy" data-code="## 安全規則
+- 永遠不要 commit .env 或包含 secret 的檔案
+- 不要在程式碼中 hardcode API key 或密碼
+- 使用資料庫查詢時必須使用 prepared statements（防 SQL Injection）
+- 所有使用者輸入必須驗證後才能使用
+- 不要自動 push 到 main 或 master branch
+- 刪除檔案前一定要先確認" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#E06C75">## 安全規則</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 永遠不要 commit .env 或包含 secret 的檔案</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要在程式碼中 hardcode API key 或密碼</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 使用資料庫查詢時必須使用 prepared statements（防 SQL Injection）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 所有使用者輸入必須驗證後才能使用</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要自動 push 到 main 或 master branch</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 刪除檔案前一定要先確認</span></span></code></pre> </div> </div>  <script type="module">document.querySelectorAll(".cb-copy").forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.code;t&&navigator.clipboard.writeText(t).then(()=>{e.textContent="已複製!",e.classList.add("copied"),setTimeout(()=>{e.textContent="複製",e.classList.remove("copied")},2e3)})})});</script> <h3>2. Git 工作流規則</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>CLAUDE.md</span> <button class="cb-copy" data-code="## Git 規則
+- commit message 使用英文，格式：`type: description`
+  type 可以是：feat / fix / refactor / docs / test / chore
+- 不要 force push
+- 不要修改已 push 的 commit history
+- 每次 commit 前先執行 `npm run typecheck &amp;&amp; npm test`" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#E06C75">## Git 規則</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> commit message 使用英文，格式：</span><span style="color:#E5C07B">`</span><span style="color:#98C379">type: description</span><span style="color:#E5C07B">`</span></span>
+<span class="line"><span style="color:#ABB2BF">  type 可以是：feat / fix / refactor / docs / test / chore</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要 force push</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要修改已 push 的 commit history</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 每次 commit 前先執行 </span><span style="color:#E5C07B">`</span><span style="color:#98C379">npm run typecheck &#x26;&#x26; npm test</span><span style="color:#E5C07B">`</span></span></code></pre> </div> </div>   <h3>3. 程式碼風格規則</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>CLAUDE.md</span> <button class="cb-copy" data-code="## 程式碼規範
+- 使用 TypeScript strict mode，不允許 `any`
+- 函式長度控制在 30 行以內；超過則重構
+- 不加不必要的 comment（好的命名就是最好的文件）
+- async 函式必須有 try-catch 或回傳 Result type
+- 不要使用 `var`，一律用 `const` 或 `let`
+- import 按照：外部套件 → 內部模組 → 相對路徑的順序排列" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#E06C75">## 程式碼規範</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 使用 TypeScript strict mode，不允許 </span><span style="color:#E5C07B">`</span><span style="color:#98C379">any</span><span style="color:#E5C07B">`</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 函式長度控制在 30 行以內；超過則重構</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不加不必要的 comment（好的命名就是最好的文件）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> async 函式必須有 try-catch 或回傳 Result type</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要使用 </span><span style="color:#E5C07B">`</span><span style="color:#98C379">var</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF">，一律用 </span><span style="color:#E5C07B">`</span><span style="color:#98C379">const</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> 或 </span><span style="color:#E5C07B">`</span><span style="color:#98C379">let</span><span style="color:#E5C07B">`</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> import 按照：外部套件 → 內部模組 → 相對路徑的順序排列</span></span></code></pre> </div> </div>   <h3>4. 禁止行為規則</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>CLAUDE.md</span> <button class="cb-copy" data-code="## 禁止事項
+- 不要修改 package.json 的 version 欄位
+- 不要更動 migrations/ 目錄下的既有檔案（只能新增）
+- 不要在 production config 中開啟 debug 模式
+- 不要安裝未經確認的新 npm 套件（先問我）
+- 不要修改 .github/workflows/ 裡的 CI 設定" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#E06C75">## 禁止事項</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要修改 package.json 的 version 欄位</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要更動 migrations/ 目錄下的既有檔案（只能新增）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要在 production config 中開啟 debug 模式</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要安裝未經確認的新 npm 套件（先問我）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要修改 .github/workflows/ 裡的 CI 設定</span></span></code></pre> </div> </div>   <h2>進階：Path-Scoped Rules</h2> <p>針對特定檔案類型或目錄套用特殊規則，在子目錄的 CLAUDE.md 或用 frontmatter 宣告：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>src/api/CLAUDE.md（只在 src/api/ 生效）</span> <button class="cb-copy" data-code="---
+paths:
+  - &quot;src/api/**/*.ts&quot;
+---
+
+# API 開發規則
+
+- 所有 endpoint 必須驗證使用者身份（除了 /health 和 /auth/*）
+- Request body 必須用 Zod schema 驗證
+- Response 必須包含 `{ success: boolean, data?: T, error?: string }` 結構
+- 不要在 handler 裡直接寫 SQL，呼叫 service 層
+- 每個新 endpoint 必須有對應的整合測試" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#ABB2BF">---</span></span>
+<span class="line"><span style="color:#ABB2BF">paths:</span></span>
+<span class="line"><span style="color:#E5C07B">  -</span><span style="color:#ABB2BF"> "src/api/*</span><span style="color:#C678DD;font-style:italic">*/*</span><span style="color:#ABB2BF">.ts"</span></span>
+<span class="line"><span style="color:#ABB2BF">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75"># API 開發規則</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 所有 endpoint 必須驗證使用者身份（除了 /health 和 /auth/*）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> Request body 必須用 Zod schema 驗證</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> Response 必須包含 </span><span style="color:#E5C07B">`</span><span style="color:#98C379">{ success: boolean, data?: T, error?: string }</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF"> 結構</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要在 handler 裡直接寫 SQL，呼叫 service 層</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 每個新 endpoint 必須有對應的整合測試</span></span></code></pre> </div> </div>   <h2>Rules 的寫法原則</h2>  <div class="rule-compare"> <div class="r-col r-good"> <div class="r-title"><span>✅</span> 具體可驗證的 Rule</div> <div class="r-item">使用 2 格空格縮排</div> <div class="r-item">不要直接刪除檔案，先移到 .trash/ 目錄</div> <div class="r-item">commit 前執行 <code>npm test</code></div> <div class="r-item">API Key 存在環境變數，用 <code>process.env.KEY</code> 讀取</div> </div> <div class="r-col r-bad"> <div class="r-title"><span>❌</span> 模糊的 Rule</div> <div class="r-item">好好格式化程式碼</div> <div class="r-item">小心刪除檔案</div> <div class="r-item">確認測試通過再 commit</div> <div class="r-item">不要洩漏敏感資料</div> </div> </div> <div class="call tip"> <span class="ci">💡</span> <div> <strong>越具體越好</strong> <p>Rules 的目的是讓 Claude 知道確切的邊界，而不是模糊的原則。「具體可驗證」的規則（可以用 yes/no 判斷是否遵守）比「模糊的價值觀」（好好寫程式）有效得多。</p> </div> </div> <h2>用 Hooks 強制執行規則</h2> <p>
+CLAUDE.md 中的 Rules 依賴 Claude 的「自覺」遵守。如果要<strong>強制執行</strong>（不管 Claude 怎麼想都不能做），
+    需要搭配 <strong>Hooks</strong>（第 9 章）。
+</p> <p>例如，要完全阻止 Claude 執行 <code>git push</code>，需要設定一個 <code>PreToolUse</code> Hook 來攔截 Bash 工具的呼叫。</p> <div class="call warn"> <span class="ci">⚠️</span> <div> <strong>Rules ≠ 鐵板</strong> <p>寫在 CLAUDE.md 的規則是<strong>強烈建議</strong>，不是技術層面的強制阻擋。Claude 通常會遵守，但在極少數情況下（如 Claude 認為規則與任務目標衝突）可能不會完全照做。需要硬性阻擋特定操作，請使用 Hooks 或 Permissions 設定。</p> </div> </div> <h2>完整範例：一份實際專案的 Rules</h2> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>./CLAUDE.md（節錄 Rules 部分）</span> <button class="cb-copy" data-code="## 開發規則
+
+### 必須遵守
+- 所有 TypeScript 檔案必須通過 `tsc --noEmit`（零型別錯誤）
+- 新功能必須有對應的單元測試（coverage 不低於現有水準）
+- 資料庫操作必須在 transaction 中執行
+- 所有 API endpoint 必須有 rate limiting
+
+### 禁止操作
+- 不要安裝新的 npm 套件（先列清單請我確認）
+- 不要修改 prisma/migrations/ 下的既有 migration 檔案
+- 不要刪除 src/types/ 下的任何型別定義
+- 不要變更現有 API 的 response 結構（breaking change）
+
+### Git 規範
+- commit message 格式：`feat(scope): description`
+- 一個 commit 只做一件事
+- 每次 commit 前執行：`npm run lint &amp;&amp; npm run typecheck &amp;&amp; npm test`" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#E06C75">## 開發規則</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">### 必須遵守</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 所有 TypeScript 檔案必須通過 </span><span style="color:#E5C07B">`</span><span style="color:#98C379">tsc --noEmit</span><span style="color:#E5C07B">`</span><span style="color:#ABB2BF">（零型別錯誤）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 新功能必須有對應的單元測試（coverage 不低於現有水準）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 資料庫操作必須在 transaction 中執行</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 所有 API endpoint 必須有 rate limiting</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">### 禁止操作</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要安裝新的 npm 套件（先列清單請我確認）</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要修改 prisma/migrations/ 下的既有 migration 檔案</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要刪除 src/types/ 下的任何型別定義</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 不要變更現有 API 的 response 結構（breaking change）</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">### Git 規範</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> commit message 格式：</span><span style="color:#E5C07B">`</span><span style="color:#98C379">feat(scope): description</span><span style="color:#E5C07B">`</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 一個 commit 只做一件事</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 每次 commit 前執行：</span><span style="color:#E5C07B">`</span><span style="color:#98C379">npm run lint &#x26;&#x26; npm run typecheck &#x26;&#x26; npm test</span><span style="color:#E5C07B">`</span></span></code></pre> </div> </div>    </div> <nav class="cnav" data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" class="prev" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>← 上一章</span> <span class="nt" data-astro-cid-mw7aashj>CLAUDE.md</span> </a> <a href="/claude-code-guide/ch08-memory" class="next" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>下一章 →</span> <span class="nt" data-astro-cid-mw7aashj>Memory.md</span> </a> </nav> </main> </div> <script>
+    // Theme
+    const html = document.documentElement;
+    const tt = document.getElementById('tt');
+    const isun = document.getElementById('isun');
+    const imoon = document.getElementById('imoon');
+    function syncIcons() {
+      const dk = html.classList.contains('dark');
+      isun.style.display = dk ? 'block' : 'none';
+      imoon.style.display = dk ? 'none' : 'block';
+    }
+    syncIcons();
+    tt?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('cc-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      syncIcons();
+    });
+
+    // Progress
+    const pb = document.getElementById('pb');
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = t > 0 ? `${(window.scrollY / t) * 100}%` : '0%';
+    }, { passive: true });
+
+    // Sidebar part toggles
+    document.querySelectorAll('.pt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.pid;
+        const list = document.querySelector(`[data-pl="${id}"]`);
+        btn.classList.toggle('open');
+        list?.classList.toggle('closed');
+      });
+    });
+
+    // Mobile menu
+    const sb = document.getElementById('sb');
+    const ov = document.getElementById('ov');
+    const mb = document.getElementById('mbtn');
+    const open = () => { sb.classList.add('open'); ov.classList.add('open'); document.body.style.overflow='hidden'; };
+    const close = () => { sb.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow=''; };
+    mb?.addEventListener('click', open);
+    ov?.addEventListener('click', close);
+  </script> </body> 

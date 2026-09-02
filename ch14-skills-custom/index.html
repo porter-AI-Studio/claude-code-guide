@@ -1,0 +1,291 @@
+<!DOCTYPE html><html lang="zh-TW" data-astro-cid-mw7aashj> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>自己寫 Skill | </title><link rel="stylesheet" href="/claude-code-guide/_astro/DocsLayout.BldRaKia.css">
+<style>.timing-card{background:linear-gradient(145deg,var(--bg2),var(--bg));border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0;box-shadow:0 4px 15px #0000000d}.tc-header{font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}.tc-header:before{content:"⏱️"}.tc-list{display:flex;flex-direction:column;gap:.75rem;list-style:none;padding:0;margin:0}.tc-item{background:var(--bg);padding:.75rem 1rem;border-radius:8px;font-size:.9rem;color:var(--text2);display:flex;align-items:flex-start;gap:.5rem;transition:all .2s;border:1px solid transparent}.tc-item:hover{border-color:var(--accent);transform:translate(4px);color:var(--text);background:var(--abg)}.tc-item:before{content:"✨";margin-top:.1rem}.tc-item strong{color:var(--accent)}
+.cb-wrap[data-astro-cid-jgrc2lfe]{margin-bottom:1.25rem}.cb-bar[data-astro-cid-jgrc2lfe]{display:flex;align-items:center;justify-content:space-between;background:#1a1a2e;border-radius:6px 6px 0 0;border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.05);padding:.18rem .5rem .18rem .75rem;min-height:1.8rem}.cb-label[data-astro-cid-jgrc2lfe]{color:#a6adc8;font-family:Fira Code,Cascadia Code,Consolas,monospace;font-size:.73rem;letter-spacing:.04em}.cb-inner[data-astro-cid-jgrc2lfe] pre{border-radius:0 0 8px 8px!important;margin-bottom:0!important}.cb-copy[data-astro-cid-jgrc2lfe]{background:#ffffff14;color:#888;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.15rem .55rem;font-size:.7rem;cursor:pointer;transition:all .15s;flex-shrink:0}.cb-copy[data-astro-cid-jgrc2lfe]:hover{background:#ffffff2e;color:#fff}.cb-copy[data-astro-cid-jgrc2lfe].copied{color:#4ec9b0;border-color:#4ec9b0}
+</style></head>Claude Code 完整指南 <meta name="description" content="把你常做的工作流程封裝成 Skill，讓 Claude 一個指令自動完成整個流程。"> <link rel="icon" href="/claude-code-guide/favicon.svg" type="image/svg+xml"> <script>
+    (function () {
+      const s = localStorage.getItem('cc-theme');
+      const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+    })();
+  </script>  </html> <body data-astro-cid-mw7aashj> <div id="pb" data-astro-cid-mw7aashj></div> <header data-astro-cid-mw7aashj> <div class="hi" data-astro-cid-mw7aashj> <div class="hl" data-astro-cid-mw7aashj> <button id="mbtn" class="ibtn" aria-label="選單" data-astro-cid-mw7aashj> <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" data-astro-cid-mw7aashj></path> </svg> </button> <a href="/claude-code-guide/" class="site-name" data-astro-cid-mw7aashj> <span class="logo" data-astro-cid-mw7aashj>CC</span>&nbsp;&nbsp;Claude Code 完整指南
+</a> </div> <div class="hr" data-astro-cid-mw7aashj> <button id="tt" class="ibtn" aria-label="切換主題" data-astro-cid-mw7aashj> <svg id="isun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" data-astro-cid-mw7aashj></path> </svg> <svg id="imoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" data-astro-cid-mw7aashj></path> </svg> </button> </div> </div> </header> <div id="layout" data-astro-cid-mw7aashj> <nav id="sb" data-astro-cid-mw7aashj> <div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="1" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 1：入門</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="1" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch01-what-is-cc" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>1.</span> <span data-astro-cid-mw7aashj>什麼是 Claude Code？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch02-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>2.</span> <span data-astro-cid-mw7aashj>安裝與環境設定</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch03-first-chat" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>3.</span> <span data-astro-cid-mw7aashj>第一次對話</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="2" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 2：模型選擇</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="2" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch04-models" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>4.</span> <span data-astro-cid-mw7aashj>三大模型比較</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>5.</span> <span data-astro-cid-mw7aashj>如何切換模型</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="3" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 3：設定與記憶</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="3" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>6.</span> <span data-astro-cid-mw7aashj>CLAUDE.md</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch07-rules" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>7.</span> <span data-astro-cid-mw7aashj>Rules</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>8.</span> <span data-astro-cid-mw7aashj>Memory.md</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="4" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 4：Hooks</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="4" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>9.</span> <span data-astro-cid-mw7aashj>Hooks 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch10-hooks-diary" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>10.</span> <span data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch11-hooks-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>11.</span> <span data-astro-cid-mw7aashj>Hooks 安全性應用</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="5" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 5：Skills</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="5" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch12-skills-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>12.</span> <span data-astro-cid-mw7aashj>官方六大類 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>13.</span> <span data-astro-cid-mw7aashj>使用內建 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch14-skills-custom" class="active" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>14.</span> <span data-astro-cid-mw7aashj>自己寫 Skill</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="6" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 6：MCP Plugin</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="6" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch15-mcp-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>15.</span> <span data-astro-cid-mw7aashj>MCP 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>16.</span> <span data-astro-cid-mw7aashj>安裝 MCP Server</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch17-mcp-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>17.</span> <span data-astro-cid-mw7aashj>自製 MCP Server</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="7" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 7：進階技巧</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="7" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch18-multi-agent" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>18.</span> <span data-astro-cid-mw7aashj>多 Agent 協作</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch19-permissions" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>19.</span> <span data-astro-cid-mw7aashj>Permissions 模式</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch20-faq" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>20.</span> <span data-astro-cid-mw7aashj>常見問題 &amp; Debug</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="8" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 8：附錄</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="8" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-mcp-spec" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>21.</span> <span data-astro-cid-mw7aashj>附錄 A：MCP 協定規格與底層通訊解析</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-sandbox-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>22.</span> <span data-astro-cid-mw7aashj>附錄 B：終端沙箱安全與權限控制原理</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-terminal-pager" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>23.</span> <span data-astro-cid-mw7aashj>附錄 C：終端 Pager 控制與中文字元編碼故障排除</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>24.</span> <span data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-skills-examples" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>25.</span> <span data-astro-cid-mw7aashj>附錄 E：Skills 實戰手冊</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-pro-limits" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>26.</span> <span data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span>  </a> </li> </ul> </div> </nav> <div id="ov" data-astro-cid-mw7aashj></div> <main data-astro-cid-mw7aashj> <div class="cb" data-astro-cid-mw7aashj>  <p class="clabel">第 14 章 · Part 5：Skills</p> <h1>自己寫 Skill</h1> <p class="cdesc">Skill 就是一個 Markdown 檔案。告訴 Claude「什麼時候啟動」以及「要做什麼」，就完成了。</p> <h2>Skill 的本質</h2> <p>
+Skill 是放在 <code>~/.claude/skills/</code> 目錄下的 <code>.md</code> 檔案。
+    Claude Code 在每次對話開始時掃描這個目錄，當使用者的請求符合 TRIGGER 條件時，自動套用對應的 Skill。
+</p> <h2>基本結構</h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 240" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .folder { fill: rgba(245,158,11,0.1); stroke: #f59e0b; stroke-width: 2; rx: 4; }
+      .file { fill: rgba(59,130,246,0.05); stroke: #3b82f6; stroke-width: 1.5; rx: 4; }
+      .t-bold { font-family: "system-ui, sans-serif"; font-size: 16px; font-weight: bold; fill: var(--text); }
+      .t-norm { font-family: "system-ui, sans-serif"; font-size: 14px; fill: var(--text); }
+      .line { fill: none; stroke: var(--text); stroke-opacity: 0.3; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <g transform="translate(200, 40)">
+    <rect class="folder" width="160" height="36"/>
+    <text class="t-bold" x="30" y="24">my-custom-skill/</text>
+  </g>
+
+  <!-- SKILL.md -->
+  <path class="line" d="M 220 76 L 220 110 L 240 110"/>
+  <g transform="translate(250, 92)">
+    <rect class="file" width="120" height="32"/>
+    <text class="t-bold" x="15" y="21">SKILL.md</text>
+    <text class="t-norm" x="140" y="21" opacity="0.7">← 核心入口 (Frontmatter + Prompt)</text>
+  </g>
+
+  <!-- scripts/ -->
+  <path class="line" d="M 220 110 L 220 160 L 240 160"/>
+  <g transform="translate(250, 142)">
+    <rect class="folder" width="120" height="32"/>
+    <text class="t-bold" x="15" y="21">scripts/</text>
+    <text class="t-norm" x="140" y="21" opacity="0.7">← 工具腳本 (Python, Bash...等)</text>
+  </g>
+
+  <!-- examples/ -->
+  <path class="line" d="M 220 160 L 220 210 L 240 210"/>
+  <g transform="translate(250, 192)">
+    <rect class="folder" width="120" height="32"/>
+    <text class="t-bold" x="15" y="21">examples/</text>
+    <text class="t-norm" x="140" y="21" opacity="0.7">← 參考範例與打樣</text>
+  </g>
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>一個標準的自訂 Skill 結構，SKILL.md 是靈魂，其他的目錄則是外掛裝備。</figcaption> </figure> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/skills/my-skill.md</span> <button class="cb-copy" data-code="---
+description: 這個 Skill 做什麼的一句話說明
+trigger: 什麼情況下自動觸發（給 Claude 判斷用）
+argument-hint: 使用者需要提供的參數說明（可選）
+---
+
+# Skill 名稱
+
+## 執行流程
+1. 步驟一：...
+2. 步驟二：...
+3. 步驟三：...
+
+## 輸出格式
+說明最終要產出什麼格式的結果。
+
+## 注意事項
+- 特殊限制或邊界情況" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#ABB2BF">---</span></span>
+<span class="line"><span style="color:#ABB2BF">description: 這個 Skill 做什麼的一句話說明</span></span>
+<span class="line"><span style="color:#ABB2BF">trigger: 什麼情況下自動觸發（給 Claude 判斷用）</span></span>
+<span class="line"><span style="color:#ABB2BF">argument-hint: 使用者需要提供的參數說明（可選）</span></span>
+<span class="line"><span style="color:#E06C75">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75"># Skill 名稱</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 執行流程</span></span>
+<span class="line"><span style="color:#E5C07B">1.</span><span style="color:#ABB2BF"> 步驟一：...</span></span>
+<span class="line"><span style="color:#E5C07B">2.</span><span style="color:#ABB2BF"> 步驟二：...</span></span>
+<span class="line"><span style="color:#E5C07B">3.</span><span style="color:#ABB2BF"> 步驟三：...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 輸出格式</span></span>
+<span class="line"><span style="color:#ABB2BF">說明最終要產出什麼格式的結果。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 注意事項</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 特殊限制或邊界情況</span></span></code></pre> </div> </div>  <script type="module">document.querySelectorAll(".cb-copy").forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.code;t&&navigator.clipboard.writeText(t).then(()=>{e.textContent="已複製!",e.classList.add("copied"),setTimeout(()=>{e.textContent="複製",e.classList.remove("copied")},2e3)})})});</script> <h2>實戰範例：本地影片轉 Obsidian 筆記</h2> <p>這是一個真實使用的 Skill：把本地影片檔案轉成帶時間軸的 Obsidian 筆記。</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/skills/local-video-note.md</span> <button class="cb-copy" data-code="---
+description: 擷取本地影片音訊、Whisper 語音轉文字，自動建立 Obsidian 雙語影片筆記。
+trigger: 當使用者提到本地影片轉文字、影片筆記、local video 等關鍵字時使用
+argument-hint: 影片檔案路徑（必填），開始時間與結束時間（可選，格式 HH:MM:SS）
+---
+
+# Local Video Note
+
+## 執行流程
+
+1. **確認參數**：取得影片路徑，確認檔案存在
+2. **裁切音訊**（若有指定時間範圍）：
+   使用 ffmpeg 擷取指定時間段
+3. **轉換格式**：ffmpeg 將影片音訊轉為 WAV（16kHz, mono）
+4. **語音辨識**：執行 faster-whisper 進行轉錄
+   - 語言偵測：自動
+   - 輸出：帶時間戳記的文字段落
+5. **建立筆記**：在 Obsidian vault 建立 YYYY-MM-DD-影片名稱.md
+   - 包含影片路徑、時間範圍、全文逐字稿
+   - 若為英文：產生中英雙語對照
+
+## 輸出格式
+Obsidian Markdown，存放於 C:\Obsidian\vault\影片筆記\
+
+## 注意事項
+- 需要系統安裝：ffmpeg、faster-whisper
+- GPU 加速：若有 NVIDIA GPU，自動使用 CUDA" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#ABB2BF">---</span></span>
+<span class="line"><span style="color:#ABB2BF">description: 擷取本地影片音訊、Whisper 語音轉文字，自動建立 Obsidian 雙語影片筆記。</span></span>
+<span class="line"><span style="color:#ABB2BF">trigger: 當使用者提到本地影片轉文字、影片筆記、local video 等關鍵字時使用</span></span>
+<span class="line"><span style="color:#ABB2BF">argument-hint: 影片檔案路徑（必填），開始時間與結束時間（可選，格式 HH:MM:SS）</span></span>
+<span class="line"><span style="color:#E06C75">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75"># Local Video Note</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 執行流程</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E5C07B">1.</span><span style="color:#D19A66"> **確認參數**</span><span style="color:#ABB2BF">：取得影片路徑，確認檔案存在</span></span>
+<span class="line"><span style="color:#E5C07B">2.</span><span style="color:#D19A66"> **裁切音訊**</span><span style="color:#ABB2BF">（若有指定時間範圍）：</span></span>
+<span class="line"><span style="color:#ABB2BF">   使用 ffmpeg 擷取指定時間段</span></span>
+<span class="line"><span style="color:#E5C07B">3.</span><span style="color:#D19A66"> **轉換格式**</span><span style="color:#ABB2BF">：ffmpeg 將影片音訊轉為 WAV（16kHz, mono）</span></span>
+<span class="line"><span style="color:#E5C07B">4.</span><span style="color:#D19A66"> **語音辨識**</span><span style="color:#ABB2BF">：執行 faster-whisper 進行轉錄</span></span>
+<span class="line"><span style="color:#E5C07B">   -</span><span style="color:#ABB2BF"> 語言偵測：自動</span></span>
+<span class="line"><span style="color:#E5C07B">   -</span><span style="color:#ABB2BF"> 輸出：帶時間戳記的文字段落</span></span>
+<span class="line"><span style="color:#E5C07B">5.</span><span style="color:#D19A66"> **建立筆記**</span><span style="color:#ABB2BF">：在 Obsidian vault 建立 YYYY-MM-DD-影片名稱.md</span></span>
+<span class="line"><span style="color:#E5C07B">   -</span><span style="color:#ABB2BF"> 包含影片路徑、時間範圍、全文逐字稿</span></span>
+<span class="line"><span style="color:#E5C07B">   -</span><span style="color:#ABB2BF"> 若為英文：產生中英雙語對照</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 輸出格式</span></span>
+<span class="line"><span style="color:#ABB2BF">Obsidian Markdown，存放於 C:\Obsidian\vault\影片筆記\</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 注意事項</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> 需要系統安裝：ffmpeg、faster-whisper</span></span>
+<span class="line"><span style="color:#E5C07B">-</span><span style="color:#ABB2BF"> GPU 加速：若有 NVIDIA GPU，自動使用 CUDA</span></span></code></pre> </div> </div>   <p>使用方式：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>互動模式</span> <button class="cb-copy" data-code="# 整個影片
+You: /local-video-note C:Videosmeeting-2026-06-04.mp4
+
+# 指定時間段（只處理 5:00 到 12:30）
+You: /local-video-note C:Videosconference.mp4 --start 00:05:00 --end 00:12:30" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span># 整個影片</span></span>
+<span class="line"><span>You: /local-video-note C:Videosmeeting-2026-06-04.mp4</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 指定時間段（只處理 5:00 到 12:30）</span></span>
+<span class="line"><span>You: /local-video-note C:Videosconference.mp4 --start 00:05:00 --end 00:12:30</span></span></code></pre> </div> </div>   <h2>更多 Skill 範例結構</h2> <h3>範例：每日工作計畫</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/skills/daily-plan.md</span> <button class="cb-copy" data-code="---
+description: 根據今日日誌和 TODO，生成今日工作計畫
+trigger: 當使用者說「今日計畫」「daily plan」「今天要做什麼」時觸發
+---
+
+# Daily Plan
+
+## 流程
+1. 讀取 Obsidian 今日工作日誌（若存在）
+2. 搜尋 TODO.md 中未完成項目
+3. 列出今日建議優先順序（P1/P2/P3）
+4. 輸出為 Obsidian 格式，寫入今日日誌開頭" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#ABB2BF">---</span></span>
+<span class="line"><span style="color:#ABB2BF">description: 根據今日日誌和 TODO，生成今日工作計畫</span></span>
+<span class="line"><span style="color:#ABB2BF">trigger: 當使用者說「今日計畫」「daily plan」「今天要做什麼」時觸發</span></span>
+<span class="line"><span style="color:#E06C75">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75"># Daily Plan</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 流程</span></span>
+<span class="line"><span style="color:#E5C07B">1.</span><span style="color:#ABB2BF"> 讀取 Obsidian 今日工作日誌（若存在）</span></span>
+<span class="line"><span style="color:#E5C07B">2.</span><span style="color:#ABB2BF"> 搜尋 TODO.md 中未完成項目</span></span>
+<span class="line"><span style="color:#E5C07B">3.</span><span style="color:#ABB2BF"> 列出今日建議優先順序（P1/P2/P3）</span></span>
+<span class="line"><span style="color:#E5C07B">4.</span><span style="color:#ABB2BF"> 輸出為 Obsidian 格式，寫入今日日誌開頭</span></span></code></pre> </div> </div>   <h3>範例：Dify API 指令產生器</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/skills/dify-api-cmd.md</span> <button class="cb-copy" data-code="---
+description: 根據描述產生對應的 Dify API curl 指令
+trigger: 當使用者要呼叫 Dify API、測試 Dify endpoint 時觸發
+---
+
+# Dify API Command Generator
+
+## 流程
+1. 確認 API 類型（Chat / Completion / Agent）
+2. 讀取 .env 中的 DIFY_API_KEY
+3. 根據描述產生完整的 curl 指令（含 headers、body）
+4. 同時產生 PowerShell 版本（Invoke-RestMethod）" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="markdown"><code><span class="line"><span style="color:#ABB2BF">---</span></span>
+<span class="line"><span style="color:#ABB2BF">description: 根據描述產生對應的 Dify API curl 指令</span></span>
+<span class="line"><span style="color:#ABB2BF">trigger: 當使用者要呼叫 Dify API、測試 Dify endpoint 時觸發</span></span>
+<span class="line"><span style="color:#E06C75">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75"># Dify API Command Generator</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">## 流程</span></span>
+<span class="line"><span style="color:#E5C07B">1.</span><span style="color:#ABB2BF"> 確認 API 類型（Chat / Completion / Agent）</span></span>
+<span class="line"><span style="color:#E5C07B">2.</span><span style="color:#ABB2BF"> 讀取 .env 中的 DIFY_API_KEY</span></span>
+<span class="line"><span style="color:#E5C07B">3.</span><span style="color:#ABB2BF"> 根據描述產生完整的 curl 指令（含 headers、body）</span></span>
+<span class="line"><span style="color:#E5C07B">4.</span><span style="color:#ABB2BF"> 同時產生 PowerShell 版本（Invoke-RestMethod）</span></span></code></pre> </div> </div>   <h2>Skills 放置位置</h2> <table> <thead> <tr><th>位置</th><th>範圍</th><th>適用情境</th></tr> </thead> <tbody> <tr><td><code>~/.claude/skills/</code></td><td>個人全域</td><td>個人工作流程，所有專案適用</td></tr> <tr><td><code>.claude/skills/</code></td><td>專案級</td><td>特定專案的標準流程，可 git commit 共享</td></tr> </tbody> </table> <div class="call tip"> <span class="ci">💡</span> <div> <strong>寫好 TRIGGER 是關鍵</strong> <p>TRIGGER 是給 Claude 看的描述，說明什麼情況下應該套用這個 Skill。寫越具體越好，例如「當使用者提到本地影片轉文字、/local-video-note 指令、影片筆記等關鍵字時」。模糊的 TRIGGER 會導致 Skill 被誤觸發。</p> </div> </div> <h2>Skill 的真正價值：從對話中長出來</h2> <p>
+Skill 最有價值的誕生方式，不是從零開始設計，而是在你跟 Claude Code 的日常對話中自然浮現——
+    當你發現某個工作流程<strong>做完之後覺得「這個以後還會用到」</strong>，那就是該封裝成 Skill 的時機。
+</p>  <div class="timing-card"> <div class="tc-header">封裝 Skill 的最佳時機</div> <ul class="tc-list"> <li class="tc-item">這個操作你<strong>每週至少做一次</strong>，每次都需要解釋一長串背景</li> <li class="tc-item">你剛完成一個複雜任務，覺得<strong>「如果下次有模板就好了」</strong></li> <li class="tc-item">這個流程涉及<strong>你特定的工具組合</strong>（特定路徑、特定格式、特定慣例）</li> <li class="tc-item">你從網路下載了別人的 Skill，但它<strong>跟你的環境有差異</strong>需要調整</li> </ul> </div> <h3>把對話變成 Skill 的流程</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>從對話到 Skill（示範）</span> <button class="cb-copy" data-code="# 你跟 CC 完成了一個有價值的任務之後：
+You: 我們剛才做的這個「讀取 Excel → 彙整成週報 → 寫入 Obsidian」流程很有用，
+     請把它封裝成一個 Skill，儲存到 ~/.claude/skills/weekly-report.md
+
+Claude: 好的，我會把完整流程、參數說明、輸出格式整理成 SKILL.md...
+# ↑ Claude 直接幫你寫好 Skill 檔案" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span># 你跟 CC 完成了一個有價值的任務之後：</span></span>
+<span class="line"><span>You: 我們剛才做的這個「讀取 Excel → 彙整成週報 → 寫入 Obsidian」流程很有用，</span></span>
+<span class="line"><span>     請把它封裝成一個 Skill，儲存到 ~/.claude/skills/weekly-report.md</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Claude: 好的，我會把完整流程、參數說明、輸出格式整理成 SKILL.md...</span></span>
+<span class="line"><span># ↑ Claude 直接幫你寫好 Skill 檔案</span></span></code></pre> </div> </div>   <h3>讓 Skill 不斷進化</h3> <p>
+Skill 不是寫一次就鎖死的——它應該隨你使用習慣的改變而進化。
+    每次執行完 Skill 覺得哪裡不順、哪裡可以更精確，<strong>直接告訴 CC 修改 Skill 本身</strong>：
+</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>進化 Skill（示範）</span> <button class="cb-copy" data-code="You: /weekly-report
+
+（執行完之後）
+You: 這個 Skill 的摘要格式我想改成條列式，不要段落文字。
+     而且輸出路徑要改成 C:\Obsidian\vault\週報\，請更新 Skill 檔案。
+
+Claude: 好的，已更新 ~/.claude/skills/weekly-report.md：
+✓ 摘要改為條列式
+✓ 輸出路徑更新" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: /weekly-report</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>（執行完之後）</span></span>
+<span class="line"><span>You: 這個 Skill 的摘要格式我想改成條列式，不要段落文字。</span></span>
+<span class="line"><span>     而且輸出路徑要改成 C:\Obsidian\vault\週報\，請更新 Skill 檔案。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Claude: 好的，已更新 ~/.claude/skills/weekly-report.md：</span></span>
+<span class="line"><span>✓ 摘要改為條列式</span></span>
+<span class="line"><span>✓ 輸出路徑更新</span></span></code></pre> </div> </div>   <div class="call tip"> <span class="ci">💡</span> <div> <strong>Skill 越用越好用，這就是複利</strong> <p>
+每一次修改都讓 Skill 更貼近你的工作習慣。三個月後，你有了一套完全為你量身打造的 Skill 工具箱——
+        寫程式、寫文章、做影音、做報告，每個高頻任務都有對應的 Skill，啟動指令一秒觸發，
+        不需要每次從頭解釋背景。這就是 AI 原生工作流的複利效應。
+</p> </div> </div> <h3>下載別人的 Skill 也要進化</h3> <p>
+從 GitHub 下載的專家 Skill（例如 <code>frontend-design</code>、<code>deep-research</code>）通常假設通用環境。
+    拿到之後，第一步是「本地化」：把路徑、慣例、輸出格式改成符合你的工作環境。
+</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>本地化下載的 Skill</span> <button class="cb-copy" data-code="You: 我把 frontend-design skill 下載到 ~/.claude/skills/ 了，
+     請閱讀這個 skill，並做以下調整：
+     1. 預設使用 Vue 3 + Vite（原本是 React）
+     2. 輸出目錄改到 C:\VSCode_Proj\frontend-output\
+     3. 在設計思考流程加入「必須符合公司設計規範 style-guide.md」這一步
+
+Claude: 好的，已更新 frontend-design Skill..." data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: 我把 frontend-design skill 下載到 ~/.claude/skills/ 了，</span></span>
+<span class="line"><span>     請閱讀這個 skill，並做以下調整：</span></span>
+<span class="line"><span>     1. 預設使用 Vue 3 + Vite（原本是 React）</span></span>
+<span class="line"><span>     2. 輸出目錄改到 C:\VSCode_Proj\frontend-output\</span></span>
+<span class="line"><span>     3. 在設計思考流程加入「必須符合公司設計規範 style-guide.md」這一步</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Claude: 好的，已更新 frontend-design Skill...</span></span></code></pre> </div> </div>   <h2>列出所有 Skills</h2> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>互動模式</span> <button class="cb-copy" data-code="You: /skills
+
+# 列出所有已載入的 Skills（官方 + 自訂）" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>You: /skills</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 列出所有已載入的 Skills（官方 + 自訂）</span></span></code></pre> </div> </div>    </div> <nav class="cnav" data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" class="prev" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>← 上一章</span> <span class="nt" data-astro-cid-mw7aashj>使用內建 Skills</span> </a> <a href="/claude-code-guide/ch15-mcp-intro" class="next" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>下一章 →</span> <span class="nt" data-astro-cid-mw7aashj>MCP 是什麼？</span> </a> </nav> </main> </div> <script>
+    // Theme
+    const html = document.documentElement;
+    const tt = document.getElementById('tt');
+    const isun = document.getElementById('isun');
+    const imoon = document.getElementById('imoon');
+    function syncIcons() {
+      const dk = html.classList.contains('dark');
+      isun.style.display = dk ? 'block' : 'none';
+      imoon.style.display = dk ? 'none' : 'block';
+    }
+    syncIcons();
+    tt?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('cc-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      syncIcons();
+    });
+
+    // Progress
+    const pb = document.getElementById('pb');
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = t > 0 ? `${(window.scrollY / t) * 100}%` : '0%';
+    }, { passive: true });
+
+    // Sidebar part toggles
+    document.querySelectorAll('.pt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.pid;
+        const list = document.querySelector(`[data-pl="${id}"]`);
+        btn.classList.toggle('open');
+        list?.classList.toggle('closed');
+      });
+    });
+
+    // Mobile menu
+    const sb = document.getElementById('sb');
+    const ov = document.getElementById('ov');
+    const mb = document.getElementById('mbtn');
+    const open = () => { sb.classList.add('open'); ov.classList.add('open'); document.body.style.overflow='hidden'; };
+    const close = () => { sb.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow=''; };
+    mb?.addEventListener('click', open);
+    ov?.addEventListener('click', close);
+  </script> </body> 

@@ -1,0 +1,528 @@
+<!DOCTYPE html><html lang="zh-TW" data-astro-cid-mw7aashj> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>實戰：自動寫工作日誌 | </title><link rel="stylesheet" href="/claude-code-guide/_astro/DocsLayout.BldRaKia.css">
+<style>.verify-term{background:#0f172a;padding:1.5rem;border-radius:12px;margin:1.5rem 0;font-family:var(--mono);font-size:.85rem;color:#e2e8f0;border:1px solid #1e293b;box-shadow:0 10px 30px #0000004d}.vt-header{display:flex;gap:6px;margin-bottom:1rem}.vt-dot{width:12px;height:12px;border-radius:50%}.vt-red{background:#ef4444}.vt-yellow{background:#f59e0b}.vt-green{background:#10b981}.vt-prompt{color:#38bdf8}.vt-cmd{color:#f8fafc}.vt-out{color:#cbd5e1;margin-top:.5rem;white-space:pre-wrap;line-height:1.5}.vt-hl{color:#10b981}
+.cb-wrap[data-astro-cid-jgrc2lfe]{margin-bottom:1.25rem}.cb-bar[data-astro-cid-jgrc2lfe]{display:flex;align-items:center;justify-content:space-between;background:#1a1a2e;border-radius:6px 6px 0 0;border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.05);padding:.18rem .5rem .18rem .75rem;min-height:1.8rem}.cb-label[data-astro-cid-jgrc2lfe]{color:#a6adc8;font-family:Fira Code,Cascadia Code,Consolas,monospace;font-size:.73rem;letter-spacing:.04em}.cb-inner[data-astro-cid-jgrc2lfe] pre{border-radius:0 0 8px 8px!important;margin-bottom:0!important}.cb-copy[data-astro-cid-jgrc2lfe]{background:#ffffff14;color:#888;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.15rem .55rem;font-size:.7rem;cursor:pointer;transition:all .15s;flex-shrink:0}.cb-copy[data-astro-cid-jgrc2lfe]:hover{background:#ffffff2e;color:#fff}.cb-copy[data-astro-cid-jgrc2lfe].copied{color:#4ec9b0;border-color:#4ec9b0}
+</style></head>Claude Code 完整指南 <meta name="description" content="用 Hooks 實現每次 Claude Code session 結束後，自動把摘要寫入 Obsidian 工作日誌。"> <link rel="icon" href="/claude-code-guide/favicon.svg" type="image/svg+xml"> <script>
+    (function () {
+      const s = localStorage.getItem('cc-theme');
+      const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+    })();
+  </script>  </html> <body data-astro-cid-mw7aashj> <div id="pb" data-astro-cid-mw7aashj></div> <header data-astro-cid-mw7aashj> <div class="hi" data-astro-cid-mw7aashj> <div class="hl" data-astro-cid-mw7aashj> <button id="mbtn" class="ibtn" aria-label="選單" data-astro-cid-mw7aashj> <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" data-astro-cid-mw7aashj></path> </svg> </button> <a href="/claude-code-guide/" class="site-name" data-astro-cid-mw7aashj> <span class="logo" data-astro-cid-mw7aashj>CC</span>&nbsp;&nbsp;Claude Code 完整指南
+</a> </div> <div class="hr" data-astro-cid-mw7aashj> <button id="tt" class="ibtn" aria-label="切換主題" data-astro-cid-mw7aashj> <svg id="isun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" data-astro-cid-mw7aashj></path> </svg> <svg id="imoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" data-astro-cid-mw7aashj></path> </svg> </button> </div> </div> </header> <div id="layout" data-astro-cid-mw7aashj> <nav id="sb" data-astro-cid-mw7aashj> <div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="1" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 1：入門</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="1" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch01-what-is-cc" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>1.</span> <span data-astro-cid-mw7aashj>什麼是 Claude Code？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch02-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>2.</span> <span data-astro-cid-mw7aashj>安裝與環境設定</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch03-first-chat" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>3.</span> <span data-astro-cid-mw7aashj>第一次對話</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="2" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 2：模型選擇</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="2" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch04-models" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>4.</span> <span data-astro-cid-mw7aashj>三大模型比較</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>5.</span> <span data-astro-cid-mw7aashj>如何切換模型</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="3" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 3：設定與記憶</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="3" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>6.</span> <span data-astro-cid-mw7aashj>CLAUDE.md</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch07-rules" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>7.</span> <span data-astro-cid-mw7aashj>Rules</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>8.</span> <span data-astro-cid-mw7aashj>Memory.md</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="4" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 4：Hooks</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="4" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>9.</span> <span data-astro-cid-mw7aashj>Hooks 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch10-hooks-diary" class="active" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>10.</span> <span data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch11-hooks-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>11.</span> <span data-astro-cid-mw7aashj>Hooks 安全性應用</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="5" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 5：Skills</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="5" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch12-skills-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>12.</span> <span data-astro-cid-mw7aashj>官方六大類 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>13.</span> <span data-astro-cid-mw7aashj>使用內建 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch14-skills-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>14.</span> <span data-astro-cid-mw7aashj>自己寫 Skill</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="6" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 6：MCP Plugin</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="6" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch15-mcp-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>15.</span> <span data-astro-cid-mw7aashj>MCP 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>16.</span> <span data-astro-cid-mw7aashj>安裝 MCP Server</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch17-mcp-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>17.</span> <span data-astro-cid-mw7aashj>自製 MCP Server</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="7" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 7：進階技巧</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="7" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch18-multi-agent" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>18.</span> <span data-astro-cid-mw7aashj>多 Agent 協作</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch19-permissions" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>19.</span> <span data-astro-cid-mw7aashj>Permissions 模式</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch20-faq" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>20.</span> <span data-astro-cid-mw7aashj>常見問題 &amp; Debug</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="8" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 8：附錄</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="8" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-mcp-spec" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>21.</span> <span data-astro-cid-mw7aashj>附錄 A：MCP 協定規格與底層通訊解析</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-sandbox-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>22.</span> <span data-astro-cid-mw7aashj>附錄 B：終端沙箱安全與權限控制原理</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-terminal-pager" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>23.</span> <span data-astro-cid-mw7aashj>附錄 C：終端 Pager 控制與中文字元編碼故障排除</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>24.</span> <span data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-skills-examples" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>25.</span> <span data-astro-cid-mw7aashj>附錄 E：Skills 實戰手冊</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-pro-limits" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>26.</span> <span data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span>  </a> </li> </ul> </div> </nav> <div id="ov" data-astro-cid-mw7aashj></div> <main data-astro-cid-mw7aashj> <div class="cb" data-astro-cid-mw7aashj>  <p class="clabel">第 10 章 · Part 4：Hooks</p> <h1>實戰：自動寫工作日誌</h1> <p class="cdesc">每次 CC session 結束時，自動把工作紀錄寫入 Obsidian 日誌——不需要手動整理，Hooks 全程代勞。</p> <h2>目標</h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 240" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--text)" fill-opacity="0.4"/>
+    </marker>
+  </defs>
+  <style>
+    .glass-sys { fill: rgba(59,130,246,0.07); stroke: #60a5fa; stroke-width: 2; rx: 8; }
+    .glass-act { fill: rgba(16,185,129,0.07); stroke: #34d399; stroke-width: 2; rx: 8; }
+    .node-title { font-family: "system-ui, sans-serif"; font-size: 18px; font-weight: bold; fill: var(--text); }
+  </style>
+
+  <g transform="translate(100, 100)">
+    <rect class="glass-sys" width="150" height="60"/>
+    <text class="node-title" x="75" y="35" text-anchor="middle">Claude Code</text>
+  </g>
+
+  <g transform="translate(325, 100)">
+    <rect class="glass-act" width="150" height="60"/>
+    <text class="node-title" x="75" y="35" text-anchor="middle">TaskDone Hook</text>
+  </g>
+
+  <g transform="translate(550, 100)">
+    <rect class="glass-sys" width="150" height="60"/>
+    <text class="node-title" x="75" y="35" text-anchor="middle">diary.md</text>
+  </g>
+  
+  <path d="M 250 130 L 325 130" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M 475 130 L 550 130" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+  
+  <text x="287" y="115" text-anchor="middle" font-size="17px" fill="var(--text)" opacity="0.7">任務結束</text>
+  <text x="512" y="115" text-anchor="middle" font-size="17px" fill="var(--text)" opacity="0.7">寫入日誌</text>
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>自動化日誌工作流：每次 Claude Code 完成任務，Hook 就會將對話紀錄自動寫入日誌檔中。</figcaption> </figure> <p>這個章節要實作一個真實的 Hooks 應用：<strong>每次 Claude Code session 結束時，自動把 session 摘要追加到今日的 Obsidian 工作日誌</strong>，路徑為：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>工作日誌路徑</span> <button class="cb-copy" data-code="C:\Obsidian\vault\工作日誌\YYYY-MM-DD.md" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>C:\Obsidian\vault\工作日誌\YYYY-MM-DD.md</span></span></code></pre> </div> </div>  <script type="module">document.querySelectorAll(".cb-copy").forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.code;t&&navigator.clipboard.writeText(t).then(()=>{e.textContent="已複製!",e.classList.add("copied"),setTimeout(()=>{e.textContent="複製",e.classList.remove("copied")},2e3)})})});</script> <p>完成後的效果：</p> <ul> <li>打開 CC、做事、關掉——日誌自動更新</li> <li>每個 session 留下時間戳記、工作目錄、Session ID</li> <li>完全不需要手動複製貼上</li> </ul> <h2>Step 1：建立 Hook 腳本</h2> <p>先建立腳本目錄（若不存在）：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>Terminal</span> <button class="cb-copy" data-code="mkdir -p ~/.claude/hooks" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="bash"><code><span class="line"><span style="color:#61AFEF">mkdir</span><span style="color:#D19A66"> -p</span><span style="color:#98C379"> ~/.claude/hooks</span></span></code></pre> </div> </div>   <p>建立 PowerShell 腳本 <code>~/.claude/hooks/write-diary.ps1</code>：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/hooks/write-diary.ps1</span> <button class="cb-copy" data-code="# 從 stdin 讀取 session 資料
+$data = $input | ConvertFrom-Json
+$date = Get-Date -Format &quot;yyyy-MM-dd&quot;
+$diaryPath = &quot;C:\Obsidian\vault\工作日誌\$date.md&quot;
+
+# 準備要寫入的內容
+$entry = @&quot;
+
+---
+## Claude Code Session - $(Get-Date -Format &quot;HH:mm&quot;)
+- Session ID: $($data.session_id)
+- 工作目錄: $($data.cwd)
+整理人：Claude Code &amp; Porter
+&quot;@
+
+Add-Content -Path $diaryPath -Value $entry -Encoding UTF8" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="powershell"><code><span class="line"><span style="color:#7F848E;font-style:italic"># 從 stdin 讀取 session 資料</span></span>
+<span class="line"><span style="color:#E06C75">$data</span><span style="color:#56B6C2"> =</span><span style="color:#ABB2BF"> $input | </span><span style="color:#56B6C2">ConvertFrom-Json</span></span>
+<span class="line"><span style="color:#E06C75">$date</span><span style="color:#56B6C2"> =</span><span style="color:#56B6C2"> Get-Date</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">Format </span><span style="color:#98C379">"yyyy-MM-dd"</span></span>
+<span class="line"><span style="color:#E06C75">$diaryPath</span><span style="color:#56B6C2"> =</span><span style="color:#98C379"> "C:\Obsidian\vault\工作日誌\</span><span style="color:#E06C75">$date</span><span style="color:#98C379">.md"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 準備要寫入的內容</span></span>
+<span class="line"><span style="color:#E06C75">$entry</span><span style="color:#56B6C2"> =</span><span style="color:#98C379"> @"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#98C379">---</span></span>
+<span class="line"><span style="color:#98C379">## Claude Code Session - </span><span style="color:#C678DD">$(</span><span style="color:#56B6C2">Get-Date</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">Format </span><span style="color:#98C379">"HH:mm"</span><span style="color:#C678DD">)</span></span>
+<span class="line"><span style="color:#98C379">- Session ID: </span><span style="color:#C678DD">$(</span><span style="color:#E06C75">$data.session_id</span><span style="color:#C678DD">)</span></span>
+<span class="line"><span style="color:#98C379">- 工作目錄: </span><span style="color:#C678DD">$(</span><span style="color:#E06C75">$data.cwd</span><span style="color:#C678DD">)</span></span>
+<span class="line"><span style="color:#98C379">整理人：Claude Code &#x26; Porter</span></span>
+<span class="line"><span style="color:#98C379">"@</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#56B6C2">Add-Content</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">Path </span><span style="color:#E06C75">$diaryPath</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">Value </span><span style="color:#E06C75">$entry</span><span style="color:#56B6C2"> -</span><span style="color:#ABB2BF">Encoding UTF8</span></span></code></pre> </div> </div>   <p>腳本說明：</p> <ul> <li><code>$input | ConvertFrom-Json</code> — 讀取 CC 透過 stdin 傳入的 session 資料</li> <li><code>Get-Date -Format "yyyy-MM-dd"</code> — 取得今日日期，組成日誌檔案路徑</li> <li><code>Add-Content</code> — 追加到檔案末尾（不覆蓋），確保 UTF-8 編碼</li> </ul> <h2>Step 2：設定 settings.json</h2> <p>在 <code>~/.claude/settings.json</code> 加入 <code>Stop</code> Hook，讓腳本在每次 agent 回應結束後觸發：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;Stop&quot;: [
+      {
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;powershell -NonInteractive -File ~/.claude/hooks/write-diary.ps1&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "Stop"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"powershell -NonInteractive -File ~/.claude/hooks/write-diary.ps1"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <p>如果你的環境是 macOS / Linux，改用 bash 腳本：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（Linux/macOS）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;Stop&quot;: [
+      {
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;~/.claude/hooks/write-diary.sh&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "Stop"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"~/.claude/hooks/write-diary.sh"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h2>Step 3：驗證</h2> <p>測試流程：</p> <ol> <li>開啟 Claude Code：<code>claude</code></li> <li>隨便說幾句話，例如「幫我列出目前目錄的檔案」</li> <li>按 <code>Ctrl+C</code> 或輸入 <code>/exit</code> 結束 session</li> <li>檢查今日日誌檔案是否已更新：</li> </ol>  <div class="verify-term"> <div class="vt-header"> <div class="vt-dot vt-red"></div><div class="vt-dot vt-yellow"></div><div class="vt-dot vt-green"></div> </div> <div><span class="vt-prompt">PS C:\></span> <span class="vt-cmd">$date = Get-Date -Format "yyyy-MM-dd"</span></div> <div><span class="vt-prompt">PS C:\></span> <span class="vt-cmd">Get-Content "C:\Obsidian\vault\工作日誌\$date.md" -Tail 5</span></div> <div class="vt-out">---
+<span class="vt-hl">## Claude Code Session - 14:35</span> <span class="vt-hl">- Session ID: sess_abc123xyz</span> <span class="vt-hl">- 工作目錄: C:\VSCode_Proj\my-project</span>
+整理人：Claude Code & Porter</div> </div> <h2>進階：讓 Claude 寫摘要</h2> <p>上面的腳本只記錄 metadata（session ID、目錄）。如果你想要讓 Claude <strong>自動總結這次 session 做了什麼</strong>，可以改用 <code>prompt</code> 類型的 Hook：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（使用 prompt 類型）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;Stop&quot;: [
+      {
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;prompt&quot;,
+            &quot;prompt&quot;: &quot;請用 2-3 句繁體中文總結這次 session 完成了什麼工作，格式為條列式。然後呼叫 write_diary 工具把摘要寫入今日工作日誌。&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "Stop"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"prompt"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "prompt"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"請用 2-3 句繁體中文總結這次 session 完成了什麼工作，格式為條列式。然後呼叫 write_diary 工具把摘要寫入今日工作日誌。"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <p><code>prompt</code> 類型會讓 CC 在 session 結束時，用目前對話的完整 context 執行一次額外的 LLM 推理，生成摘要後再寫入日誌。這樣每篇日誌都會有清楚的工作記錄，而不只是 metadata。</p> <h3>組合使用：先跑腳本，再生成摘要</h3> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（組合 command + prompt）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;Stop&quot;: [
+      {
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;powershell -NonInteractive -File ~/.claude/hooks/write-diary.ps1&quot;
+          },
+          {
+            &quot;type&quot;: &quot;prompt&quot;,
+            &quot;prompt&quot;: &quot;用一句話總結這次對話的主要成果，追加到今日工作日誌。&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "Stop"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"powershell -NonInteractive -File ~/.claude/hooks/write-diary.ps1"</span></span>
+<span class="line"><span style="color:#ABB2BF">          },</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"prompt"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "prompt"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"用一句話總結這次對話的主要成果，追加到今日工作日誌。"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h2>自動 Git Staging</h2> <p>每次 Claude 編輯完檔案，自動執行 <code>git add</code>——不再需要手動暫存，最終只要確認 commit 訊息就好。</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/hooks/auto-stage.sh</span> <button class="cb-copy" data-code="#!/bin/bash
+INPUT=$(cat)
+FILE_PATH=$(echo &quot;$INPUT&quot; | python3 -c &quot;import sys,json; d=json.load(sys.stdin); print(d.get('tool_input',{}).get('file_path',''))&quot;)
+[ -z &quot;$FILE_PATH&quot; ] &amp;&amp; exit 0
+
+PROJECT_DIR=&quot;$CLAUDE_PROJECT_DIR&quot;
+[ -z &quot;$PROJECT_DIR&quot; ] &amp;&amp; PROJECT_DIR=&quot;$(pwd)&quot;
+cd &quot;$PROJECT_DIR&quot; || exit 0
+
+git add &quot;$FILE_PATH&quot; 2>/dev/null || true
+exit 0" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic">#!/bin/bash</span></span>
+<span class="line"><span style="color:#E06C75">INPUT</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#61AFEF">cat</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#E06C75">FILE_PATH</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$INPUT</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">python3</span><span style="color:#D19A66"> -c</span><span style="color:#98C379"> "import sys,json; d=json.load(sys.stdin); print(d.get('tool_input',{}).get('file_path',''))"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#ABB2BF">[ </span><span style="color:#56B6C2">-z</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$FILE_PATH</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> ] &#x26;&#x26; </span><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">PROJECT_DIR</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"</span><span style="color:#E06C75">$CLAUDE_PROJECT_DIR</span><span style="color:#98C379">"</span></span>
+<span class="line"><span style="color:#ABB2BF">[ </span><span style="color:#56B6C2">-z</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$PROJECT_DIR</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> ] &#x26;&#x26; </span><span style="color:#E06C75">PROJECT_DIR</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"$(</span><span style="color:#56B6C2">pwd</span><span style="color:#98C379">)"</span></span>
+<span class="line"><span style="color:#56B6C2">cd</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$PROJECT_DIR</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> || </span><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#61AFEF">git</span><span style="color:#98C379"> add</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$FILE_PATH</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> 2></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> || </span><span style="color:#56B6C2">true</span></span>
+<span class="line"><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（auto-stage）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;PostToolUse&quot;: [
+      {
+        &quot;matcher&quot;: &quot;Edit|Write|MultiEdit&quot;,
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;~/.claude/hooks/auto-stage.sh&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "PostToolUse"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "matcher"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"Edit|Write|MultiEdit"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"~/.claude/hooks/auto-stage.sh"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h2>Token 使用量追蹤</h2> <p>每次工具呼叫結束後，把工具名稱與時間戳記追加到 CSV 檔——方便事後分析哪些工具最耗資源。設定 <code>async: true</code> 讓日誌在背景寫入，不阻擋主流程。</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/hooks/cost-logger.py</span> <button class="cb-copy" data-code="#!/usr/bin/env python3
+import json, sys, os, csv
+from datetime import datetime
+
+data = json.load(sys.stdin)
+log_file = os.path.expanduser(&quot;~/.claude/cost-log.csv&quot;)
+row = [
+    datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;),
+    data.get(&quot;tool_name&quot;, &quot;&quot;),
+    data.get(&quot;session_id&quot;, &quot;&quot;),
+]
+with open(log_file, &quot;a&quot;, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as f:
+    csv.writer(f).writerow(row)" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="python"><code><span class="line"><span style="color:#7F848E;font-style:italic">#!/usr/bin/env python3</span></span>
+<span class="line"><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> json, sys, os, csv</span></span>
+<span class="line"><span style="color:#C678DD">from</span><span style="color:#ABB2BF"> datetime </span><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> datetime</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ABB2BF">data </span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF"> json.</span><span style="color:#61AFEF">load</span><span style="color:#ABB2BF">(sys.stdin)</span></span>
+<span class="line"><span style="color:#ABB2BF">log_file </span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF"> os.path.</span><span style="color:#61AFEF">expanduser</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">"~/.claude/cost-log.csv"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#ABB2BF">row </span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF"> [</span></span>
+<span class="line"><span style="color:#ABB2BF">    datetime.</span><span style="color:#61AFEF">now</span><span style="color:#ABB2BF">().</span><span style="color:#61AFEF">strftime</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">"%Y-%m-</span><span style="color:#D19A66">%d</span><span style="color:#98C379"> %H:%M:%S"</span><span style="color:#ABB2BF">),</span></span>
+<span class="line"><span style="color:#ABB2BF">    data.</span><span style="color:#61AFEF">get</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">"tool_name"</span><span style="color:#ABB2BF">, </span><span style="color:#98C379">""</span><span style="color:#ABB2BF">),</span></span>
+<span class="line"><span style="color:#ABB2BF">    data.</span><span style="color:#61AFEF">get</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">"session_id"</span><span style="color:#ABB2BF">, </span><span style="color:#98C379">""</span><span style="color:#ABB2BF">),</span></span>
+<span class="line"><span style="color:#ABB2BF">]</span></span>
+<span class="line"><span style="color:#C678DD">with</span><span style="color:#56B6C2"> open</span><span style="color:#ABB2BF">(log_file, </span><span style="color:#98C379">"a"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75;font-style:italic">newline</span><span style="color:#56B6C2">=</span><span style="color:#98C379">""</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75;font-style:italic">encoding</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"utf-8"</span><span style="color:#ABB2BF">) </span><span style="color:#C678DD">as</span><span style="color:#ABB2BF"> f:</span></span>
+<span class="line"><span style="color:#ABB2BF">    csv.</span><span style="color:#61AFEF">writer</span><span style="color:#ABB2BF">(f).</span><span style="color:#61AFEF">writerow</span><span style="color:#ABB2BF">(row)</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（cost-logger，async: true）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;PostToolUse&quot;: [
+      {
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;python3 ~/.claude/hooks/cost-logger.py&quot;,
+            &quot;async&quot;: true
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "PostToolUse"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"python3 ~/.claude/hooks/cost-logger.py"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "async"</span><span style="color:#ABB2BF">: </span><span style="color:#D19A66">true</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <p>日誌範例：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/cost-log.csv</span> <button class="cb-copy" data-code="2026-06-10 09:15:33,Read,sess_abc123
+2026-06-10 09:15:41,Bash,sess_abc123
+2026-06-10 09:15:55,Edit,sess_abc123
+2026-06-10 09:16:10,Bash,sess_abc123" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="text"><code><span class="line"><span>2026-06-10 09:15:33,Read,sess_abc123</span></span>
+<span class="line"><span>2026-06-10 09:15:41,Bash,sess_abc123</span></span>
+<span class="line"><span>2026-06-10 09:15:55,Edit,sess_abc123</span></span>
+<span class="line"><span>2026-06-10 09:16:10,Bash,sess_abc123</span></span></code></pre> </div> </div>   <h2>編輯後自動格式化</h2> <p>Claude 修改完程式碼後，自動用對應格式化工具整理風格——依副檔名選擇 <code>prettier</code>（JS/TS/CSS）、<code>black</code>（Python）或 <code>gofmt</code>（Go）。無論 Claude 的縮排習慣如何，輸出永遠符合你的 code style。</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/hooks/format-after-edit.sh</span> <button class="cb-copy" data-code="#!/bin/bash
+INPUT=$(cat)
+FILE_PATH=$(echo &quot;$INPUT&quot; | python3 -c &quot;import sys,json; d=json.load(sys.stdin); print(d.get('tool_input',{}).get('file_path',''))&quot;)
+[ -z &quot;$FILE_PATH&quot; ] &amp;&amp; exit 0
+
+EXT=$(python3 -c &quot;import sys; f=sys.argv[1]; print(f.rsplit('.',1)[-1].lower() if '.' in f else '')&quot; &quot;$FILE_PATH&quot;)
+
+case &quot;$EXT&quot; in
+  js|ts|jsx|tsx|css|html|json|md)
+    command -v prettier >/dev/null &amp;&amp; prettier --write &quot;$FILE_PATH&quot; 2>/dev/null ;;
+  py)
+    command -v black >/dev/null &amp;&amp; black -q &quot;$FILE_PATH&quot; 2>/dev/null ;;
+  go)
+    command -v gofmt >/dev/null &amp;&amp; gofmt -w &quot;$FILE_PATH&quot; 2>/dev/null ;;
+esac
+exit 0" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic">#!/bin/bash</span></span>
+<span class="line"><span style="color:#E06C75">INPUT</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#61AFEF">cat</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#E06C75">FILE_PATH</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$INPUT</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">python3</span><span style="color:#D19A66"> -c</span><span style="color:#98C379"> "import sys,json; d=json.load(sys.stdin); print(d.get('tool_input',{}).get('file_path',''))"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#ABB2BF">[ </span><span style="color:#56B6C2">-z</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$FILE_PATH</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> ] &#x26;&#x26; </span><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">EXT</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#61AFEF">python3</span><span style="color:#D19A66"> -c</span><span style="color:#98C379"> "import sys; f=sys.argv[1]; print(f.rsplit('.',1)[-1].lower() if '.' in f else '')"</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$FILE_PATH</span><span style="color:#98C379">"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">case</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$EXT</span><span style="color:#98C379">"</span><span style="color:#C678DD"> in</span></span>
+<span class="line"><span style="color:#E06C75">  js</span><span style="color:#ABB2BF">|</span><span style="color:#E06C75">ts</span><span style="color:#ABB2BF">|</span><span style="color:#E06C75">jsx</span><span style="color:#ABB2BF">|</span><span style="color:#E06C75">tsx</span><span style="color:#ABB2BF">|</span><span style="color:#E06C75">css</span><span style="color:#ABB2BF">|</span><span style="color:#E06C75">html</span><span style="color:#ABB2BF">|</span><span style="color:#E06C75">json</span><span style="color:#ABB2BF">|</span><span style="color:#E06C75">md</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#56B6C2">    command</span><span style="color:#D19A66"> -v</span><span style="color:#98C379"> prettier</span><span style="color:#ABB2BF"> ></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> &#x26;&#x26; </span><span style="color:#61AFEF">prettier</span><span style="color:#D19A66"> --write</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$FILE_PATH</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> 2></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> ;;</span></span>
+<span class="line"><span style="color:#E06C75">  py</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#56B6C2">    command</span><span style="color:#D19A66"> -v</span><span style="color:#98C379"> black</span><span style="color:#ABB2BF"> ></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> &#x26;&#x26; </span><span style="color:#61AFEF">black</span><span style="color:#D19A66"> -q</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$FILE_PATH</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> 2></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> ;;</span></span>
+<span class="line"><span style="color:#E06C75">  go</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#56B6C2">    command</span><span style="color:#D19A66"> -v</span><span style="color:#98C379"> gofmt</span><span style="color:#ABB2BF"> ></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> &#x26;&#x26; </span><span style="color:#61AFEF">gofmt</span><span style="color:#D19A66"> -w</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$FILE_PATH</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> 2></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> ;;</span></span>
+<span class="line"><span style="color:#C678DD">esac</span></span>
+<span class="line"><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（format-after-edit）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;PostToolUse&quot;: [
+      {
+        &quot;matcher&quot;: &quot;Edit|Write|MultiEdit&quot;,
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;~/.claude/hooks/format-after-edit.sh&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "PostToolUse"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "matcher"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"Edit|Write|MultiEdit"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"~/.claude/hooks/format-after-edit.sh"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h2>Notification Hook：等待提示通知</h2> <p>
+Claude 長時間跑任務時，你往往切換去做別的事。
+<code>Notification</code> Hook 在 Claude 需要確認（<code>permission_prompt</code>）或等待輸入（<code>idle_prompt</code>）時，
+    主動發 Slack 通知把你叫回來。
+</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/hooks/notify-slack.sh</span> <button class="cb-copy" data-code="#!/bin/bash
+INPUT=$(cat)
+NOTIF_TYPE=$(echo &quot;$INPUT&quot; | python3 -c &quot;import sys,json; print(json.load(sys.stdin).get('notification_type',''))&quot;)
+MESSAGE=$(echo &quot;$INPUT&quot; | python3 -c &quot;import sys,json; print(json.load(sys.stdin).get('message',''))&quot;)
+
+SLACK_URL=&quot;$SLACK_WEBHOOK_URL&quot;
+[ -z &quot;$SLACK_URL&quot; ] &amp;&amp; exit 0
+
+case &quot;$NOTIF_TYPE&quot; in
+  permission_prompt) ICON=&quot;:bell:&quot;  ; TITLE=&quot;Claude 需要你的確認&quot; ;;
+  idle_prompt)       ICON=&quot;:zzz:&quot;   ; TITLE=&quot;Claude 在等待輸入&quot; ;;
+  *) exit 0 ;;
+esac
+
+PAYLOAD=$(printf '{&quot;text&quot;:&quot;%s *%s*: %s&quot;}' &quot;$ICON&quot; &quot;$TITLE&quot; &quot;$MESSAGE&quot;)
+curl -s -X POST &quot;$SLACK_URL&quot; -H &quot;Content-Type: application/json&quot; -d &quot;$PAYLOAD&quot; >/dev/null
+exit 0" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic">#!/bin/bash</span></span>
+<span class="line"><span style="color:#E06C75">INPUT</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#61AFEF">cat</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#E06C75">NOTIF_TYPE</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$INPUT</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">python3</span><span style="color:#D19A66"> -c</span><span style="color:#98C379"> "import sys,json; print(json.load(sys.stdin).get('notification_type',''))"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#E06C75">MESSAGE</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$INPUT</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">python3</span><span style="color:#D19A66"> -c</span><span style="color:#98C379"> "import sys,json; print(json.load(sys.stdin).get('message',''))"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">SLACK_URL</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"</span><span style="color:#E06C75">$SLACK_WEBHOOK_URL</span><span style="color:#98C379">"</span></span>
+<span class="line"><span style="color:#ABB2BF">[ </span><span style="color:#56B6C2">-z</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$SLACK_URL</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> ] &#x26;&#x26; </span><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">case</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$NOTIF_TYPE</span><span style="color:#98C379">"</span><span style="color:#C678DD"> in</span></span>
+<span class="line"><span style="color:#E06C75">  permission_prompt</span><span style="color:#ABB2BF">) </span><span style="color:#E06C75">ICON</span><span style="color:#56B6C2">=</span><span style="color:#98C379">":bell:"</span><span style="color:#ABB2BF">  ; </span><span style="color:#E06C75">TITLE</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"Claude 需要你的確認"</span><span style="color:#ABB2BF"> ;;</span></span>
+<span class="line"><span style="color:#E06C75">  idle_prompt</span><span style="color:#ABB2BF">)       </span><span style="color:#E06C75">ICON</span><span style="color:#56B6C2">=</span><span style="color:#98C379">":zzz:"</span><span style="color:#ABB2BF">   ; </span><span style="color:#E06C75">TITLE</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"Claude 在等待輸入"</span><span style="color:#ABB2BF"> ;;</span></span>
+<span class="line"><span style="color:#ABB2BF">  *) </span><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span><span style="color:#ABB2BF"> ;;</span></span>
+<span class="line"><span style="color:#C678DD">esac</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E06C75">PAYLOAD</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">$(</span><span style="color:#56B6C2">printf</span><span style="color:#98C379"> '{"text":"%s *%s*: %s"}'</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$ICON</span><span style="color:#98C379">"</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$TITLE</span><span style="color:#98C379">"</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$MESSAGE</span><span style="color:#98C379">"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"><span style="color:#61AFEF">curl</span><span style="color:#D19A66"> -s</span><span style="color:#D19A66"> -X</span><span style="color:#98C379"> POST</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$SLACK_URL</span><span style="color:#98C379">"</span><span style="color:#D19A66"> -H</span><span style="color:#98C379"> "Content-Type: application/json"</span><span style="color:#D19A66"> -d</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$PAYLOAD</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> ></span><span style="color:#98C379">/dev/null</span></span>
+<span class="line"><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（Notification Hook）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;Notification&quot;: [
+      {
+        &quot;matcher&quot;: &quot;permission_prompt|idle_prompt&quot;,
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;~/.claude/hooks/notify-slack.sh&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "Notification"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "matcher"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"permission_prompt|idle_prompt"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"~/.claude/hooks/notify-slack.sh"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <div class="call tip"> <span class="ci">💡</span> <div> <strong>設定 SLACK_WEBHOOK_URL</strong> <p>Slack Webhook URL 屬於敏感資訊，絕對不要寫進 settings.json。在 <code>~/.bashrc</code> 或 <code>~/.zshrc</code> 加入：<br> <code>export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/..."</code><br>
+腳本執行時即可讀取。Windows 使用者可在系統環境變數或 <code>~/.profile</code> 加入相同設定。</p> </div> </div> <h2>延伸：SessionStart 注入 Git 上下文</h2> <p>
+Stop Hook 是 session 結束後動作。<code>SessionStart</code> 則是 session 開始時執行——
+    可以在 Claude 開始工作<em>之前</em>，自動把 Git 分支、最近 commit、待辦事項注入為初始 context，
+    讓 Claude 一開口就知道現在專案的狀態。
+</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/hooks/inject-context.sh</span> <button class="cb-copy" data-code="#!/bin/bash
+PROJECT_DIR=&quot;$CLAUDE_PROJECT_DIR&quot;
+[ -z &quot;$PROJECT_DIR&quot; ] &amp;&amp; PROJECT_DIR=&quot;$(pwd)&quot;
+cd &quot;$PROJECT_DIR&quot; || exit 0
+
+echo &quot;## 目前專案狀態（SessionStart 自動注入）&quot;
+echo &quot;&quot;
+echo &quot;分支：$(git branch --show-current 2>/dev/null || echo '(非 git 專案)')&quot;
+echo &quot;&quot;
+echo &quot;最近 5 個 commit：&quot;
+git log --oneline -5 2>/dev/null || echo &quot;  (無 git 歷史)&quot;
+echo &quot;&quot;
+echo &quot;工作樹變更：&quot;
+git status --short 2>/dev/null || echo &quot;  (乾淨)&quot;
+echo &quot;&quot;
+echo &quot;TODO 清單：&quot;
+grep -rn &quot;TODO:&quot; src/ 2>/dev/null | head -5 || echo &quot;  (無待辦)&quot;
+exit 0" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic">#!/bin/bash</span></span>
+<span class="line"><span style="color:#E06C75">PROJECT_DIR</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"</span><span style="color:#E06C75">$CLAUDE_PROJECT_DIR</span><span style="color:#98C379">"</span></span>
+<span class="line"><span style="color:#ABB2BF">[ </span><span style="color:#56B6C2">-z</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$PROJECT_DIR</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> ] &#x26;&#x26; </span><span style="color:#E06C75">PROJECT_DIR</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"$(</span><span style="color:#56B6C2">pwd</span><span style="color:#98C379">)"</span></span>
+<span class="line"><span style="color:#56B6C2">cd</span><span style="color:#98C379"> "</span><span style="color:#E06C75">$PROJECT_DIR</span><span style="color:#98C379">"</span><span style="color:#ABB2BF"> || </span><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "## 目前專案狀態（SessionStart 自動注入）"</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> ""</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "分支：$(</span><span style="color:#61AFEF">git</span><span style="color:#98C379"> branch </span><span style="color:#D19A66">--show-current</span><span style="color:#ABB2BF"> 2></span><span style="color:#98C379">/dev/null </span><span style="color:#ABB2BF">||</span><span style="color:#56B6C2"> echo</span><span style="color:#98C379"> '(非 git 專案)')"</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> ""</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "最近 5 個 commit："</span></span>
+<span class="line"><span style="color:#61AFEF">git</span><span style="color:#98C379"> log</span><span style="color:#D19A66"> --oneline</span><span style="color:#D19A66"> -5</span><span style="color:#ABB2BF"> 2></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> || </span><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "  (無 git 歷史)"</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> ""</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "工作樹變更："</span></span>
+<span class="line"><span style="color:#61AFEF">git</span><span style="color:#98C379"> status</span><span style="color:#D19A66"> --short</span><span style="color:#ABB2BF"> 2></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> || </span><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "  (乾淨)"</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> ""</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "TODO 清單："</span></span>
+<span class="line"><span style="color:#61AFEF">grep</span><span style="color:#D19A66"> -rn</span><span style="color:#98C379"> "TODO:"</span><span style="color:#98C379"> src/</span><span style="color:#ABB2BF"> 2></span><span style="color:#98C379">/dev/null</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">head</span><span style="color:#D19A66"> -5</span><span style="color:#ABB2BF"> || </span><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "  (無待辦)"</span></span>
+<span class="line"><span style="color:#56B6C2">exit</span><span style="color:#D19A66"> 0</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json（SessionStart）</span> <button class="cb-copy" data-code="{
+  &quot;hooks&quot;: {
+    &quot;SessionStart&quot;: [
+      {
+        &quot;hooks&quot;: [
+          {
+            &quot;type&quot;: &quot;command&quot;,
+            &quot;command&quot;: &quot;~/.claude/hooks/inject-context.sh&quot;
+          }
+        ]
+      }
+    ]
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "hooks"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "SessionStart"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">      {</span></span>
+<span class="line"><span style="color:#E06C75">        "hooks"</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">          {</span></span>
+<span class="line"><span style="color:#E06C75">            "type"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"command"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">            "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"~/.claude/hooks/inject-context.sh"</span></span>
+<span class="line"><span style="color:#ABB2BF">          }</span></span>
+<span class="line"><span style="color:#ABB2BF">        ]</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <p>
+腳本的 <strong>stdout 輸出會自動注入</strong>到 Claude 的初始 context——
+    不需要你每次手動說「現在在 main 分支、有 3 個未提交的變更」，Claude 一開始就知道。
+</p> <div class="call info"> <span class="ci">ℹ️</span> <div> <strong>SessionEnd vs Stop — 差別在哪裡？</strong> <p><strong>Stop</strong> 在每次 agent <em>回應結束後</em>觸發，一次 session 中可能觸發多次（每次 Claude 說完話就觸發一次）。<strong>SessionEnd</strong> 則在整個 session 關閉時才觸發一次。寫工作日誌通常用 <strong>Stop</strong> 或 <strong>SessionEnd</strong> 都可以；如果想每次回應都記一筆，用 Stop；想要整個 session 只記一次總結，用 SessionEnd。</p> </div> </div>  </div> <nav class="cnav" data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" class="prev" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>← 上一章</span> <span class="nt" data-astro-cid-mw7aashj>Hooks 是什麼？</span> </a> <a href="/claude-code-guide/ch11-hooks-security" class="next" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>下一章 →</span> <span class="nt" data-astro-cid-mw7aashj>Hooks 安全性應用</span> </a> </nav> </main> </div> <script>
+    // Theme
+    const html = document.documentElement;
+    const tt = document.getElementById('tt');
+    const isun = document.getElementById('isun');
+    const imoon = document.getElementById('imoon');
+    function syncIcons() {
+      const dk = html.classList.contains('dark');
+      isun.style.display = dk ? 'block' : 'none';
+      imoon.style.display = dk ? 'none' : 'block';
+    }
+    syncIcons();
+    tt?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('cc-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      syncIcons();
+    });
+
+    // Progress
+    const pb = document.getElementById('pb');
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = t > 0 ? `${(window.scrollY / t) * 100}%` : '0%';
+    }, { passive: true });
+
+    // Sidebar part toggles
+    document.querySelectorAll('.pt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.pid;
+        const list = document.querySelector(`[data-pl="${id}"]`);
+        btn.classList.toggle('open');
+        list?.classList.toggle('closed');
+      });
+    });
+
+    // Mobile menu
+    const sb = document.getElementById('sb');
+    const ov = document.getElementById('ov');
+    const mb = document.getElementById('mbtn');
+    const open = () => { sb.classList.add('open'); ov.classList.add('open'); document.body.style.overflow='hidden'; };
+    const close = () => { sb.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow=''; };
+    mb?.addEventListener('click', open);
+    ov?.addEventListener('click', close);
+  </script> </body> 

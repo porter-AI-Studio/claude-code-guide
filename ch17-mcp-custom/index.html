@@ -1,0 +1,357 @@
+<!DOCTYPE html><html lang="zh-TW" data-astro-cid-mw7aashj> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>自製 MCP Server | </title><link rel="stylesheet" href="/claude-code-guide/_astro/DocsLayout.BldRaKia.css">
+<style>.mcp-why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.5rem 0}.mcp-why-card{background:var(--bg2);border:1px solid var(--border);padding:1.25rem;border-radius:12px;display:flex;gap:1rem;align-items:flex-start;transition:all .2s}.mcp-why-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 4px 15px #0000000d}.mcp-why-icon{font-size:1.5rem;background:var(--bg);width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}.mcp-why-text{font-size:.9rem;color:var(--text2);line-height:1.5;padding-top:.2rem}.mcp-why-text strong{color:var(--text);display:block;margin-bottom:.2rem}
+.cb-wrap[data-astro-cid-jgrc2lfe]{margin-bottom:1.25rem}.cb-bar[data-astro-cid-jgrc2lfe]{display:flex;align-items:center;justify-content:space-between;background:#1a1a2e;border-radius:6px 6px 0 0;border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.05);padding:.18rem .5rem .18rem .75rem;min-height:1.8rem}.cb-label[data-astro-cid-jgrc2lfe]{color:#a6adc8;font-family:Fira Code,Cascadia Code,Consolas,monospace;font-size:.73rem;letter-spacing:.04em}.cb-inner[data-astro-cid-jgrc2lfe] pre{border-radius:0 0 8px 8px!important;margin-bottom:0!important}.cb-copy[data-astro-cid-jgrc2lfe]{background:#ffffff14;color:#888;border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.15rem .55rem;font-size:.7rem;cursor:pointer;transition:all .15s;flex-shrink:0}.cb-copy[data-astro-cid-jgrc2lfe]:hover{background:#ffffff2e;color:#fff}.cb-copy[data-astro-cid-jgrc2lfe].copied{color:#4ec9b0;border-color:#4ec9b0}
+</style></head>Claude Code 完整指南 <meta name="description" content="把你的 API 包成 MCP Server，讓 Claude 直接呼叫公司內部工具。"> <link rel="icon" href="/claude-code-guide/favicon.svg" type="image/svg+xml"> <script>
+    (function () {
+      const s = localStorage.getItem('cc-theme');
+      const d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (s === 'dark' || (!s && d)) document.documentElement.classList.add('dark');
+    })();
+  </script>  </html> <body data-astro-cid-mw7aashj> <div id="pb" data-astro-cid-mw7aashj></div> <header data-astro-cid-mw7aashj> <div class="hi" data-astro-cid-mw7aashj> <div class="hl" data-astro-cid-mw7aashj> <button id="mbtn" class="ibtn" aria-label="選單" data-astro-cid-mw7aashj> <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" data-astro-cid-mw7aashj></path> </svg> </button> <a href="/claude-code-guide/" class="site-name" data-astro-cid-mw7aashj> <span class="logo" data-astro-cid-mw7aashj>CC</span>&nbsp;&nbsp;Claude Code 完整指南
+</a> </div> <div class="hr" data-astro-cid-mw7aashj> <button id="tt" class="ibtn" aria-label="切換主題" data-astro-cid-mw7aashj> <svg id="isun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728 0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" data-astro-cid-mw7aashj></path> </svg> <svg id="imoon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 0 1 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z" data-astro-cid-mw7aashj></path> </svg> </button> </div> </div> </header> <div id="layout" data-astro-cid-mw7aashj> <nav id="sb" data-astro-cid-mw7aashj> <div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="1" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 1：入門</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="1" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch01-what-is-cc" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>1.</span> <span data-astro-cid-mw7aashj>什麼是 Claude Code？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch02-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>2.</span> <span data-astro-cid-mw7aashj>安裝與環境設定</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch03-first-chat" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>3.</span> <span data-astro-cid-mw7aashj>第一次對話</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="2" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 2：模型選擇</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="2" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch04-models" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>4.</span> <span data-astro-cid-mw7aashj>三大模型比較</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch05-model-switch" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>5.</span> <span data-astro-cid-mw7aashj>如何切換模型</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="3" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 3：設定與記憶</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="3" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch06-claude-md" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>6.</span> <span data-astro-cid-mw7aashj>CLAUDE.md</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch07-rules" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>7.</span> <span data-astro-cid-mw7aashj>Rules</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch08-memory" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>8.</span> <span data-astro-cid-mw7aashj>Memory.md</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="4" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 4：Hooks</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="4" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch09-hooks-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>9.</span> <span data-astro-cid-mw7aashj>Hooks 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch10-hooks-diary" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>10.</span> <span data-astro-cid-mw7aashj>實戰：自動寫工作日誌</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch11-hooks-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>11.</span> <span data-astro-cid-mw7aashj>Hooks 安全性應用</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="5" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 5：Skills</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="5" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch12-skills-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>12.</span> <span data-astro-cid-mw7aashj>官方六大類 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch13-skills-builtin" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>13.</span> <span data-astro-cid-mw7aashj>使用內建 Skills</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch14-skills-custom" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>14.</span> <span data-astro-cid-mw7aashj>自己寫 Skill</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt open" data-pid="6" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 6：MCP Plugin</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl" data-pl="6" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch15-mcp-intro" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>15.</span> <span data-astro-cid-mw7aashj>MCP 是什麼？</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>16.</span> <span data-astro-cid-mw7aashj>安裝 MCP Server</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch17-mcp-custom" class="active" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>17.</span> <span data-astro-cid-mw7aashj>自製 MCP Server</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="7" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 7：進階技巧</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="7" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch18-multi-agent" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>18.</span> <span data-astro-cid-mw7aashj>多 Agent 協作</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch19-permissions" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>19.</span> <span data-astro-cid-mw7aashj>Permissions 模式</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch20-faq" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>20.</span> <span data-astro-cid-mw7aashj>常見問題 &amp; Debug</span>  </a> </li> </ul> </div><div class="np" data-astro-cid-mw7aashj> <button class="pt" data-pid="8" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj>Part 8：附錄</span> <svg class="arr" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" data-astro-cid-mw7aashj> <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" data-astro-cid-mw7aashj></path> </svg> </button> <ul class="nl closed" data-pl="8" data-astro-cid-mw7aashj> <li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-mcp-spec" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>21.</span> <span data-astro-cid-mw7aashj>附錄 A：MCP 協定規格與底層通訊解析</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-sandbox-security" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>22.</span> <span data-astro-cid-mw7aashj>附錄 B：終端沙箱安全與權限控制原理</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-terminal-pager" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>23.</span> <span data-astro-cid-mw7aashj>附錄 C：終端 Pager 控制與中文字元編碼故障排除</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-agent-comparison" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>24.</span> <span data-astro-cid-mw7aashj>附錄 D：AI 代理工具大比拼 (Claude Code vs Cursor)</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-skills-examples" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>25.</span> <span data-astro-cid-mw7aashj>附錄 E：Skills 實戰手冊</span>  </a> </li><li data-astro-cid-mw7aashj> <a href="/claude-code-guide/ap-pro-limits" data-astro-cid-mw7aashj> <span class="cn" data-astro-cid-mw7aashj>26.</span> <span data-astro-cid-mw7aashj>附錄 F：Pro 方案額度機制詳解</span>  </a> </li> </ul> </div> </nav> <div id="ov" data-astro-cid-mw7aashj></div> <main data-astro-cid-mw7aashj> <div class="cb" data-astro-cid-mw7aashj>  <p class="clabel">第 17 章 · Part 6：MCP Plugin</p> <h1>自製 MCP Server</h1> <p class="cdesc">把你的 API 包成標準的 MCP Server，讓 Claude 能夠直接呼叫——不只是你用，整個團隊都能用。</p> <h2>何時自製 MCP？</h2> <figure class="svg-fig"> 
+<svg viewBox="0 0 800 240" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--text)" fill-opacity="0.4"/>
+    </marker>
+    <style>
+      .box { fill: rgba(139,92,246,0.1); stroke: #8b5cf6; stroke-width: 2; rx: 8; }
+      .box-custom { fill: rgba(245,158,11,0.1); stroke: #f59e0b; stroke-width: 2; stroke-dasharray: 4,4; rx: 8; }
+      .box-int { fill: rgba(239,68,68,0.1); stroke: #ef4444; stroke-width: 2; rx: 8; }
+      .t-bold { font-family: "system-ui, sans-serif"; font-size: 16px; font-weight: bold; fill: var(--text); }
+      .t-sub { font-family: "system-ui, sans-serif"; font-size: 13px; fill: var(--text); opacity: 0.7; }
+    </style>
+  </defs>
+  
+  <g transform="translate(50, 80)">
+    <rect class="box" width="160" height="80"/>
+    <text class="t-bold" x="80" y="35" text-anchor="middle">Claude Code</text>
+  </g>
+
+  <path d="M 210 120 L 330 120" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+
+  <g transform="translate(330, 60)">
+    <rect class="box-custom" width="180" height="120"/>
+    <text class="t-bold" x="90" y="35" text-anchor="middle">自製 MCP Server</text>
+    <text class="t-sub" x="90" y="60" text-anchor="middle">(Python / TS)</text>
+    <text class="t-sub" x="90" y="95" text-anchor="middle">將內部邏輯包裝為 Tool</text>
+  </g>
+
+  <path d="M 510 120 L 630 120" fill="none" stroke="var(--text)" stroke-opacity="0.4" stroke-width="2" marker-end="url(#arr)"/>
+
+  <g transform="translate(630, 80)">
+    <rect class="box-int" width="140" height="80"/>
+    <text class="t-bold" x="70" y="35" text-anchor="middle">內部 ERP / DB</text>
+    <text class="t-sub" x="70" y="60" text-anchor="middle">(無現成 MCP 支援)</text>
+  </g>
+</svg>
+ <figcaption style="color: var(--text); opacity: 0.8; text-align: center; font-size: 0.9em; font-style: italic; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed var(--border); display: block; max-width: 80%; margin-left: auto; margin-right: auto;">💡 <strong>圖解：</strong>當公司有獨特的內部系統，且社群沒有現成的 MCP 時，就是自製 MCP Server 的最佳時機。</figcaption> </figure>  <div class="mcp-why-grid"> <div class="mcp-why-card"> <div class="mcp-why-icon">🏢</div> <div class="mcp-why-text"><strong>連接內部系統</strong>公司有內部 API，想讓 Claude 直接存取與操作</div> </div> <div class="mcp-why-card"> <div class="mcp-why-icon">📦</div> <div class="mcp-why-text"><strong>封裝常用工作流</strong>有一組常用操作，想封裝成可重複呼叫的工具</div> </div> <div class="mcp-why-card"> <div class="mcp-why-icon">⚙️</div> <div class="mcp-why-text"><strong>客製化邏輯</strong>現有 MCP Server 不符合需求，需要高度自訂的商業邏輯</div> </div> <div class="mcp-why-card"> <div class="mcp-why-icon">🤝</div> <div class="mcp-why-text"><strong>跨團隊共享</strong>把好用的能力寫成 Server，在團隊成員間共享標準操作</div> </div> </div> <h2>MCP SDK 安裝</h2> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>bash</span> <button class="cb-copy" data-code="# TypeScript / JavaScript（推薦）
+npm install @modelcontextprotocol/sdk
+
+# Python
+pip install mcp" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># TypeScript / JavaScript（推薦）</span></span>
+<span class="line"><span style="color:#61AFEF">npm</span><span style="color:#98C379"> install</span><span style="color:#98C379"> @modelcontextprotocol/sdk</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># Python</span></span>
+<span class="line"><span style="color:#61AFEF">pip</span><span style="color:#98C379"> install</span><span style="color:#98C379"> mcp</span></span></code></pre> </div> </div>  <script type="module">document.querySelectorAll(".cb-copy").forEach(e=>{e.addEventListener("click",()=>{const t=e.dataset.code;t&&navigator.clipboard.writeText(t).then(()=>{e.textContent="已複製!",e.classList.add("copied"),setTimeout(()=>{e.textContent="複製",e.classList.remove("copied")},2e3)})})});</script> <h2>最小可運行範例（TypeScript）</h2> <p>一個提供兩個工具的簡單 MCP Server：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>my-mcp-server/index.ts</span> <button class="cb-copy" data-code="import { Server } from &quot;@modelcontextprotocol/sdk/server/index.js&quot;;
+import { StdioServerTransport } from &quot;@modelcontextprotocol/sdk/server/stdio.js&quot;;
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+} from &quot;@modelcontextprotocol/sdk/types.js&quot;;
+
+const server = new Server(
+  { name: &quot;my-tools&quot;, version: &quot;1.0.0&quot; },
+  { capabilities: { tools: {} } }
+);
+
+server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  tools: [
+    {
+      name: &quot;get_weather&quot;,
+      description: &quot;取得指定城市的天氣&quot;,
+      inputSchema: {
+        type: &quot;object&quot;,
+        properties: {
+          city: { type: &quot;string&quot;, description: &quot;城市名稱&quot; },
+        },
+        required: [&quot;city&quot;],
+      },
+    },
+    {
+      name: &quot;query_db&quot;,
+      description: &quot;查詢公司內部資料庫&quot;,
+      inputSchema: {
+        type: &quot;object&quot;,
+        properties: {
+          sql: { type: &quot;string&quot;, description: &quot;SQL 查詢語句（唯讀）&quot; },
+        },
+        required: [&quot;sql&quot;],
+      },
+    },
+  ],
+}));
+
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const { name, arguments: args } = request.params;
+
+  if (name === &quot;get_weather&quot;) {
+    const { city } = args as { city: string };
+    const result = await fetchWeather(city);
+    return { content: [{ type: &quot;text&quot;, text: JSON.stringify(result) }] };
+  }
+
+  if (name === &quot;query_db&quot;) {
+    const { sql } = args as { sql: string };
+    const rows = await db.query(sql);
+    return { content: [{ type: &quot;text&quot;, text: JSON.stringify(rows) }] };
+  }
+
+  throw new Error(&quot;Unknown tool: &quot; + name);
+});
+
+const transport = new StdioServerTransport();
+await server.connect(transport);" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="typescript"><code><span class="line"><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> { </span><span style="color:#E06C75">Server</span><span style="color:#ABB2BF"> } </span><span style="color:#C678DD">from</span><span style="color:#98C379"> "@modelcontextprotocol/sdk/server/index.js"</span><span style="color:#ABB2BF">;</span></span>
+<span class="line"><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> { </span><span style="color:#E06C75">StdioServerTransport</span><span style="color:#ABB2BF"> } </span><span style="color:#C678DD">from</span><span style="color:#98C379"> "@modelcontextprotocol/sdk/server/stdio.js"</span><span style="color:#ABB2BF">;</span></span>
+<span class="line"><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> {</span></span>
+<span class="line"><span style="color:#E06C75">  CallToolRequestSchema</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">  ListToolsRequestSchema</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#ABB2BF">} </span><span style="color:#C678DD">from</span><span style="color:#98C379"> "@modelcontextprotocol/sdk/types.js"</span><span style="color:#ABB2BF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">const</span><span style="color:#E5C07B"> server</span><span style="color:#56B6C2"> =</span><span style="color:#C678DD"> new</span><span style="color:#61AFEF"> Server</span><span style="color:#ABB2BF">(</span></span>
+<span class="line"><span style="color:#ABB2BF">  { </span><span style="color:#E06C75">name</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"my-tools"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75">version</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"1.0.0"</span><span style="color:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#ABB2BF">  { </span><span style="color:#E06C75">capabilities</span><span style="color:#ABB2BF">: { </span><span style="color:#E06C75">tools</span><span style="color:#ABB2BF">: {} } }</span></span>
+<span class="line"><span style="color:#ABB2BF">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E5C07B">server</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">setRequestHandler</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75">ListToolsRequestSchema</span><span style="color:#ABB2BF">, </span><span style="color:#C678DD">async</span><span style="color:#ABB2BF"> () </span><span style="color:#C678DD">=></span><span style="color:#ABB2BF"> ({</span></span>
+<span class="line"><span style="color:#E06C75">  tools</span><span style="color:#ABB2BF">: [</span></span>
+<span class="line"><span style="color:#ABB2BF">    {</span></span>
+<span class="line"><span style="color:#E06C75">      name</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"get_weather"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">      description</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"取得指定城市的天氣"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">      inputSchema</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">        type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"object"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">        properties</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">          city</span><span style="color:#ABB2BF">: { </span><span style="color:#E06C75">type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"string"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75">description</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"城市名稱"</span><span style="color:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#ABB2BF">        },</span></span>
+<span class="line"><span style="color:#E06C75">        required</span><span style="color:#ABB2BF">: [</span><span style="color:#98C379">"city"</span><span style="color:#ABB2BF">],</span></span>
+<span class="line"><span style="color:#ABB2BF">      },</span></span>
+<span class="line"><span style="color:#ABB2BF">    },</span></span>
+<span class="line"><span style="color:#ABB2BF">    {</span></span>
+<span class="line"><span style="color:#E06C75">      name</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"query_db"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">      description</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"查詢公司內部資料庫"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">      inputSchema</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">        type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"object"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">        properties</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">          sql</span><span style="color:#ABB2BF">: { </span><span style="color:#E06C75">type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"string"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75">description</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"SQL 查詢語句（唯讀）"</span><span style="color:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#ABB2BF">        },</span></span>
+<span class="line"><span style="color:#E06C75">        required</span><span style="color:#ABB2BF">: [</span><span style="color:#98C379">"sql"</span><span style="color:#ABB2BF">],</span></span>
+<span class="line"><span style="color:#ABB2BF">      },</span></span>
+<span class="line"><span style="color:#ABB2BF">    },</span></span>
+<span class="line"><span style="color:#ABB2BF">  ],</span></span>
+<span class="line"><span style="color:#ABB2BF">}));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E5C07B">server</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">setRequestHandler</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75">CallToolRequestSchema</span><span style="color:#ABB2BF">, </span><span style="color:#C678DD">async</span><span style="color:#ABB2BF"> (</span><span style="color:#E06C75;font-style:italic">request</span><span style="color:#ABB2BF">) </span><span style="color:#C678DD">=></span><span style="color:#ABB2BF"> {</span></span>
+<span class="line"><span style="color:#C678DD">  const</span><span style="color:#ABB2BF"> { </span><span style="color:#E5C07B">name</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75">arguments</span><span style="color:#ABB2BF">: </span><span style="color:#E5C07B">args</span><span style="color:#ABB2BF"> } </span><span style="color:#56B6C2">=</span><span style="color:#E5C07B"> request</span><span style="color:#ABB2BF">.</span><span style="color:#E06C75">params</span><span style="color:#ABB2BF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">  if</span><span style="color:#ABB2BF"> (</span><span style="color:#E06C75">name</span><span style="color:#56B6C2"> ===</span><span style="color:#98C379"> "get_weather"</span><span style="color:#ABB2BF">) {</span></span>
+<span class="line"><span style="color:#C678DD">    const</span><span style="color:#ABB2BF"> { </span><span style="color:#E5C07B">city</span><span style="color:#ABB2BF"> } </span><span style="color:#56B6C2">=</span><span style="color:#E06C75"> args</span><span style="color:#C678DD"> as</span><span style="color:#ABB2BF"> { </span><span style="color:#E06C75">city</span><span style="color:#ABB2BF">: </span><span style="color:#E5C07B">string</span><span style="color:#ABB2BF"> };</span></span>
+<span class="line"><span style="color:#C678DD">    const</span><span style="color:#E5C07B"> result</span><span style="color:#56B6C2"> =</span><span style="color:#C678DD"> await</span><span style="color:#61AFEF"> fetchWeather</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75">city</span><span style="color:#ABB2BF">);</span></span>
+<span class="line"><span style="color:#C678DD">    return</span><span style="color:#ABB2BF"> { </span><span style="color:#E06C75">content</span><span style="color:#ABB2BF">: [{ </span><span style="color:#E06C75">type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"text"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75">text</span><span style="color:#ABB2BF">: </span><span style="color:#E5C07B">JSON</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">stringify</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75">result</span><span style="color:#ABB2BF">) }] };</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">  if</span><span style="color:#ABB2BF"> (</span><span style="color:#E06C75">name</span><span style="color:#56B6C2"> ===</span><span style="color:#98C379"> "query_db"</span><span style="color:#ABB2BF">) {</span></span>
+<span class="line"><span style="color:#C678DD">    const</span><span style="color:#ABB2BF"> { </span><span style="color:#E5C07B">sql</span><span style="color:#ABB2BF"> } </span><span style="color:#56B6C2">=</span><span style="color:#E06C75"> args</span><span style="color:#C678DD"> as</span><span style="color:#ABB2BF"> { </span><span style="color:#E06C75">sql</span><span style="color:#ABB2BF">: </span><span style="color:#E5C07B">string</span><span style="color:#ABB2BF"> };</span></span>
+<span class="line"><span style="color:#C678DD">    const</span><span style="color:#E5C07B"> rows</span><span style="color:#56B6C2"> =</span><span style="color:#C678DD"> await</span><span style="color:#E5C07B"> db</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">query</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75">sql</span><span style="color:#ABB2BF">);</span></span>
+<span class="line"><span style="color:#C678DD">    return</span><span style="color:#ABB2BF"> { </span><span style="color:#E06C75">content</span><span style="color:#ABB2BF">: [{ </span><span style="color:#E06C75">type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"text"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75">text</span><span style="color:#ABB2BF">: </span><span style="color:#E5C07B">JSON</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">stringify</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75">rows</span><span style="color:#ABB2BF">) }] };</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">  throw</span><span style="color:#C678DD"> new</span><span style="color:#61AFEF"> Error</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">"Unknown tool: "</span><span style="color:#56B6C2"> +</span><span style="color:#E06C75"> name</span><span style="color:#ABB2BF">);</span></span>
+<span class="line"><span style="color:#ABB2BF">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">const</span><span style="color:#E5C07B"> transport</span><span style="color:#56B6C2"> =</span><span style="color:#C678DD"> new</span><span style="color:#61AFEF"> StdioServerTransport</span><span style="color:#ABB2BF">();</span></span>
+<span class="line"><span style="color:#C678DD">await</span><span style="color:#E5C07B"> server</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">connect</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75">transport</span><span style="color:#ABB2BF">);</span></span></code></pre> </div> </div>   <h2>建置與設定</h2> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>bash — 建置</span> <button class="cb-copy" data-code="cd my-mcp-server
+npm install
+npx tsc  # 編譯到 dist/index.js" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="bash"><code><span class="line"><span style="color:#56B6C2">cd</span><span style="color:#98C379"> my-mcp-server</span></span>
+<span class="line"><span style="color:#61AFEF">npm</span><span style="color:#98C379"> install</span></span>
+<span class="line"><span style="color:#61AFEF">npx</span><span style="color:#98C379"> tsc</span><span style="color:#7F848E;font-style:italic">  # 編譯到 dist/index.js</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>~/.claude/settings.json — 註冊</span> <button class="cb-copy" data-code="{
+  &quot;mcpServers&quot;: {
+    &quot;my-tools&quot;: {
+      &quot;command&quot;: &quot;node&quot;,
+      &quot;args&quot;: [&quot;C:/path/to/my-mcp-server/dist/index.js&quot;],
+      &quot;env&quot;: {
+        &quot;DB_CONNECTION_STRING&quot;: &quot;postgresql://...&quot;,
+        &quot;WEATHER_API_KEY&quot;: &quot;your-key&quot;
+      }
+    }
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "mcpServers"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "my-tools"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">      "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"node"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">      "args"</span><span style="color:#ABB2BF">: [</span><span style="color:#98C379">"C:/path/to/my-mcp-server/dist/index.js"</span><span style="color:#ABB2BF">],</span></span>
+<span class="line"><span style="color:#E06C75">      "env"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">        "DB_CONNECTION_STRING"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"postgresql://..."</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">        "WEATHER_API_KEY"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"your-key"</span></span>
+<span class="line"><span style="color:#ABB2BF">      }</span></span>
+<span class="line"><span style="color:#ABB2BF">    }</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h2>實戰：包裝公司內部 API</h2> <p>以 TSC API（內部服務查詢系統）為例：</p> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>tsc-api-mcp/index.ts（節錄）</span> <button class="cb-copy" data-code="const TSC_BASE_URL = process.env.TSC_API_URL || &quot;http://localhost:8080&quot;;
+
+// 工具定義
+{
+  name: &quot;search_service&quot;,
+  description: &quot;在 TSC 系統中搜尋服務資訊&quot;,
+  inputSchema: {
+    type: &quot;object&quot;,
+    properties: {
+      keyword: { type: &quot;string&quot; },
+      category: { type: &quot;string&quot;, enum: [&quot;network&quot;, &quot;storage&quot;, &quot;compute&quot;] },
+    },
+    required: [&quot;keyword&quot;],
+  },
+}
+
+// 處理工具呼叫
+if (name === &quot;search_service&quot;) {
+  const response = await fetch(
+    TSC_BASE_URL + &quot;/api/services/search?q=&quot; + args.keyword,
+    { headers: { Authorization: &quot;Bearer &quot; + process.env.TSC_TOKEN } }
+  );
+  const data = await response.json();
+  return { content: [{ type: &quot;text&quot;, text: JSON.stringify(data) }] };
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="typescript"><code><span class="line"><span style="color:#C678DD">const</span><span style="color:#E5C07B"> TSC_BASE_URL</span><span style="color:#56B6C2"> =</span><span style="color:#E5C07B"> process</span><span style="color:#ABB2BF">.</span><span style="color:#E5C07B">env</span><span style="color:#ABB2BF">.</span><span style="color:#E06C75">TSC_API_URL</span><span style="color:#56B6C2"> ||</span><span style="color:#98C379"> "http://localhost:8080"</span><span style="color:#ABB2BF">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic">// 工具定義</span></span>
+<span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  name</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"search_service"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">  description</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"在 TSC 系統中搜尋服務資訊"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">  inputSchema</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"object"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">    properties</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">      keyword</span><span style="color:#ABB2BF">: { </span><span style="color:#E06C75">type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"string"</span><span style="color:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#E06C75">      category</span><span style="color:#ABB2BF">: { </span><span style="color:#E06C75">type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"string"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75">enum</span><span style="color:#ABB2BF">: [</span><span style="color:#98C379">"network"</span><span style="color:#ABB2BF">, </span><span style="color:#98C379">"storage"</span><span style="color:#ABB2BF">, </span><span style="color:#98C379">"compute"</span><span style="color:#ABB2BF">] },</span></span>
+<span class="line"><span style="color:#ABB2BF">    },</span></span>
+<span class="line"><span style="color:#E06C75">    required</span><span style="color:#ABB2BF">: [</span><span style="color:#98C379">"keyword"</span><span style="color:#ABB2BF">],</span></span>
+<span class="line"><span style="color:#ABB2BF">  },</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic">// 處理工具呼叫</span></span>
+<span class="line"><span style="color:#C678DD">if</span><span style="color:#ABB2BF"> (</span><span style="color:#E06C75">name</span><span style="color:#56B6C2"> ===</span><span style="color:#98C379"> "search_service"</span><span style="color:#ABB2BF">) {</span></span>
+<span class="line"><span style="color:#C678DD">  const</span><span style="color:#E5C07B"> response</span><span style="color:#56B6C2"> =</span><span style="color:#C678DD"> await</span><span style="color:#61AFEF"> fetch</span><span style="color:#ABB2BF">(</span></span>
+<span class="line"><span style="color:#E5C07B">    TSC_BASE_URL</span><span style="color:#56B6C2"> +</span><span style="color:#98C379"> "/api/services/search?q="</span><span style="color:#56B6C2"> +</span><span style="color:#E5C07B"> args</span><span style="color:#ABB2BF">.</span><span style="color:#E06C75">keyword</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#ABB2BF">    { </span><span style="color:#E06C75">headers</span><span style="color:#ABB2BF">: { </span><span style="color:#E06C75">Authorization</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"Bearer "</span><span style="color:#56B6C2"> +</span><span style="color:#E5C07B"> process</span><span style="color:#ABB2BF">.</span><span style="color:#E5C07B">env</span><span style="color:#ABB2BF">.</span><span style="color:#E06C75">TSC_TOKEN</span><span style="color:#ABB2BF"> } }</span></span>
+<span class="line"><span style="color:#ABB2BF">  );</span></span>
+<span class="line"><span style="color:#C678DD">  const</span><span style="color:#E5C07B"> data</span><span style="color:#56B6C2"> =</span><span style="color:#C678DD"> await</span><span style="color:#E5C07B"> response</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">json</span><span style="color:#ABB2BF">();</span></span>
+<span class="line"><span style="color:#C678DD">  return</span><span style="color:#ABB2BF"> { </span><span style="color:#E06C75">content</span><span style="color:#ABB2BF">: [{ </span><span style="color:#E06C75">type</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"text"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75">text</span><span style="color:#ABB2BF">: </span><span style="color:#E5C07B">JSON</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">stringify</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75">data</span><span style="color:#ABB2BF">) }] };</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <h2>Python 版本（更簡潔）</h2> <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>my_server.py</span> <button class="cb-copy" data-code="from mcp.server import Server
+from mcp.server.stdio import stdio_server
+from mcp import types
+import asyncio
+
+app = Server(&quot;my-tools&quot;)
+
+@app.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name=&quot;hello&quot;,
+            description=&quot;回應問候&quot;,
+            inputSchema={&quot;type&quot;:&quot;object&quot;,&quot;properties&quot;:{&quot;name&quot;:{&quot;type&quot;:&quot;string&quot;}},&quot;required&quot;:[&quot;name&quot;]},
+        )
+    ]
+
+@app.call_tool()
+async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
+    if name == &quot;hello&quot;:
+        return [types.TextContent(type=&quot;text&quot;, text=&quot;Hello, &quot; + arguments[&quot;name&quot;] + &quot;!&quot;)]
+    raise ValueError(&quot;Unknown tool: &quot; + name)
+
+async def main():
+    async with stdio_server() as (read, write):
+        await app.run(read, write, app.create_initialization_options())
+
+asyncio.run(main())" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="python"><code><span class="line"><span style="color:#C678DD">from</span><span style="color:#ABB2BF"> mcp.server </span><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> Server</span></span>
+<span class="line"><span style="color:#C678DD">from</span><span style="color:#ABB2BF"> mcp.server.stdio </span><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> stdio_server</span></span>
+<span class="line"><span style="color:#C678DD">from</span><span style="color:#ABB2BF"> mcp </span><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> types</span></span>
+<span class="line"><span style="color:#C678DD">import</span><span style="color:#ABB2BF"> asyncio</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ABB2BF">app </span><span style="color:#56B6C2">=</span><span style="color:#61AFEF"> Server</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">"my-tools"</span><span style="color:#ABB2BF">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#61AFEF">@app</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">list_tools</span><span style="color:#ABB2BF">()</span></span>
+<span class="line"><span style="color:#C678DD">async</span><span style="color:#C678DD"> def</span><span style="color:#61AFEF"> list_tools</span><span style="color:#ABB2BF">() -> list[types.Tool]:</span></span>
+<span class="line"><span style="color:#C678DD">    return</span><span style="color:#ABB2BF"> [</span></span>
+<span class="line"><span style="color:#ABB2BF">        types.</span><span style="color:#61AFEF">Tool</span><span style="color:#ABB2BF">(</span></span>
+<span class="line"><span style="color:#E06C75;font-style:italic">            name</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"hello"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75;font-style:italic">            description</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"回應問候"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75;font-style:italic">            inputSchema</span><span style="color:#56B6C2">=</span><span style="color:#ABB2BF">{</span><span style="color:#98C379">"type"</span><span style="color:#ABB2BF">:</span><span style="color:#98C379">"object"</span><span style="color:#ABB2BF">,</span><span style="color:#98C379">"properties"</span><span style="color:#ABB2BF">:{</span><span style="color:#98C379">"name"</span><span style="color:#ABB2BF">:{</span><span style="color:#98C379">"type"</span><span style="color:#ABB2BF">:</span><span style="color:#98C379">"string"</span><span style="color:#ABB2BF">}},</span><span style="color:#98C379">"required"</span><span style="color:#ABB2BF">:[</span><span style="color:#98C379">"name"</span><span style="color:#ABB2BF">]},</span></span>
+<span class="line"><span style="color:#ABB2BF">        )</span></span>
+<span class="line"><span style="color:#ABB2BF">    ]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#61AFEF">@app</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">call_tool</span><span style="color:#ABB2BF">()</span></span>
+<span class="line"><span style="color:#C678DD">async</span><span style="color:#C678DD"> def</span><span style="color:#61AFEF"> call_tool</span><span style="color:#ABB2BF">(</span><span style="color:#D19A66;font-style:italic">name</span><span style="color:#ABB2BF">: </span><span style="color:#56B6C2">str</span><span style="color:#ABB2BF">, </span><span style="color:#D19A66;font-style:italic">arguments</span><span style="color:#ABB2BF">: </span><span style="color:#56B6C2">dict</span><span style="color:#ABB2BF">) -> list[types.TextContent]:</span></span>
+<span class="line"><span style="color:#C678DD">    if</span><span style="color:#ABB2BF"> name </span><span style="color:#56B6C2">==</span><span style="color:#98C379"> "hello"</span><span style="color:#ABB2BF">:</span></span>
+<span class="line"><span style="color:#C678DD">        return</span><span style="color:#ABB2BF"> [types.</span><span style="color:#61AFEF">TextContent</span><span style="color:#ABB2BF">(</span><span style="color:#E06C75;font-style:italic">type</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"text"</span><span style="color:#ABB2BF">, </span><span style="color:#E06C75;font-style:italic">text</span><span style="color:#56B6C2">=</span><span style="color:#98C379">"Hello, "</span><span style="color:#56B6C2"> +</span><span style="color:#ABB2BF"> arguments[</span><span style="color:#98C379">"name"</span><span style="color:#ABB2BF">] </span><span style="color:#56B6C2">+</span><span style="color:#98C379"> "!"</span><span style="color:#ABB2BF">)]</span></span>
+<span class="line"><span style="color:#C678DD">    raise</span><span style="color:#ABB2BF"> ValueError(</span><span style="color:#98C379">"Unknown tool: "</span><span style="color:#56B6C2"> +</span><span style="color:#ABB2BF"> name)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">async</span><span style="color:#C678DD"> def</span><span style="color:#61AFEF"> main</span><span style="color:#ABB2BF">():</span></span>
+<span class="line"><span style="color:#C678DD">    async</span><span style="color:#C678DD"> with</span><span style="color:#61AFEF"> stdio_server</span><span style="color:#ABB2BF">() </span><span style="color:#C678DD">as</span><span style="color:#ABB2BF"> (read, write):</span></span>
+<span class="line"><span style="color:#C678DD">        await</span><span style="color:#ABB2BF"> app.</span><span style="color:#61AFEF">run</span><span style="color:#ABB2BF">(read, write, app.</span><span style="color:#61AFEF">create_initialization_options</span><span style="color:#ABB2BF">())</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#ABB2BF">asyncio.</span><span style="color:#61AFEF">run</span><span style="color:#ABB2BF">(</span><span style="color:#61AFEF">main</span><span style="color:#ABB2BF">())</span></span></code></pre> </div> </div>   <div class="cb-wrap" data-astro-cid-jgrc2lfe> <div class="cb-bar" data-astro-cid-jgrc2lfe> <span class="cb-label" data-astro-cid-jgrc2lfe>settings.json — Python 版</span> <button class="cb-copy" data-code="{
+  &quot;mcpServers&quot;: {
+    &quot;my-tools&quot;: {
+      &quot;command&quot;: &quot;python&quot;,
+      &quot;args&quot;: [&quot;C:/path/to/my_server.py&quot;]
+    }
+  }
+}" data-astro-cid-jgrc2lfe>複製</button> </div> <div class="cb-inner" data-astro-cid-jgrc2lfe> <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto;" tabindex="0" data-astro-cid-jgrc2lfe data-language="json"><code><span class="line"><span style="color:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#E06C75">  "mcpServers"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">    "my-tools"</span><span style="color:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#E06C75">      "command"</span><span style="color:#ABB2BF">: </span><span style="color:#98C379">"python"</span><span style="color:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#E06C75">      "args"</span><span style="color:#ABB2BF">: [</span><span style="color:#98C379">"C:/path/to/my_server.py"</span><span style="color:#ABB2BF">]</span></span>
+<span class="line"><span style="color:#ABB2BF">    }</span></span>
+<span class="line"><span style="color:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre> </div> </div>   <div class="call tip"> <span class="ci">💡</span> <div> <strong>MCP Server 的最佳實踐</strong> <p>工具描述（description）要清楚——Claude 靠描述決定何時呼叫哪個工具。只暴露唯讀工具，或在寫入工具加上確認步驟。敏感的 API Key 放在 env 裡，不要 hardcode 在程式碼中。</p> </div> </div>  </div> <nav class="cnav" data-astro-cid-mw7aashj> <a href="/claude-code-guide/ch16-mcp-install" class="prev" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>← 上一章</span> <span class="nt" data-astro-cid-mw7aashj>安裝 MCP Server</span> </a> <a href="/claude-code-guide/ch18-multi-agent" class="next" data-astro-cid-mw7aashj> <span class="nd" data-astro-cid-mw7aashj>下一章 →</span> <span class="nt" data-astro-cid-mw7aashj>多 Agent 協作</span> </a> </nav> </main> </div> <script>
+    // Theme
+    const html = document.documentElement;
+    const tt = document.getElementById('tt');
+    const isun = document.getElementById('isun');
+    const imoon = document.getElementById('imoon');
+    function syncIcons() {
+      const dk = html.classList.contains('dark');
+      isun.style.display = dk ? 'block' : 'none';
+      imoon.style.display = dk ? 'none' : 'block';
+    }
+    syncIcons();
+    tt?.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('cc-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      syncIcons();
+    });
+
+    // Progress
+    const pb = document.getElementById('pb');
+    window.addEventListener('scroll', () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = t > 0 ? `${(window.scrollY / t) * 100}%` : '0%';
+    }, { passive: true });
+
+    // Sidebar part toggles
+    document.querySelectorAll('.pt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.pid;
+        const list = document.querySelector(`[data-pl="${id}"]`);
+        btn.classList.toggle('open');
+        list?.classList.toggle('closed');
+      });
+    });
+
+    // Mobile menu
+    const sb = document.getElementById('sb');
+    const ov = document.getElementById('ov');
+    const mb = document.getElementById('mbtn');
+    const open = () => { sb.classList.add('open'); ov.classList.add('open'); document.body.style.overflow='hidden'; };
+    const close = () => { sb.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow=''; };
+    mb?.addEventListener('click', open);
+    ov?.addEventListener('click', close);
+  </script> </body> 
